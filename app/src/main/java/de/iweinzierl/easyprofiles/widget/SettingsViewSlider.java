@@ -13,8 +13,12 @@ public class SettingsViewSlider extends AbstractSettingsView<Integer> {
         super(context, attrs);
     }
 
+    private Integer rawValue;
+
     @Override
     public void setValue(Integer value) {
+        this.rawValue = value;
+
         String volumeSetTo = getContext().getResources().getString(R.string.editprofile_volume_set_to);
         volumeSetTo = volumeSetTo.replace("{volume}", String.valueOf(value));
         valueField.setText(volumeSetTo);
@@ -23,10 +27,10 @@ public class SettingsViewSlider extends AbstractSettingsView<Integer> {
 
     @Override
     public Integer getValue() {
-        if (Strings.isNullOrEmpty(valueField.getText().toString())) {
+        if (rawValue == null) {
             return 0;
         } else {
-            return Integer.valueOf(valueField.getText().toString());
+            return rawValue;
         }
     }
 
