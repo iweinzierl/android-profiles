@@ -42,6 +42,14 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
+        Button cancelButton = (Button) view.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
+
         name = (SettingsViewEditText) view.findViewById(R.id.profile_name);
     }
 

@@ -3,12 +3,16 @@
     <color name="ColorPrimary">#FF5722</color>
     <color name="ColorPrimaryDark">#E64A19</color>
 
+    <color name="EditProfileDevider">#b4b4b4</color>
+    <color name="EditProfileSectionHeader">#518744</color>
+
     <color name="SettingsViewLabel">#000</color>
     <color name="SettingsViewValue">#595959</color>
 
-    <color name="EditTextDialogTitle">#000</color>
-    <color name="EditTextDialogLabel">#595959</color>
+    <color name="SettingsDialogTitle">#000</color>
+    <color name="SettingsDialogLabel">#595959</color>
+    <color name="SettingsDialogOk">#518744</color>
+    <color name="SettingsDialogCancel">#518744</color>
+
     <color name="EditTextDialogValue">#000</color>
-    <color name="EditTextDialogOk">#518744</color>
-    <color name="EditTextDialogCancel">#518744</color>
 </resources>

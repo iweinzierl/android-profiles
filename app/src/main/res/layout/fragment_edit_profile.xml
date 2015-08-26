@@ -1,37 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <de.iweinzierl.easyprofiles.widget.SettingsViewEditText
-        android:id="@+id/profile_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        custom:label="@string/editprofile_name" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/cancel_button"
-            style="@style/AppTheme.EditProfile.Button.Ok"
+        <de.iweinzierl.easyprofiles.widget.SettingsViewEditText
+            android:id="@+id/profile_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/editprofile_cancel_button" />
+            custom:label="@string/editprofile_name" />
 
-        <Button
-            android:id="@+id/save_button"
-            style="@style/AppTheme.EditProfile.Button.Ok"
+        <!-- SECTION: Volume -->
+        <TextView
+            android:id="@+id/section_volume"
+            style="@style/AppTheme.EditProfile.SectionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/editprofile_save_button" />
+            android:text="@string/editprofile_section_volume" />
+
+        <de.iweinzierl.easyprofiles.widget.SettingsViewSlider
+            android:id="@+id/alarm_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:label="@string/editprofile_alarm_volume" />
+
+        <FrameLayout
+            style="@style/AppTheme.EditProfile.Devider"
+            android:layout_width="match_parent" />
+
+        <de.iweinzierl.easyprofiles.widget.SettingsViewSlider
+            android:id="@+id/media_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:label="@string/editprofile_media_volume" />
+
+        <FrameLayout
+            style="@style/AppTheme.EditProfile.Devider"
+            android:layout_width="match_parent" />
+
+        <de.iweinzierl.easyprofiles.widget.SettingsViewSlider
+            android:id="@+id/ringtone_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:label="@string/editprofile_ringtone_volume" />
+
+        <FrameLayout
+            style="@style/AppTheme.EditProfile.Devider"
+            android:layout_width="match_parent" />
+
+        <de.iweinzierl.easyprofiles.widget.SettingsViewSlider
+            android:id="@+id/notification_volume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:label="@string/editprofile_notification_volume" />
+
+        <FrameLayout
+            style="@style/AppTheme.EditProfile.Devider"
+            android:layout_width="match_parent" />
+
+        <!-- TODO vibration missing -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_button"
+                style="@style/AppTheme.EditProfile.Button.Ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/editprofile_cancel_button" />
+
+            <Button
+                android:id="@+id/save_button"
+                style="@style/AppTheme.EditProfile.Button.Ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/editprofile_save_button" />
+        </LinearLayout>
+
+
     </LinearLayout>
-
-
-</LinearLayout>
+</ScrollView>

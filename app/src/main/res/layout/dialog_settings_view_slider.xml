@@ -17,13 +17,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title" />
 
-    <EditText
+    <SeekBar
         android:id="@+id/value"
-        style="@style/AppTheme.TextSettingsDialog.Value"
+        style="@style/AppTheme.SlideSettingsDialog.Value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/label"
-        android:inputType="text" />
+        android:layout_below="@+id/label"
+        android:max="10" />
 
     <LinearLayout
         android:layout_width="match_parent"

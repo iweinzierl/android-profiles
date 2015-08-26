@@ -8,6 +8,19 @@
     <style name="AppTheme.EditProfile">
     </style>
 
+    <style name="AppTheme.EditProfile.Devider">
+        <item name="android:background">@color/EditProfileDevider</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+    <style name="AppTheme.EditProfile.SectionHeader">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/EditProfileSectionHeader</item>
+    </style>
+
     <style name="AppTheme.EditProfile.Button">
         <item name="android:drawable">@android:color/transparent</item>
     </style>
@@ -18,8 +31,9 @@
     <style name="AppTheme.EditProfile.Button.Ok">
     </style>
 
+    <!-- SettingsView -->
     <style name="AppTheme.SettingsView">
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_margin">10dp</item>
     </style>
 
     <style name="AppTheme.SettingsView.Dialog">
@@ -37,35 +51,42 @@
         <item name="android:textColor">@color/SettingsViewLabel</item>
     </style>
 
-    <style name="AppTheme.EditTextDialog" parent="AlertDialog.AppCompat">
+    <!-- SettingsDialog -->
+    <style name="AppTheme.SettingsDialog" parent="AlertDialog.AppCompat">
         <item name="android:layout_margin">5dp</item>
         <item name="android:padding">10dp</item>
     </style>
 
-    <style name="AppTheme.EditTextDialog.Title">
+    <style name="AppTheme.SettingsDialog.Title">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/EditTextDialogTitle</item>
+        <item name="android:textColor">@color/SettingsDialogTitle</item>
     </style>
 
-    <style name="AppTheme.EditTextDialog.Label">
+    <style name="AppTheme.SettingsDialog.Label">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/EditTextDialogLabel</item>
+        <item name="android:textColor">@color/SettingsDialogLabel</item>
     </style>
 
-    <style name="AppTheme.EditTextDialog.Value">
+    <style name="AppTheme.SettingsDialog.OkButton">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/SettingsDialogOk</item>
+    </style>
+
+    <style name="AppTheme.SettingsDialog.CancelButton">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/SettingsDialogCancel</item>
+    </style>
+
+    <!-- Specific to EditTextDialog -->
+    <style name="AppTheme.TextSettingsDialog.Value" parent="AppTheme.SettingsDialog">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/EditTextDialogValue</item>
     </style>
 
-    <style name="AppTheme.EditTextDialog.OkButton">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/EditTextDialogOk</item>
-    </style>
-
-    <style name="AppTheme.EditTextDialog.CancelButton">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/EditTextDialogCancel</item>
+    <!-- Specific to SlideSettingsDialog -->
+    <style name="AppTheme.SlideSettingsDialog.Value" parent="AppTheme.SettingsDialog">
+        <!-- TODO -->
     </style>
 
 </resources>
