@@ -1,5 +1,6 @@
 package de.iweinzierl.easyprofiles.persistence;
 
+import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 
 public class Profile extends SugarRecord<Profile> {
@@ -56,5 +57,15 @@ public class Profile extends SugarRecord<Profile> {
 
     public void setExtraSettings(ExtraSettings extraSettings) {
         this.extraSettings = extraSettings;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("wifiSettings", wifiSettings)
+                .add("volumeSettings", volumeSettings)
+                .add("dataSettings", dataSettings)
+                .add("extraSettings", extraSettings)
+                .toString();
     }
 }

@@ -1,5 +1,6 @@
 package de.iweinzierl.easyprofiles.persistence;
 
+import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 
 public class VolumeSettings extends SugarRecord<VolumeSettings> {
@@ -65,5 +66,17 @@ public class VolumeSettings extends SugarRecord<VolumeSettings> {
 
     public void setShouldVibrate(boolean shouldVibrate) {
         this.shouldVibrate = shouldVibrate;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("alarmVolume", alarmVolume)
+                .add("mediaVolume", mediaVolume)
+                .add("ringtoneVolume", ringtoneVolume)
+                .add("notificationVolume", notificationVolume)
+                .add("shouldVibrate", shouldVibrate)
+                .toString();
+
     }
 }

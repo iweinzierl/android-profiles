@@ -1,5 +1,6 @@
 package de.iweinzierl.easyprofiles.persistence;
 
+import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 
 public class ExtraSettings extends SugarRecord<ExtraSettings> {
@@ -42,5 +43,14 @@ public class ExtraSettings extends SugarRecord<ExtraSettings> {
 
     public void setNfcEnabled(boolean nfcEnabled) {
         this.nfcEnabled = nfcEnabled;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("gpsEnabled", gpsEnabled)
+                .add("bluetoothEnabled", bluetoothEnabled)
+                .add("nfcEnabled", nfcEnabled)
+                .toString();
     }
 }

@@ -25,6 +25,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
     public void onSaveProfile(Profile profile) {
         profile.save();
         if (profile.getId() > 0) {
+            Log.d("easyprofile", "Successfully persisted profile: " + profile);
             finish();
         }
         else {

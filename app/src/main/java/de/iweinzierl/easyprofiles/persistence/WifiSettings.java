@@ -1,5 +1,6 @@
 package de.iweinzierl.easyprofiles.persistence;
 
+import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 
 public class WifiSettings extends SugarRecord<WifiSettings> {
@@ -31,5 +32,13 @@ public class WifiSettings extends SugarRecord<WifiSettings> {
 
     public void setWifiHotspotEnabled(boolean wifiHotspotEnabled) {
         this.wifiHotspotEnabled = wifiHotspotEnabled;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("wifiEnabled", wifiEnabled)
+                .add("wifiHotspotEnabled", wifiHotspotEnabled)
+                .toString();
     }
 }

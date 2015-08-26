@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.persistence.Profile;
+import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
+import de.iweinzierl.easyprofiles.widget.AbstractSettingsView;
 import de.iweinzierl.easyprofiles.widget.SettingsViewEditText;
 
 public class EditProfileFragment extends Fragment {
@@ -20,7 +22,11 @@ public class EditProfileFragment extends Fragment {
 
     private Callback callback;
 
-    private SettingsViewEditText name;
+    private AbstractSettingsView<String> name;
+    private AbstractSettingsView<Integer> alarmVolume;
+    private AbstractSettingsView<Integer> mediaVolume;
+    private AbstractSettingsView<Integer> ringtoneVolume;
+    private AbstractSettingsView<Integer> notificationVolume;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,6 +34,7 @@ public class EditProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_edit_profile, container, false);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -51,6 +58,10 @@ public class EditProfileFragment extends Fragment {
         });
 
         name = (SettingsViewEditText) view.findViewById(R.id.profile_name);
+        alarmVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.alarm_volume);
+        mediaVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.media_volume);
+        ringtoneVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.ringtone_volume);
+        notificationVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.notification_volume);
     }
 
     @Override
@@ -63,8 +74,15 @@ public class EditProfileFragment extends Fragment {
     }
 
     public Profile getProfile() {
+        VolumeSettings volumeSettings = new VolumeSettings();
+        volumeSettings.setAlarmVolume(alarmVolume.getValue());
+        volumeSettings.setMediaVolume(mediaVolume.getValue());
+        volumeSettings.setRingtoneVolume(ringtoneVolume.getValue());
+        volumeSettings.setNotificationVolume(notificationVolume.getValue());
+
         Profile profile = new Profile();
         profile.setName(name.getValue());
+        profile.setVolumeSettings(volumeSettings);
 
         return profile;
     }

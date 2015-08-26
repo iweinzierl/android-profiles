@@ -1,5 +1,6 @@
 package de.iweinzierl.easyprofiles.persistence;
 
+import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 
 public class DataSettings extends SugarRecord<DataSettings> {
@@ -31,5 +32,13 @@ public class DataSettings extends SugarRecord<DataSettings> {
 
     public void setDataEnabled(boolean dataEnabled) {
         this.dataEnabled = dataEnabled;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("dataSyncEnabled", dataSyncEnabled)
+                .add("dataEnabled", dataEnabled)
+                .toString();
     }
 }
