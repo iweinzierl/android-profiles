@@ -2,4 +2,13 @@
 <resources>
     <color name="ColorPrimary">#FF5722</color>
     <color name="ColorPrimaryDark">#E64A19</color>
+
+    <color name="SettingsViewLabel">#000</color>
+    <color name="SettingsViewValue">#595959</color>
+
+    <color name="EditTextDialogTitle">#000</color>
+    <color name="EditTextDialogLabel">#595959</color>
+    <color name="EditTextDialogValue">#000</color>
+    <color name="EditTextDialogOk">#518744</color>
+    <color name="EditTextDialogCancel">#518744</color>
 </resources>

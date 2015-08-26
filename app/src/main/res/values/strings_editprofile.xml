@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="editprofile_save_button">Speichern</string>
+    <string name="editprofile_name">Name:</string>
+
+    <string name="editprofile_cancel_button">Zurück</string>
+    <string name="editprofile_save_button">Fortfahren</string>
 </resources>

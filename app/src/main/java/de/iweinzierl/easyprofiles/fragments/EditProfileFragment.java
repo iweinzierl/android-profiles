@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.persistence.Profile;
+import de.iweinzierl.easyprofiles.widget.SettingsViewEditText;
 
 public class EditProfileFragment extends Fragment {
 
@@ -20,7 +20,7 @@ public class EditProfileFragment extends Fragment {
 
     private Callback callback;
 
-    private EditText name;
+    private SettingsViewEditText name;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +42,7 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-        name = (EditText) view.findViewById(R.id.profile_name);
+        name = (SettingsViewEditText) view.findViewById(R.id.profile_name);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class EditProfileFragment extends Fragment {
 
     public Profile getProfile() {
         Profile profile = new Profile();
-        profile.setName(name.getText().toString());
+        profile.setName(name.getValue());
 
         return profile;
     }
