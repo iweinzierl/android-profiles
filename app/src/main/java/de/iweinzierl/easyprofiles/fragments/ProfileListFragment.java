@@ -1,5 +1,6 @@
 package de.iweinzierl.easyprofiles.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -20,6 +22,11 @@ import de.iweinzierl.easyprofiles.persistence.Profile;
 
 public class ProfileListFragment extends Fragment {
 
+    public interface Callback {
+        void onProfileClick(Profile profile);
+    }
+
+    private Callback callback;
     private ListView profileList;
 
     public ProfileListFragment() {
@@ -36,13 +43,41 @@ public class ProfileListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         profileList = (ListView) view.findViewById(R.id.profile_list);
+        profileList.setOnItemClickListener(new OnActivateProfileClickListener(callback));
 
         ImageButton addProfileButton = (ImageButton) view.findViewById(R.id.addProfileButton);
         addProfileButton.setOnClickListener(new OnAddProfileClickListener(getActivity()));
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof Callback) {
+            callback = (Callback) activity;
+        }
+    }
+
     public void setProfiles(List<Profile> profiles) {
         profileList.setAdapter(new ProfileAdapter(getActivity(), profiles));
+    }
+
+    private static class OnActivateProfileClickListener implements ListView.OnItemClickListener {
+
+        private Callback callback;
+
+        public OnActivateProfileClickListener(Callback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Profile item = (Profile) adapterView.getAdapter().getItem(i);
+            if (callback != null) {
+                callback.onProfileClick(item);
+            } else {
+                Log.w("easyprofiles", "No Callback set for ProfileListFragment! Cannot switch Profiles!");
+            }
+        }
     }
 
     private static class OnAddProfileClickListener implements View.OnClickListener {

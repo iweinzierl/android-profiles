@@ -1,5 +1,7 @@
 package de.iweinzierl.easyprofiles;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,8 +12,9 @@ import java.util.List;
 
 import de.iweinzierl.easyprofiles.fragments.ProfileListFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
+import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 
-public class ProfileListActivity extends AppCompatActivity {
+public class ProfileListActivity extends AppCompatActivity implements ProfileListFragment.Callback {
 
     private ProfileListFragment profileListFragment;
 
@@ -40,11 +43,16 @@ public class ProfileListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onProfileClick(Profile profile) {
+        if (profile != null) {
+            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            new AudioManagerHelper(audioManager).adjustVolume(profile.getVolumeSettings());
+        }
     }
 
     private void updateProfileList() {

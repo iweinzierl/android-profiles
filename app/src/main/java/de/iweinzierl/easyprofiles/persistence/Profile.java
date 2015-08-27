@@ -68,4 +68,38 @@ public class Profile extends SugarRecord<Profile> {
                 .add("extraSettings", extraSettings)
                 .toString();
     }
+
+    /**
+     * Save a profile to database and also persist relations.
+     *
+     * NOTE: this is a hack to work around the problem that SugarORM is not saving relations.
+     */
+    @Override
+    public void save() {
+        if (wifiSettings != null) {
+            wifiSettings.save();
+        }
+
+        if (volumeSettings != null) {
+            volumeSettings.save();
+        }
+
+        if (dataSettings != null) {
+            dataSettings.save();
+        }
+
+        if (extraSettings != null) {
+            extraSettings.save();
+        }
+
+        super.save();
+    }
+
+    public static Profile of(long id, String name, VolumeSettings volumeSettings) {
+        Profile profile = new Profile();
+        profile.setId(id);
+        profile.setName(name);
+        profile.setVolumeSettings(volumeSettings);
+        return profile;
+    }
 }
