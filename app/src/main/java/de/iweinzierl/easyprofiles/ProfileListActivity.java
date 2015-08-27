@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -52,7 +53,14 @@ public class ProfileListActivity extends AppCompatActivity implements ProfileLis
         if (profile != null) {
             AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             new AudioManagerHelper(audioManager).adjustVolume(profile.getVolumeSettings());
+            Toast.makeText(this, "Profile " + profile.getName() + " successfully set.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onProfileModify(Profile profile) {
+        // TODO
+        Toast.makeText(this, "Profile Modification Currently Not Implemented!", Toast.LENGTH_LONG).show();
     }
 
     private void updateProfileList() {

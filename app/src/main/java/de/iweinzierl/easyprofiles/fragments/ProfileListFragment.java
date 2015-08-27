@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -20,10 +19,12 @@ import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.adapter.ProfileAdapter;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 
-public class ProfileListFragment extends Fragment {
+public class ProfileListFragment extends Fragment implements ProfileAdapter.ClickListener {
 
     public interface Callback {
         void onProfileClick(Profile profile);
+
+        void onProfileModify(Profile profile);
     }
 
     private Callback callback;
@@ -43,7 +44,7 @@ public class ProfileListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         profileList = (ListView) view.findViewById(R.id.profile_list);
-        profileList.setOnItemClickListener(new OnActivateProfileClickListener(callback));
+        //profileList.setOnItemClickListener(new OnActivateProfileClickListener(callback));
 
         ImageButton addProfileButton = (ImageButton) view.findViewById(R.id.addProfileButton);
         addProfileButton.setOnClickListener(new OnAddProfileClickListener(getActivity()));
@@ -57,27 +58,18 @@ public class ProfileListFragment extends Fragment {
         }
     }
 
-    public void setProfiles(List<Profile> profiles) {
-        profileList.setAdapter(new ProfileAdapter(getActivity(), profiles));
+    @Override
+    public void onNameClicked(Profile profile) {
+        callback.onProfileClick(profile);
     }
 
-    private static class OnActivateProfileClickListener implements ListView.OnItemClickListener {
+    @Override
+    public void onModifyClicked(Profile profile) {
+        callback.onProfileModify(profile);
+    }
 
-        private Callback callback;
-
-        public OnActivateProfileClickListener(Callback callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Profile item = (Profile) adapterView.getAdapter().getItem(i);
-            if (callback != null) {
-                callback.onProfileClick(item);
-            } else {
-                Log.w("easyprofiles", "No Callback set for ProfileListFragment! Cannot switch Profiles!");
-            }
-        }
+    public void setProfiles(List<Profile> profiles) {
+        profileList.setAdapter(new ProfileAdapter(getActivity(), this, profiles));
     }
 
     private static class OnAddProfileClickListener implements View.OnClickListener {

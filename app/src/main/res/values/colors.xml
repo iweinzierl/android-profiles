@@ -2,8 +2,11 @@
 <resources>
     <color name="ColorPrimary">#FF5722</color>
     <color name="ColorPrimaryDark">#E64A19</color>
+    <color name="ButtonPressed">#518744</color>
 
-    <color name="EditProfileDevider">#b4b4b4</color>
+    <color name="ProfileListItem">#707070</color>
+
+    <color name="EditProfileDevider">#595959</color>
     <color name="EditProfileSectionHeader">#518744</color>
 
     <color name="SettingsViewLabel">#000</color>
