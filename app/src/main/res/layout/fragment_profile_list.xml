@@ -21,6 +21,6 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="15dp"
         android:background="@drawable/circle"
-        android:src="@android:drawable/ic_menu_add" />
+        android:src="@drawable/ic_add_circle_outline_white_24px" />
 
 </FrameLayout>
