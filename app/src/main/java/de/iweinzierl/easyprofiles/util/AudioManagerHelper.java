@@ -27,6 +27,16 @@ public class AudioManagerHelper {
         setNotificationVolume(volumeSettings.getNotificationVolume());
     }
 
+    public VolumeSettings getCurrentVolumeSettings() {
+        return new VolumeSettings(
+                audioManager.getStreamVolume(AudioManager.STREAM_ALARM),
+                audioManager.getStreamVolume(AudioManager.STREAM_MUSIC),
+                audioManager.getStreamVolume(AudioManager.STREAM_RING),
+                audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION),
+                true // evaluate vibrations
+        );
+    }
+
     private void determineMaxVolumes() {
         maxAlarmVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
         maxMediaVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);

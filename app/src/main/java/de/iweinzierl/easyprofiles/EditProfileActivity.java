@@ -1,6 +1,8 @@
 package de.iweinzierl.easyprofiles;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +12,8 @@ import android.widget.Toast;
 
 import de.iweinzierl.easyprofiles.fragments.EditProfileFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
+import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
+import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 
 public class EditProfileActivity extends AppCompatActivity implements EditProfileFragment.Callback {
 
@@ -41,6 +45,14 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         super.onStart();
         if (initProfile != null) {
             editProfileFragment.setProfile(initProfile);
+        } else {
+            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            VolumeSettings volumeSettings = new AudioManagerHelper(audioManager).getCurrentVolumeSettings();
+
+            Profile currentProfile = new Profile();
+            currentProfile.setVolumeSettings(volumeSettings);
+
+            editProfileFragment.setProfile(currentProfile);
         }
     }
 
