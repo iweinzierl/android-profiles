@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +24,8 @@ public class EditProfileFragment extends Fragment {
     }
 
     private Callback callback;
+
+    private Profile editProfile;
 
     private AbstractSettingsView<String> name;
     private AbstractSettingsView<Integer> alarmVolume;
@@ -84,6 +89,22 @@ public class EditProfileFragment extends Fragment {
         profile.setName(name.getValue());
         profile.setVolumeSettings(volumeSettings);
 
+        if (editProfile != null) {
+            profile.setId(editProfile.getId());
+        }
+
         return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        editProfile = profile;
+
+        VolumeSettings volumeSettings = profile.getVolumeSettings();
+
+        name.setValue(profile.getName());
+        alarmVolume.setValue(volumeSettings.getAlarmVolume());
+        mediaVolume.setValue(volumeSettings.getMediaVolume());
+        ringtoneVolume.setValue(volumeSettings.getRingtoneVolume());
+        notificationVolume.setValue(volumeSettings.getNotificationVolume());
     }
 }

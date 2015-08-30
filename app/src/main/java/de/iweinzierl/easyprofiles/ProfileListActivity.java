@@ -1,6 +1,7 @@
 package de.iweinzierl.easyprofiles;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -59,8 +60,9 @@ public class ProfileListActivity extends AppCompatActivity implements ProfileLis
 
     @Override
     public void onProfileModify(Profile profile) {
-        // TODO
-        Toast.makeText(this, "Profile Modification Currently Not Implemented!", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        intent.putExtra(EditProfileActivity.EXTRA_PROFILE_ID, profile.getId());
+        startActivity(intent);
     }
 
     private void updateProfileList() {

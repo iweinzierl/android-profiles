@@ -11,4 +11,8 @@
 
     <string name="editprofile_cancel_button">Zurück</string>
     <string name="editprofile_save_button">Fortfahren</string>
+
+    <string name="editprofile_menu_delete">Löschen</string>
+
+    <string name="editprofile_info_delete_successful">Profile erfolgreich gelöscht.</string>
 </resources>
