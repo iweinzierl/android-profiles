@@ -96,12 +96,14 @@ public class EditProfileFragment extends Fragment {
     public void setProfile(Profile profile) {
         editProfile = profile;
 
-        VolumeSettings volumeSettings = profile.getVolumeSettings();
-
         name.setValue(profile.getName());
-        alarmVolume.setValue(volumeSettings.getAlarmVolume());
-        mediaVolume.setValue(volumeSettings.getMediaVolume());
-        ringtoneVolume.setValue(volumeSettings.getRingtoneVolume());
-        notificationVolume.setValue(volumeSettings.getNotificationVolume());
+
+        VolumeSettings volumeSettings = profile.getVolumeSettings();
+        if (volumeSettings != null) {
+            alarmVolume.setValue(volumeSettings.getAlarmVolume());
+            mediaVolume.setValue(volumeSettings.getMediaVolume());
+            ringtoneVolume.setValue(volumeSettings.getRingtoneVolume());
+            notificationVolume.setValue(volumeSettings.getNotificationVolume());
+        }
     }
 }
