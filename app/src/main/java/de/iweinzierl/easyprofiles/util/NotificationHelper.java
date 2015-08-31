@@ -31,6 +31,7 @@ public class NotificationHelper {
                 .setContentText(context.getResources().getString(R.string.notification_active_profile) + " " + profile.getName())
                 .setSmallIcon(R.drawable.ic_settings_black_24dp)
                 .setContentIntent(resultPendingIntent)
+                .setOngoing(true)
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
