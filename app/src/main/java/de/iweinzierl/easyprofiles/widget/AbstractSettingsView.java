@@ -56,10 +56,6 @@ public abstract class AbstractSettingsView<T> extends FrameLayout {
 
     protected abstract void showEditDialog();
 
-    public void setOnEditListener(OnEditFinishedListener<T> OnEditFinishedListener) {
-        this.onEditFinishedListener = OnEditFinishedListener;
-    }
-
     public void setLabel(String label) {
         labelField.setText(label);
         invalidate();
