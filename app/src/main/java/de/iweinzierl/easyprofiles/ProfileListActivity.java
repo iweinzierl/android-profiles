@@ -53,8 +53,12 @@ public class ProfileListActivity extends Activity implements ProfileListFragment
     public void onProfileClick(Profile profile) {
         if (profile != null) {
             AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            new AudioManagerHelper(audioManager).adjustVolume(profile.getVolumeSettings());
-            Toast.makeText(this, "Profile " + profile.getName() + " successfully set.", Toast.LENGTH_LONG).show();
+            if (new AudioManagerHelper(audioManager).adjustVolume(profile.getVolumeSettings())) {
+                Toast.makeText(this, "Profile '" + profile.getName() + "' successfully set.", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(this, "Profile '" + profile.getName() + "' not set!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

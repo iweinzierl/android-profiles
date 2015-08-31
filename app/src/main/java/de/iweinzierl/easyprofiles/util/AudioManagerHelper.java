@@ -19,12 +19,19 @@ public class AudioManagerHelper {
         determineMaxVolumes();
     }
 
-    public void adjustVolume(VolumeSettings volumeSettings) {
+    public boolean adjustVolume(VolumeSettings volumeSettings) {
         Log.d("easyprofiles", "Adjust volume settings to: " + volumeSettings);
-        setAlarmVolume(volumeSettings.getAlarmVolume());
-        setMediaVolume(volumeSettings.getMediaVolume());
-        setRingtoneVolume(volumeSettings.getRingtoneVolume());
-        setNotificationVolume(volumeSettings.getNotificationVolume());
+        if (volumeSettings != null) {
+            setAlarmVolume(volumeSettings.getAlarmVolume());
+            setMediaVolume(volumeSettings.getMediaVolume());
+            setRingtoneVolume(volumeSettings.getRingtoneVolume());
+            setNotificationVolume(volumeSettings.getNotificationVolume());
+
+            return true;
+        } else {
+            Log.w("easyprofiles", "VolumeSettings object is null!");
+            return false;
+        }
     }
 
     public VolumeSettings getCurrentVolumeSettings() {
