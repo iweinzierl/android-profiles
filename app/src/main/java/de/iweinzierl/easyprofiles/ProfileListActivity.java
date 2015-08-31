@@ -15,6 +15,7 @@ import java.util.List;
 import de.iweinzierl.easyprofiles.fragments.ProfileListFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
+import de.iweinzierl.easyprofiles.util.NotificationHelper;
 
 public class ProfileListActivity extends Activity implements ProfileListFragment.Callback {
 
@@ -54,9 +55,9 @@ public class ProfileListActivity extends Activity implements ProfileListFragment
         if (profile != null) {
             AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             if (new AudioManagerHelper(audioManager).adjustVolume(profile.getVolumeSettings())) {
+                new NotificationHelper(this).publishProfileNotification(profile);
                 Toast.makeText(this, "Profile '" + profile.getName() + "' successfully set.", Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Profile '" + profile.getName() + "' not set!", Toast.LENGTH_LONG).show();
             }
         }
