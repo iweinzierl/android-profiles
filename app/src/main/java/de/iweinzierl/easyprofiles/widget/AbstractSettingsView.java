@@ -8,13 +8,20 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.iweinzierl.easyprofiles.R;
+import de.iweinzierl.easyprofiles.widget.validation.ValidationError;
+import de.iweinzierl.easyprofiles.widget.validation.Validator;
 
 public abstract class AbstractSettingsView<T> extends FrameLayout {
 
     public interface OnEditFinishedListener<T> {
         void onEditFinished(T oldValue, T newValue);
     }
+
+    protected List<Validator<T>> inputValidators = new ArrayList<>();
 
     protected OnEditFinishedListener<T> onEditFinishedListener;
 
@@ -63,6 +70,16 @@ public abstract class AbstractSettingsView<T> extends FrameLayout {
 
     public String getLabel() {
         return labelField.getText().toString();
+    }
+
+    public void addValidator(Validator<T> validator) {
+        inputValidators.add(validator);
+    }
+
+    protected void validate(T value) throws ValidationError {
+        for (Validator<T> validator : inputValidators) {
+            validator.validate(value);
+        }
     }
 
     protected void registerOnStartEditing() {

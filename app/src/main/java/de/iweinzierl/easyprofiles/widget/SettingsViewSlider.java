@@ -27,6 +27,7 @@ public class SettingsViewSlider extends AbstractSettingsView<Integer> {
 
     @Override
     public Integer getValue() {
+        validate(rawValue);
         if (rawValue == null) {
             return 0;
         } else {

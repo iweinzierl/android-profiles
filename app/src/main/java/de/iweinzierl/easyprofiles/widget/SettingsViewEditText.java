@@ -15,6 +15,7 @@ public class SettingsViewEditText extends AbstractSettingsView<String> {
     }
 
     public String getValue() {
+        validate(valueField.getText().toString());
         return valueField.getText().toString();
     }
 

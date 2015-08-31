@@ -14,17 +14,14 @@ import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
 import de.iweinzierl.easyprofiles.widget.AbstractSettingsView;
 import de.iweinzierl.easyprofiles.widget.SettingsViewEditText;
+import de.iweinzierl.easyprofiles.widget.validation.NotEmptyStringValidator;
+import de.iweinzierl.easyprofiles.widget.validation.NotNullValidator;
+import de.iweinzierl.easyprofiles.widget.validation.ValidationError;
 
 public class EditProfileFragment extends Fragment {
 
     public interface Callback {
         void onSaveProfile(Profile profile);
-    }
-
-    private static class InvalidInputException extends Exception {
-        public InvalidInputException(String detailMessage) {
-            super(detailMessage);
-        }
     }
 
     private Callback callback;
@@ -56,7 +53,7 @@ public class EditProfileFragment extends Fragment {
                     try {
                         callback.onSaveProfile(getProfile());
 
-                    } catch (InvalidInputException e) {
+                    } catch (ValidationError e) {
                         Log.w("easyprofiles", "Profile is invalid", e);
                     }
                 }
@@ -76,6 +73,8 @@ public class EditProfileFragment extends Fragment {
         mediaVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.media_volume);
         ringtoneVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.ringtone_volume);
         notificationVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.notification_volume);
+
+        initValidators();
     }
 
     @Override
@@ -87,9 +86,9 @@ public class EditProfileFragment extends Fragment {
         }
     }
 
-    public Profile getProfile() throws InvalidInputException {
+    public Profile getProfile() throws ValidationError {
         Profile profile = new Profile();
-        profile.setName(name.getValue());
+        profile.setName(getName());
         profile.setVolumeSettings(getVolumeSettings());
 
         if (editProfile != null) {
@@ -113,27 +112,20 @@ public class EditProfileFragment extends Fragment {
         }
     }
 
-    private void validateVolumeSettings() throws InvalidInputException {
-        if (alarmVolume.getValue() == null) {
-            throw new InvalidInputException("Alarm volume not set!");
-        }
-
-        if (mediaVolume.getValue() == null) {
-            throw new InvalidInputException("Media volume not set!");
-        }
-
-        if (ringtoneVolume.getValue() == null) {
-            throw new InvalidInputException("Ringtone volume not set!");
-        }
-
-        if (notificationVolume.getValue() == null) {
-            throw new InvalidInputException("Notification volume not set!");
-        }
+    private void initValidators() {
+        name.addValidator(new NotNullValidator<String>());
+        name.addValidator(new NotEmptyStringValidator());
+        alarmVolume.addValidator(new NotNullValidator<Integer>());
+        mediaVolume.addValidator(new NotNullValidator<Integer>());
+        ringtoneVolume.addValidator(new NotNullValidator<Integer>());
+        notificationVolume.addValidator(new NotNullValidator<Integer>());
     }
 
-    private VolumeSettings getVolumeSettings() throws InvalidInputException {
-        validateVolumeSettings();
+    private String getName() throws ValidationError {
+        return name.getValue();
+    }
 
+    private VolumeSettings getVolumeSettings() throws ValidationError {
         VolumeSettings volumeSettings = new VolumeSettings();
         volumeSettings.setAlarmVolume(alarmVolume.getValue());
         volumeSettings.setMediaVolume(mediaVolume.getValue());
