@@ -1,10 +1,10 @@
 package de.iweinzierl.easyprofiles;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +16,7 @@ import de.iweinzierl.easyprofiles.fragments.ProfileListFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 
-public class ProfileListActivity extends AppCompatActivity implements ProfileListFragment.Callback {
+public class ProfileListActivity extends Activity implements ProfileListFragment.Callback {
 
     private ProfileListFragment profileListFragment;
 

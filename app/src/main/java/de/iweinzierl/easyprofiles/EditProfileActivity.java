@@ -1,10 +1,10 @@
 package de.iweinzierl.easyprofiles;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +15,7 @@ import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 
-public class EditProfileActivity extends AppCompatActivity implements EditProfileFragment.Callback {
+public class EditProfileActivity extends Activity implements EditProfileFragment.Callback {
 
     public static final String EXTRA_PROFILE_ID = "extra.profile.id";
 
