@@ -6,11 +6,11 @@
 
     <color name="ProfileListItem">#707070</color>
 
-    <color name="EditProfileDevider">#595959</color>
+    <color name="EditProfileDevider">#bfbfbf</color>
     <color name="EditProfileSectionHeader">#518744</color>
 
     <color name="SettingsViewLabel">#000</color>
-    <color name="SettingsViewValue">#595959</color>
+    <color name="SettingsViewValue">#898989</color>
 
     <color name="SettingsDialogTitle">#000</color>
     <color name="SettingsDialogLabel">#595959</color>

@@ -27,7 +27,7 @@
     </style>
 
     <style name="AppTheme.EditProfile.SectionHeader">
-        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/EditProfileSectionHeader</item>
@@ -45,7 +45,13 @@
 
     <!-- SettingsView -->
     <style name="AppTheme.SettingsView">
-        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="AppTheme.SettingsView.Container">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="AppTheme.SettingsView.Dialog">
@@ -60,7 +66,7 @@
 
     <style name="AppTheme.SettingsView.Value">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/SettingsViewLabel</item>
+        <item name="android:textColor">@color/SettingsViewValue</item>
     </style>
 
     <!-- SettingsDialog -->
