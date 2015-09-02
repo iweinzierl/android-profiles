@@ -30,12 +30,19 @@ public class EditProfileActivity extends Activity implements EditProfileFragment
         editProfileFragment = new EditProfileFragment();
         getFragmentManager().beginTransaction().replace(R.id.edit_profile_fragment, editProfileFragment).commit();
 
+        if (getActionBar() != null) {
+            getActionBar().setHomeButtonEnabled(true);
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         Intent caller = getIntent();
         if (caller != null) {
             long profileId = caller.getLongExtra(EXTRA_PROFILE_ID, 0);
-            if (profileId > 0) {
-                initProfile = Profile.findById(Profile.class, profileId);
+            initProfile = Profile.findById(Profile.class, profileId);
+
+            if (initProfile != null) {
                 Log.d("easyprofiles", "Init activity with profile: " + initProfile);
+                setTitle(initProfile.getName());
             }
         }
     }
@@ -72,6 +79,11 @@ public class EditProfileActivity extends Activity implements EditProfileFragment
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onNavigateUp() {
+        finish();
+        return true;
+    }
 
     @Override
     public void onSaveProfile(Profile profile) {
