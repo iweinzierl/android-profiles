@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/delete"
-        android:icon="@drawable/ic_delete_white_36dp"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:orderInCategory="0"
         android:title="@string/editprofile_menu_delete"
-        tools:showAsAction="always|ifRoom" />
+        app:showAsAction="ifRoom" />
+
 </menu>

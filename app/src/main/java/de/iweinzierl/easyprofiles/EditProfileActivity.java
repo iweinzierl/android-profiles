@@ -8,14 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import de.iweinzierl.easyprofiles.fragments.EditProfileFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
+import de.iweinzierl.easyprofiles.widget.validation.ValidationError;
 
-public class EditProfileActivity extends Activity implements EditProfileFragment.Callback {
+public class EditProfileActivity extends Activity {
 
     public static final String EXTRA_PROFILE_ID = "extra.profile.id";
 
@@ -35,6 +38,12 @@ public class EditProfileActivity extends Activity implements EditProfileFragment
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        Toolbar toolbarBottom = (Toolbar) findViewById(R.id.toolbar_bottom);
+        Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbar_top);
+        toolbarTop.inflateMenu(R.menu.menu_edit_profile);
+        toolbarTop.setNavigationIcon(R.drawable.ic_arrow_back_black_36dp);
+        setActionBar(toolbarTop);
+
         Intent caller = getIntent();
         if (caller != null) {
             long profileId = caller.getLongExtra(EXTRA_PROFILE_ID, 0);
@@ -43,6 +52,25 @@ public class EditProfileActivity extends Activity implements EditProfileFragment
             if (initProfile != null) {
                 Log.d("easyprofiles", "Init activity with profile: " + initProfile);
                 setTitle(initProfile.getName());
+                toolbarBottom.setVisibility(View.GONE);
+            } else {
+                toolbarBottom.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+
+                toolbarBottom.findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            onSaveProfile(editProfileFragment.getProfile());
+                        } catch (ValidationError e) {
+                            Log.w("easyprofiles", "Error while validating profile", e);
+                        }
+                    }
+                });
             }
         }
     }
@@ -66,6 +94,12 @@ public class EditProfileActivity extends Activity implements EditProfileFragment
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
+
+        if (initProfile == null) {
+            MenuItem item = menu.findItem(R.id.delete);
+            item.setVisible(false);
+        }
+
         return true;
     }
 
@@ -85,7 +119,6 @@ public class EditProfileActivity extends Activity implements EditProfileFragment
         return true;
     }
 
-    @Override
     public void onSaveProfile(Profile profile) {
         profile.save();
         if (profile.getId() > 0) {

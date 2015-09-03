@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ColorPrimary">#518744</color>
-    <color name="ColorPrimaryDark">#518744</color>
-    <color name="ButtonPressed">#518744</color>
+    <color name="ColorPrimaryDark">#3f6b35</color>
+    <color name="ColorSecondary">#000</color>
 
     <color name="ProfileListItem">#707070</color>
 

@@ -1,13 +1,10 @@
 package de.iweinzierl.easyprofiles.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.persistence.Profile;
@@ -19,12 +16,6 @@ import de.iweinzierl.easyprofiles.widget.validation.NotNullValidator;
 import de.iweinzierl.easyprofiles.widget.validation.ValidationError;
 
 public class EditProfileFragment extends Fragment {
-
-    public interface Callback {
-        void onSaveProfile(Profile profile);
-    }
-
-    private Callback callback;
 
     private Profile editProfile;
 
@@ -45,29 +36,6 @@ public class EditProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button saveButton = (Button) view.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (callback != null) {
-                    try {
-                        callback.onSaveProfile(getProfile());
-
-                    } catch (ValidationError e) {
-                        Log.w("easyprofiles", "Profile is invalid", e);
-                    }
-                }
-            }
-        });
-
-        Button cancelButton = (Button) view.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().finish();
-            }
-        });
-
         name = (SettingsViewEditText) view.findViewById(R.id.profile_name);
         alarmVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.alarm_volume);
         mediaVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.media_volume);
@@ -75,15 +43,6 @@ public class EditProfileFragment extends Fragment {
         notificationVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.notification_volume);
 
         initValidators();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        if (activity instanceof Callback) {
-            callback = (Callback) activity;
-        }
     }
 
     public Profile getProfile() throws ValidationError {
