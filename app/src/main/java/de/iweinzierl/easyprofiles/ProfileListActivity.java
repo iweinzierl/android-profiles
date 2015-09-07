@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.util.List;
 
@@ -28,6 +29,11 @@ public class ProfileListActivity extends Activity implements ProfileListFragment
 
         profileListFragment = new ProfileListFragment();
         getFragmentManager().beginTransaction().replace(R.id.profile_list_fragment, profileListFragment).commit();
+
+        setTitle(R.string.activity_profilelist);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_top);
+        setActionBar(toolbar);
     }
 
     @Override

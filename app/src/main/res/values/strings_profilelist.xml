@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profilelist_edit_hint">Profil editieren</string>
+    <string name="activity_profilelist">Profiles</string>
+    <string name="profilelist_edit_hint">Edit Profile</string>
 </resources>
