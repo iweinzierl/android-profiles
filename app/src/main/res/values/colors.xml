@@ -4,6 +4,7 @@
     <color name="ColorPrimaryDark">#3f6b35</color>
     <color name="ColorSecondary">#898989</color>
     <color name="ColorSecondaryDark">#000</color>
+    <color name="ColorBright">#fff</color>
 
     <color name="ProfileListItem">@color/ColorSecondary</color>
 

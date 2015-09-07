@@ -10,14 +10,36 @@
         android:id="@+id/toolbar_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:background="@color/ColorPrimary"
-        android:elevation="4dp">
-    </Toolbar>
+        android:elevation="4dp" />
 
     <FrameLayout
         android:id="@+id/profile_list_fragment"
-        android:layout_below="@id/toolbar_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/notification_bar"
+        android:layout_below="@id/toolbar_top" />
+
+    <com.software.shell.fab.ActionButton xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/addProfileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/notification_bar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="15dp"
+        fab:button_color="@color/ColorPrimary"
+        fab:image="@drawable/ic_add_white_48dp"
+        fab:rippleEffect_enabled="true" />
+
+    <TextView
+        android:id="@+id/notification_bar"
+        style="@style/AppTheme.NotificationBar"
+        android:layout_marginBottom="-48dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical" />
 
 </RelativeLayout>

@@ -2,19 +2,14 @@ package de.iweinzierl.easyprofiles.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.List;
 
-import de.iweinzierl.easyprofiles.EditProfileActivity;
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.adapter.ProfileAdapter;
 import de.iweinzierl.easyprofiles.persistence.Profile;
@@ -44,10 +39,6 @@ public class ProfileListFragment extends Fragment implements ProfileAdapter.Clic
         super.onViewCreated(view, savedInstanceState);
 
         profileList = (ListView) view.findViewById(R.id.profile_list);
-        //profileList.setOnItemClickListener(new OnActivateProfileClickListener(callback));
-
-        ImageButton addProfileButton = (ImageButton) view.findViewById(R.id.addProfileButton);
-        addProfileButton.setOnClickListener(new OnAddProfileClickListener(getActivity()));
     }
 
     @Override
@@ -70,20 +61,5 @@ public class ProfileListFragment extends Fragment implements ProfileAdapter.Clic
 
     public void setProfiles(List<Profile> profiles) {
         profileList.setAdapter(new ProfileAdapter(getActivity(), this, profiles));
-    }
-
-    private static class OnAddProfileClickListener implements View.OnClickListener {
-
-        private Context context;
-
-        public OnAddProfileClickListener(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public void onClick(View view) {
-            Log.d("easyprofiles", "Clicked to add new profile");
-            context.startActivity(new Intent(context, EditProfileActivity.class));
-        }
     }
 }

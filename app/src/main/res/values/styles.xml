@@ -9,15 +9,23 @@
         <item name="android:colorAccent">@color/ColorPrimaryDark</item>
     </style>
 
-    <style name="AppTheme.ActionBar">
-    </style>
+    <style name="AppTheme.ActionBar"></style>
 
     <style name="AppTheme.ActionBar.Button">
         <item name="android:background">@drawable/primary_round</item>
     </style>
 
-    <style name="AppTheme.List">
+    <style name="AppTheme.NotificationBar">
+        <item name="android:textColor">@color/ColorBright</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:background">@color/ColorSecondary</item>
     </style>
+
+    <style name="AppTheme.List"></style>
 
     <style name="AppTheme.List.Item">
         <item name="android:padding">10dp</item>
@@ -28,8 +36,7 @@
         <item name="android:textColor">@color/ProfileListItem</item>
     </style>
 
-    <style name="AppTheme.EditProfile">
-    </style>
+    <style name="AppTheme.EditProfile"></style>
 
     <style name="AppTheme.EditProfile.Devider">
         <item name="android:background">@color/EditProfileDevider</item>
