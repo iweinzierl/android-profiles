@@ -12,6 +12,9 @@ import java.util.TimerTask;
 
 public class NotificationAnimation {
 
+    private final int ANIMATION_DURATION = 750;
+    private final int NOTIFICATION_DISPLAY_TIME = 4000;
+
     private final int HIDE_NOTIFICATION = 100;
 
     private final Handler handler = new NotificationMessageHandler(Looper.getMainLooper());
@@ -40,12 +43,13 @@ public class NotificationAnimation {
                 public void run() {
                     handler.sendEmptyMessage(HIDE_NOTIFICATION);
                 }
-            }, 3000);
+            }, NOTIFICATION_DISPLAY_TIME);
         }
     }
 
     private void show() {
         ValueAnimator animator = ValueAnimator.ofInt(initBottomMargin, 0);
+        animator.setDuration(ANIMATION_DURATION);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
@@ -60,6 +64,7 @@ public class NotificationAnimation {
         animationRunning = false;
 
         ValueAnimator animator = ValueAnimator.ofInt(0, initBottomMargin);
+        animator.setDuration(ANIMATION_DURATION);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
