@@ -55,7 +55,8 @@ public class ProfileAdapter extends BaseAdapter {
 
         TextView tv = (TextView) itemView.findViewById(R.id.name);
         tv.setText(profile.getName());
-        tv.setOnClickListener(new View.OnClickListener() {
+
+        itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clickListener.onNameClicked(profile);
