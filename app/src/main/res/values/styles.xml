@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
         <item name="colorButtonNormal">@color/ColorPrimary</item>
+        <item name="android:colorAccent">@color/ColorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.ActionBar">
@@ -50,8 +51,12 @@
     </style>
 
     <style name="AppTheme.SettingsView.Container">
+        <!--
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
+        -->
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
     </style>
 
     <style name="AppTheme.SettingsView.Dialog">
