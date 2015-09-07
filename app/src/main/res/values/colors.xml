@@ -2,20 +2,21 @@
 <resources>
     <color name="ColorPrimary">#518744</color>
     <color name="ColorPrimaryDark">#3f6b35</color>
-    <color name="ColorSecondary">#000</color>
+    <color name="ColorSecondary">#898989</color>
+    <color name="ColorSecondaryDark">#000</color>
 
-    <color name="ProfileListItem">#707070</color>
+    <color name="ProfileListItem">@color/ColorSecondary</color>
 
     <color name="EditProfileDevider">#bfbfbf</color>
-    <color name="EditProfileSectionHeader">#518744</color>
+    <color name="EditProfileSectionHeader">@color/ColorPrimary</color>
 
-    <color name="SettingsViewLabel">#000</color>
-    <color name="SettingsViewValue">#898989</color>
+    <color name="SettingsViewLabel">@color/ColorSecondaryDark</color>
+    <color name="SettingsViewValue">@color/ColorSecondary</color>
 
-    <color name="SettingsDialogTitle">#000</color>
-    <color name="SettingsDialogLabel">#595959</color>
-    <color name="SettingsDialogOk">#518744</color>
-    <color name="SettingsDialogCancel">#518744</color>
+    <color name="SettingsDialogTitle">@color/ColorSecondaryDark</color>
+    <color name="SettingsDialogLabel">@color/ColorSecondary</color>
+    <color name="SettingsDialogOk">@color/ColorSecondaryDark</color>
+    <color name="SettingsDialogCancel">@color/ColorSecondaryDark</color>
 
-    <color name="EditTextDialogValue">#000</color>
+    <color name="EditTextDialogValue">@color/ColorSecondaryDark</color>
 </resources>
