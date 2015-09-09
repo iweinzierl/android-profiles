@@ -26,6 +26,7 @@ public class AudioManagerHelper {
             setMediaVolume(volumeSettings.getMediaVolume());
             setRingtoneVolume(volumeSettings.getRingtoneVolume());
             setNotificationVolume(volumeSettings.getNotificationVolume());
+            setRingerMode(RingtoneModeHelper.translateToAudioManagerRingerMode(volumeSettings.getRingtoneMode()));
 
             return true;
         } else {
@@ -40,7 +41,7 @@ public class AudioManagerHelper {
                 audioManager.getStreamVolume(AudioManager.STREAM_MUSIC),
                 audioManager.getStreamVolume(AudioManager.STREAM_RING),
                 audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION),
-                true // evaluate vibrations
+                RingtoneModeHelper.translateToRingtoneMode(audioManager.getRingerMode())
         );
     }
 
@@ -77,6 +78,11 @@ public class AudioManagerHelper {
         Log.d("easyprofiles", "Set notification volume to: " + calculatedVolume + " / " + maxNotificationVolume);
 
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, calculatedVolume, AudioManager.FLAG_VIBRATE);
+    }
+
+    private void setRingerMode(int ringerMode) {
+        Log.d("easyprofiles", "Set ringer mode to: " + ringerMode);
+        audioManager.setRingerMode(ringerMode);
     }
 
     private int calculateVolume(int max, int volume) {

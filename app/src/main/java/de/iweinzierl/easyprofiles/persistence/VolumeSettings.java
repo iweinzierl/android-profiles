@@ -10,22 +10,22 @@ public class VolumeSettings extends SugarRecord<VolumeSettings> {
     private int ringtoneVolume;
     private int notificationVolume;
 
-    private boolean shouldVibrate;
+    private RingtoneMode ringtoneMode;
 
     public VolumeSettings() {
         this.alarmVolume = 4;
         this.mediaVolume = 4;
         this.ringtoneVolume = 4;
         this.notificationVolume = 4;
-        this.shouldVibrate = true;
+        this.ringtoneMode = RingtoneMode.NORMAL;
     }
 
-    public VolumeSettings(int alarmVolume, int mediaVolume, int ringtoneVolume, int notificationVolume, boolean shouldVibrate) {
+    public VolumeSettings(int alarmVolume, int mediaVolume, int ringtoneVolume, int notificationVolume, RingtoneMode ringtoneMode) {
         this.alarmVolume = alarmVolume;
         this.mediaVolume = mediaVolume;
         this.ringtoneVolume = ringtoneVolume;
         this.notificationVolume = notificationVolume;
-        this.shouldVibrate = shouldVibrate;
+        this.ringtoneMode = ringtoneMode;
     }
 
     public int getAlarmVolume() {
@@ -60,12 +60,12 @@ public class VolumeSettings extends SugarRecord<VolumeSettings> {
         this.notificationVolume = notificationVolume;
     }
 
-    public boolean isShouldVibrate() {
-        return shouldVibrate;
+    public RingtoneMode getRingtoneMode() {
+        return ringtoneMode;
     }
 
-    public void setShouldVibrate(boolean shouldVibrate) {
-        this.shouldVibrate = shouldVibrate;
+    public void setRingtoneMode(RingtoneMode ringtoneMode) {
+        this.ringtoneMode = ringtoneMode;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class VolumeSettings extends SugarRecord<VolumeSettings> {
                 .add("mediaVolume", mediaVolume)
                 .add("ringtoneVolume", ringtoneVolume)
                 .add("notificationVolume", notificationVolume)
-                .add("shouldVibrate", shouldVibrate)
+                .add("ringtoneMode", ringtoneMode)
                 .toString();
 
     }

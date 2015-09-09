@@ -6,11 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.common.collect.Lists;
+
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.persistence.Profile;
+import de.iweinzierl.easyprofiles.persistence.RingtoneMode;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
+import de.iweinzierl.easyprofiles.util.RingtoneModeHelper;
 import de.iweinzierl.easyprofiles.widget.AbstractSettingsView;
 import de.iweinzierl.easyprofiles.widget.SettingsViewEditText;
+import de.iweinzierl.easyprofiles.widget.SettingsViewSingleOptions;
 import de.iweinzierl.easyprofiles.widget.validation.NotEmptyStringValidator;
 import de.iweinzierl.easyprofiles.widget.validation.NotNullValidator;
 import de.iweinzierl.easyprofiles.widget.validation.ValidationError;
@@ -24,6 +29,7 @@ public class EditProfileFragment extends Fragment {
     private AbstractSettingsView<Integer> mediaVolume;
     private AbstractSettingsView<Integer> ringtoneVolume;
     private AbstractSettingsView<Integer> notificationVolume;
+    private AbstractSettingsView<SettingsViewSingleOptions.Option> ringtoneMode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +47,13 @@ public class EditProfileFragment extends Fragment {
         mediaVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.media_volume);
         ringtoneVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.ringtone_volume);
         notificationVolume = (AbstractSettingsView<Integer>) view.findViewById(R.id.notification_volume);
+        ringtoneMode = (AbstractSettingsView<SettingsViewSingleOptions.Option>) view.findViewById(R.id.ringtone_mode);
+
+        ((SettingsViewSingleOptions) ringtoneMode).setOptions(Lists.newArrayList(
+                new SettingsViewSingleOptions.Option(RingtoneModeHelper.getRingtoneModeLabel(getActivity(), RingtoneMode.NORMAL), RingtoneMode.NORMAL),
+                new SettingsViewSingleOptions.Option(RingtoneModeHelper.getRingtoneModeLabel(getActivity(), RingtoneMode.VIBRATE), RingtoneMode.VIBRATE),
+                new SettingsViewSingleOptions.Option(RingtoneModeHelper.getRingtoneModeLabel(getActivity(), RingtoneMode.SILENT), RingtoneMode.SILENT)
+        ));
 
         initValidators();
     }
@@ -68,6 +81,9 @@ public class EditProfileFragment extends Fragment {
             mediaVolume.setValue(volumeSettings.getMediaVolume());
             ringtoneVolume.setValue(volumeSettings.getRingtoneVolume());
             notificationVolume.setValue(volumeSettings.getNotificationVolume());
+
+            RingtoneMode rm = profile.getVolumeSettings().getRingtoneMode();
+            this.ringtoneMode.setValue(new SettingsViewSingleOptions.Option(RingtoneModeHelper.getRingtoneModeLabel(getActivity(), rm), rm));
         }
     }
 
@@ -78,6 +94,7 @@ public class EditProfileFragment extends Fragment {
         mediaVolume.addValidator(new NotNullValidator<Integer>());
         ringtoneVolume.addValidator(new NotNullValidator<Integer>());
         notificationVolume.addValidator(new NotNullValidator<Integer>());
+        ringtoneMode.addValidator(new NotNullValidator<SettingsViewSingleOptions.Option>());
     }
 
     private String getName() throws ValidationError {
@@ -90,6 +107,7 @@ public class EditProfileFragment extends Fragment {
         volumeSettings.setMediaVolume(mediaVolume.getValue());
         volumeSettings.setRingtoneVolume(ringtoneVolume.getValue());
         volumeSettings.setNotificationVolume(notificationVolume.getValue());
+        volumeSettings.setRingtoneMode((RingtoneMode) ringtoneMode.getValue().value);
         return volumeSettings;
     }
 }

@@ -120,4 +120,8 @@
         <!-- TODO -->
     </style>
 
+    <!-- Specific to SingleOptionsSettingsDialog -->
+    <style name="AppTheme.SingleOptionsSettingsDialog.Value" parent="AppTheme.SettingsDialog">
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

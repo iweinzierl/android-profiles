@@ -3,4 +3,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="notification_active_profile">Aktives Profil: </string>
+
+    <string name="ringtone_mode_normal">Normal</string>
+    <string name="ringtone_mode_silent">Lautlos</string>
+    <string name="ringtone_mode_vibrate">Vibrieren</string>
 </resources>

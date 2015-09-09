@@ -8,7 +8,7 @@
     <string name="editprofile_media_volume">Medien</string>
     <string name="editprofile_ringtone_volume">Klingelton</string>
     <string name="editprofile_notification_volume">Benachrichtigungen</string>
-    <string name="editprofile_vibration">Vibrieren</string>
+    <string name="editprofile_ringtone_mode">Soundprofil</string>
 
     <string name="editprofile_cancel_button">Zurück</string>
     <string name="editprofile_save_button">Fertig</string>

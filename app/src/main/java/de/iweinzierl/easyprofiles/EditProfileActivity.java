@@ -92,6 +92,14 @@ public class EditProfileActivity extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if (initProfile != null) {
+            onSaveProfile(editProfileFragment.getProfile());
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
 
