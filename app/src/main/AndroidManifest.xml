@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.iweinzierl.easyprofiles">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <application xmlns:tools="http://schemas.android.com/tools"
         android:name=".EasyProfilesApp"
         android:allowBackup="true"
@@ -33,7 +37,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".EditProfileActivity"/>
+        <activity android:name=".EditProfileActivity" />
+
+        <receiver android:name=".receiver.WifiProfileTrigger">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
