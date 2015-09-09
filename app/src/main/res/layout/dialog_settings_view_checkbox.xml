@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme.SettingsDialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/AppTheme.SettingsDialog.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/AppTheme.SettingsDialog.Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title" />
+
+    <CheckBox
+        android:id="@+id/value"
+        style="@style/AppTheme.CheckboxSettingsDialog.Value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/value"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/ok"
+            style="@style/AppTheme.SettingsDialog.OkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edittextdialog_ok_button" />
+
+        <Button
+            android:id="@+id/cancel"
+            style="@style/AppTheme.SettingsDialog.CancelButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edittextdialog_cancel_button" />
+
+    </LinearLayout>
+
+</RelativeLayout>

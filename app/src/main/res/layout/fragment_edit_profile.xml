@@ -63,6 +63,11 @@
             style="@style/AppTheme.EditProfile.Devider"
             android:layout_width="match_parent" />
 
+        <de.iweinzierl.easyprofiles.widget.SettingsViewCheckbox
+            android:id="@+id/vibration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:label="@string/editprofile_vibration" />
         <!-- TODO vibration missing -->
 
     </LinearLayout>

@@ -115,4 +115,9 @@
         <!-- TODO -->
     </style>
 
+    <!-- Specific to CheckboxSettingsDialog -->
+    <style name="AppTheme.CheckboxSettingsDialog.Value" parent="AppTheme.SettingsDialog">
+        <!-- TODO -->
+    </style>
+
 </resources>
