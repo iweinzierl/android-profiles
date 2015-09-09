@@ -68,8 +68,12 @@ public class ProfileListActivity extends Activity implements ProfileListFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            default:
+                return onOptionsItemSelected(item);
+        }
     }
 
     @Override

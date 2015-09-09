@@ -39,6 +39,8 @@
 
         <activity android:name=".EditProfileActivity" />
 
+        <activity android:name=".WifiSelectionListActivity" />
+
         <receiver android:name=".receiver.WifiProfileTrigger">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

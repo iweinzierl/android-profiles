@@ -14,6 +14,8 @@ import android.widget.Toolbar;
 
 import de.iweinzierl.easyprofiles.fragments.EditProfileFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
+import de.iweinzierl.easyprofiles.persistence.Trigger;
+import de.iweinzierl.easyprofiles.persistence.TriggerType;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 import de.iweinzierl.easyprofiles.widget.validation.ValidationError;
@@ -117,8 +119,31 @@ public class EditProfileActivity extends Activity {
             case R.id.delete:
                 deleteProfile();
                 return true;
+            case R.id.trigger:
+                // TODO REMOVE TRIGGER SELECTION AND REPLACE WITH TRIGGER SELECTION IN FRAGMENT AS SETTING
+                startActivityForResult(
+                        new Intent(this, WifiSelectionListActivity.class),
+                        WifiSelectionListActivity.REQUEST_WIFI_SSID);
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == WifiSelectionListActivity.REQUEST_WIFI_SSID && resultCode == RESULT_OK) {
+            String ssid = data.getStringExtra(WifiSelectionListActivity.EXTRA_WIFI_SSID);
+            Log.d("easyprofiles", "Received selected wifi ssid: " + ssid);
+
+            if (initProfile != null) {
+                Trigger trigger = Trigger.of(TriggerType.WIFI, ssid, initProfile.getId());
+                trigger.save();
+
+                Toast.makeText(this, "Added WIFI trigger to profile", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
