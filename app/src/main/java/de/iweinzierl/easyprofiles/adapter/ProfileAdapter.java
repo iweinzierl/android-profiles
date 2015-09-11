@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 
-public class ProfileAdapter extends BaseAdapter {
+public class ProfileAdapter extends ListAdapter<Profile> {
 
     public interface ClickListener {
         void onNameClicked(Profile profile);
@@ -20,29 +19,11 @@ public class ProfileAdapter extends BaseAdapter {
         void onModifyClicked(Profile profile);
     }
 
-    private final Context context;
     private final ClickListener clickListener;
-    private final List<Profile> profiles;
 
     public ProfileAdapter(Context context, ClickListener clickListener, List<Profile> profiles) {
-        this.context = context;
+        super(context, profiles);
         this.clickListener = clickListener;
-        this.profiles = profiles;
-    }
-
-    @Override
-    public int getCount() {
-        return profiles.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return profiles.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return profiles.get(i).getId();
     }
 
     @Override
