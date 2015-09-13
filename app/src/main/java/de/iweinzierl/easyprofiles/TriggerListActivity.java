@@ -1,6 +1,5 @@
 package de.iweinzierl.easyprofiles;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -9,14 +8,14 @@ import java.util.List;
 import de.iweinzierl.easyprofiles.fragments.TriggerListFragment;
 import de.iweinzierl.easyprofiles.persistence.Trigger;
 
-public class TriggerListActivity extends Activity {
+public class TriggerListActivity extends BaseActivity {
 
     private TriggerListFragment triggerListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trigger_list);
+        setTitle(R.string.activity_triggerlist);
 
         triggerListFragment = new TriggerListFragment();
 
@@ -30,6 +29,11 @@ public class TriggerListActivity extends Activity {
     protected void onResume() {
         super.onResume();
         updateTriggerList();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_trigger_list;
     }
 
     private void updateTriggerList() {

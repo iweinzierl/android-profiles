@@ -1,6 +1,5 @@
 package de.iweinzierl.easyprofiles;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -24,7 +23,7 @@ import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 import de.iweinzierl.easyprofiles.util.NotificationHelper;
 
-public class ProfileListActivity extends Activity implements ProfileListFragment.Callback {
+public class ProfileListActivity extends BaseActivity implements ProfileListFragment.Callback {
 
     private ProfileListFragment profileListFragment;
 
@@ -35,7 +34,7 @@ public class ProfileListActivity extends Activity implements ProfileListFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_list);
+        setTitle(R.string.activity_profilelist);
 
         notificationBar = (TextView) findViewById(R.id.notification_bar);
         notificationAnimation = new NotificationAnimation(notificationBar, ((RelativeLayout.LayoutParams) notificationBar.getLayoutParams()).bottomMargin);
@@ -72,8 +71,13 @@ public class ProfileListActivity extends Activity implements ProfileListFragment
             case R.id.action_settings:
                 return true;
             default:
-                return onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_profile_list;
     }
 
     @Override

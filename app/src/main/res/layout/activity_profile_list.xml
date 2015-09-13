@@ -1,45 +1,62 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment"
-    android:name="de.iweinzierl.easyprofiles.fragments.ProfileListFragment"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout="@layout/fragment_profile_list">
+    android:layout_height="match_parent">
 
-    <Toolbar
-        android:id="@+id/toolbar_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@color/ColorPrimary"
-        android:elevation="4dp" />
-
-    <FrameLayout
-        android:id="@+id/profile_list_fragment"
+    <RelativeLayout
+        android:id="@+id/fragment"
+        android:name="de.iweinzierl.easyprofiles.fragments.ProfileListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/notification_bar"
-        android:layout_below="@id/toolbar_top" />
+        tools:layout="@layout/fragment_profile_list">
 
-    <com.software.shell.fab.ActionButton xmlns:fab="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/addProfileButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/notification_bar"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15dp"
-        fab:button_color="@color/ColorPrimary"
-        fab:image="@drawable/ic_add_white_48dp"
-        fab:rippleEffect_enabled="true" />
+        <Toolbar
+            android:id="@+id/toolbar_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/ColorPrimary"
+            android:elevation="4dp" />
 
-    <TextView
-        android:id="@+id/notification_bar"
-        style="@style/AppTheme.NotificationBar"
-        android:layout_marginBottom="-48dp"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical" />
+        <FrameLayout
+            android:id="@+id/profile_list_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/notification_bar"
+            android:layout_below="@id/toolbar_top" />
 
-</RelativeLayout>
+        <com.software.shell.fab.ActionButton xmlns:fab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/addProfileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/notification_bar"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="15dp"
+            fab:button_color="@color/ColorPrimary"
+            fab:image="@drawable/ic_add_white_48dp"
+            fab:rippleEffect_enabled="true" />
+
+        <TextView
+            android:id="@+id/notification_bar"
+            style="@style/AppTheme.NotificationBar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-48dp"
+            android:gravity="center_vertical" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/navigation_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#111"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
+
+</android.support.v4.widget.DrawerLayout>

@@ -25,6 +25,16 @@
         <item name="android:background">@color/ColorSecondary</item>
     </style>
 
+    <style name="AppTheme.Navigation">
+    </style>
+
+    <style name="AppTheme.Navigation.Item" parent="AppTheme.List.Item">
+    </style>
+
+    <style name="AppTheme.Navigation.Item.Text">
+        <item name="android:textColor">@color/ColorBright</item>
+    </style>
+
     <style name="AppTheme.List"></style>
 
     <style name="AppTheme.List.Item">

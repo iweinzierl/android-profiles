@@ -28,8 +28,7 @@
             android:value="de.iweinzierl.easyprofiles.persistence" />
 
         <activity
-            android:name=".ProfileListActivity"
-            android:label="@string/app_name">
+            android:name=".ProfileListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -28,7 +28,7 @@ public class TriggerListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        triggerList = (ListView) view.findViewById(R.id.wifi_list);
+        triggerList = (ListView) view.findViewById(R.id.trigger_list);
     }
 
     public void setTriggers(List<Trigger> triggers) {
