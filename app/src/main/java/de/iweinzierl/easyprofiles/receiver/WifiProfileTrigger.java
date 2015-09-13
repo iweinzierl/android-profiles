@@ -31,16 +31,32 @@ public class WifiProfileTrigger extends BroadcastReceiver {
     private void onWifiConnected(Context context, String ssid) {
         Log.d("easyprofiles", "Received WiFi connection broadcast: " + ssid);
 
-        List<Trigger> triggers = Trigger.find(Trigger.class, "type=?", TriggerType.WIFI.name());
-        if (triggers != null && triggers.size() > 0) {
-            Log.d("easyprofiles", "Found Wifi trigger: " + triggers.get(0));
+        Trigger trigger = findTrigger(ssid);
+        if (trigger != null) {
+            Log.d("easyprofiles", "Found Wifi trigger: " + trigger);
 
-            Profile profile = Profile.findById(Profile.class, triggers.get(0).getProfileId());
+            Profile profile = Profile.findById(Profile.class, trigger.getProfileId());
             if (profile != null) {
                 profile.activate(context);
             } else {
-                Log.w("easyprofiles", "Could not find profile for trigger: " + triggers.get(0));
+                Log.w("easyprofiles", "Could not find profile for trigger: " + trigger);
             }
         }
+    }
+
+    private Trigger findTrigger(String ssid) {
+        List<Trigger> triggers = Trigger.find(
+                Trigger.class, "type = ? and data = ?",
+                TriggerType.WIFI.name(), ssid);
+
+        if (triggers != null && !triggers.isEmpty()) {
+            if (triggers.size() > 1) {
+                Log.w("easyprofiles", "Found more than one Wifi trigger for ssid '" + ssid + "': " + triggers);
+            }
+
+            return triggers.get(0);
+        }
+
+        return null;
     }
 }
