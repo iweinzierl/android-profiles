@@ -44,11 +44,6 @@ public class ProfileListActivity extends BaseActivity implements ProfileListFrag
 
         profileListFragment = new ProfileListFragment();
         getFragmentManager().beginTransaction().replace(R.id.profile_list_fragment, profileListFragment).commit();
-
-        setTitle(R.string.activity_profilelist);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_top);
-        setActionBar(toolbar);
     }
 
     @Override

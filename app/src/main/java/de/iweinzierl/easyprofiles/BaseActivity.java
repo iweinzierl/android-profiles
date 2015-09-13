@@ -32,9 +32,9 @@ public abstract class BaseActivity extends Activity {
         navigationDrawer.setAdapter(new NavigationAdapter(this));
         navigationDrawer.setOnItemClickListener(new NavigationClickListener(this));
 
-        setActionBar(toolbarTop);
-
         toolbarTop.setNavigationIcon(R.drawable.ic_menu_black_36dp);
+
+        setActionBar(toolbarTop);
     }
 
     @Override
