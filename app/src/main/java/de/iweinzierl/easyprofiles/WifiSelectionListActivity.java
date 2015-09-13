@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toolbar;
 
 import java.util.List;
 
@@ -23,7 +24,16 @@ public class WifiSelectionListActivity extends Activity implements WifiListFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wifi_list);
+        setContentView(R.layout.activity_wifi_selection);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_top);
+        if (toolbar != null) {
+            setActionBar(toolbar);
+            toolbar.setTitle(R.string.activity_wifi_selection);
+            setTitle(R.string.activity_wifi_selection);
+        } else {
+            setTitle(R.string.activity_wifi_selection);
+        }
 
         wifiListFragment = new WifiListFragment();
 

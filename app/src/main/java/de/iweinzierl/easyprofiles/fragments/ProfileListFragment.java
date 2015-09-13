@@ -59,7 +59,7 @@ public class ProfileListFragment extends Fragment implements ProfileAdapter.Clic
         callback.onProfileModify(profile);
     }
 
-    public void setProfiles(List<Profile> profiles) {
-        profileList.setAdapter(new ProfileAdapter(getActivity(), this, profiles));
+    public void setProfiles(List<Profile> profiles, boolean modifiable) {
+        profileList.setAdapter(new ProfileAdapter(getActivity(), this, profiles, modifiable));
     }
 }

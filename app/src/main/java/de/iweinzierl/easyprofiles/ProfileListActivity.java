@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.software.shell.fab.ActionButton;
 
@@ -99,7 +98,7 @@ public class ProfileListActivity extends BaseActivity implements ProfileListFrag
         List<Profile> profiles = Profile.listAll(Profile.class);
         Log.d("easyprofiles", "Found " + profiles.size() + " profiles in database");
 
-        profileListFragment.setProfiles(profiles);
+        profileListFragment.setProfiles(profiles, true);
     }
 
     private void showNotification(String notificationText) {

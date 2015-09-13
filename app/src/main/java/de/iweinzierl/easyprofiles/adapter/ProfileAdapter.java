@@ -20,10 +20,12 @@ public class ProfileAdapter extends ListAdapter<Profile> {
     }
 
     private final ClickListener clickListener;
+    private final boolean modifiable;
 
-    public ProfileAdapter(Context context, ClickListener clickListener, List<Profile> profiles) {
+    public ProfileAdapter(Context context, ClickListener clickListener, List<Profile> profiles, boolean modifiable) {
         super(context, profiles);
         this.clickListener = clickListener;
+        this.modifiable = modifiable;
     }
 
     @Override
@@ -32,7 +34,7 @@ public class ProfileAdapter extends ListAdapter<Profile> {
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = layoutInflater.inflate(R.layout.list_item_profile, null);
+        View itemView = layoutInflater.inflate(getLayoutId(), null);
 
         TextView tv = (TextView) itemView.findViewById(R.id.name);
         tv.setText(profile.getName());
@@ -45,13 +47,19 @@ public class ProfileAdapter extends ListAdapter<Profile> {
         });
 
         View modifyButton = itemView.findViewById(R.id.modify_button);
-        modifyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onModifyClicked(profile);
-            }
-        });
+        if (modifyButton != null) {
+            modifyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clickListener.onModifyClicked(profile);
+                }
+            });
+        }
 
         return itemView;
+    }
+
+    private int getLayoutId() {
+        return modifiable ? R.layout.list_item_profile_modifiable : R.layout.list_item_profile;
     }
 }
