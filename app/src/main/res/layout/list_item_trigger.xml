@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    style="@style/AppTheme.List.Item"
+    android:orientation="horizontal">
 
-    <TextView
+    <ImageView
         android:id="@+id/trigger_type"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        style="@style/AppTheme.List.Item.PrimaryIcon"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:scaleType="center" />
 
     <TextView
         android:id="@+id/trigger_details"
+        style="@style/AppTheme.List.Item.Text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/profile"
+        style="@style/AppTheme.List.Item.Text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
 </LinearLayout>
