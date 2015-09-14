@@ -77,11 +77,13 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
 
     @Override
     public void onTriggerEnabled(Trigger trigger) {
+        trigger.setEnabled(true);
         trigger.save();
     }
 
     @Override
     public void onTriggerDisabled(Trigger trigger) {
+        trigger.setEnabled(false);
         trigger.save();
     }
 
