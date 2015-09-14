@@ -25,12 +25,23 @@
         <item name="android:background">@color/ColorSecondary</item>
     </style>
 
-    <style name="AppTheme.Navigation"></style>
+    <style name="AppTheme.Navigation">
+        <item name="android:background">@color/ColorBright</item>
+    </style>
 
-    <style name="AppTheme.Navigation.Item" parent="AppTheme.List.Item"></style>
+    <style name="AppTheme.Navigation.Item">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
 
-    <style name="AppTheme.Navigation.Item.Text" parent="AppTheme.List.Item.Text">
-        <item name="android:textColor">@color/ColorBright</item>
+    <style name="AppTheme.Navigation.Item.Icon">
+        <item name="android:paddingLeft">16dp</item>
+    </style>
+
+    <style name="AppTheme.Navigation.Item.Text">
+        <item name="android:paddingLeft">72dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/ColorSecondaryDark</item>
     </style>
 
     <style name="AppTheme.List"></style>
