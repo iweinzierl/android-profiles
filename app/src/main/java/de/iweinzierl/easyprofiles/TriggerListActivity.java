@@ -13,7 +13,7 @@ import de.iweinzierl.easyprofiles.fragments.TriggerListFragment;
 import de.iweinzierl.easyprofiles.persistence.Trigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 
-public class TriggerListActivity extends BaseActivity {
+public class TriggerListActivity extends BaseActivity implements TriggerListFragment.Callback {
 
     private static final int REQUEST_PICK_WIFI = 100;
     private static final int REQUEST_PICK_PROFILE = 200;
@@ -73,6 +73,16 @@ public class TriggerListActivity extends BaseActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_trigger_list;
+    }
+
+    @Override
+    public void onTriggerEnabled(Trigger trigger) {
+        trigger.save();
+    }
+
+    @Override
+    public void onTriggerDisabled(Trigger trigger) {
+        trigger.save();
     }
 
     private void updateTriggerList() {

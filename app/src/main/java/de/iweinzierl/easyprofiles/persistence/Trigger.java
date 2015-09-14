@@ -9,6 +9,8 @@ public class Trigger extends SugarRecord<Trigger> {
     private String data;
     private long profileId;
 
+    private boolean enabled;
+
     public String getData() {
         return data;
     }
@@ -33,12 +35,21 @@ public class Trigger extends SugarRecord<Trigger> {
         this.profileId = profileId;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("type", type)
                 .add("data", data)
                 .add("profileId", profileId)
+                .add("enabled", enabled)
                 .toString();
     }
 
@@ -47,6 +58,7 @@ public class Trigger extends SugarRecord<Trigger> {
         trigger.setType(type);
         trigger.setData(data);
         trigger.setProfileId(profileId);
+        trigger.setEnabled(true);
         return trigger;
     }
 }

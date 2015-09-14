@@ -5,7 +5,9 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
@@ -16,8 +18,17 @@ import de.iweinzierl.easyprofiles.persistence.Trigger;
 
 public class TriggerAdapter extends ListAdapter<Trigger> {
 
-    public TriggerAdapter(Context context, List<Trigger> items) {
+    public interface Callback {
+        void onTriggerEnabled(Trigger trigger);
+
+        void onTriggerDisabled(Trigger trigger);
+    }
+
+    private Callback callback;
+
+    public TriggerAdapter(Context context, List<Trigger> items, Callback callback) {
         super(context, items);
+        this.callback = callback;
     }
 
     @Override
@@ -32,6 +43,7 @@ public class TriggerAdapter extends ListAdapter<Trigger> {
         ImageView triggerType = (ImageView) view.findViewById(R.id.trigger_type);
         TextView triggerDetails = (TextView) view.findViewById(R.id.trigger_details);
         TextView profileName = (TextView) view.findViewById(R.id.profile);
+        Switch enabled = (Switch) view.findViewById(R.id.enabled);
 
         Resources resources = context.getResources();
         Resources.Theme theme = context.getTheme();
@@ -41,6 +53,18 @@ public class TriggerAdapter extends ListAdapter<Trigger> {
         }
         triggerDetails.setText(trigger.getData());
         profileName.setText(profile.getName());
+        enabled.setChecked(trigger.isEnabled());
+
+        enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    callback.onTriggerEnabled(trigger);
+                } else {
+                    callback.onTriggerDisabled(trigger);
+                }
+            }
+        });
 
         return view;
     }
