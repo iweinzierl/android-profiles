@@ -46,7 +46,7 @@ public class WifiProfileTrigger extends BroadcastReceiver {
 
     private Trigger findTrigger(String ssid) {
         List<Trigger> triggers = Trigger.find(
-                Trigger.class, "type = ? and data = ? and enabled = true",
+                Trigger.class, "type = ? and data = ? and enabled = 1",
                 TriggerType.WIFI.name(), ssid);
 
         if (triggers != null && !triggers.isEmpty()) {
