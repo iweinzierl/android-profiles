@@ -7,7 +7,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
+
+import com.hudomju.swipe.SwipeToDismissTouchListener;
+import com.hudomju.swipe.adapter.ListViewAdapter;
 
 import java.util.List;
 
@@ -21,6 +25,8 @@ public class TriggerListFragment extends Fragment {
         void onTriggerEnabled(Trigger trigger);
 
         void onTriggerDisabled(Trigger trigger);
+
+        void onTriggerRemoved(Trigger trigger);
     }
 
     private ListView triggerList;
@@ -49,7 +55,7 @@ public class TriggerListFragment extends Fragment {
     }
 
     public void setTriggers(List<Trigger> triggers) {
-        triggerList.setAdapter(new TriggerAdapter(getActivity(), triggers, new TriggerAdapter.Callback() {
+        final TriggerAdapter adapter = new TriggerAdapter(getActivity(), triggers, new TriggerAdapter.Callback() {
             @Override
             public void onTriggerEnabled(Trigger trigger) {
                 if (callback != null) {
@@ -63,6 +69,29 @@ public class TriggerListFragment extends Fragment {
                     callback.onTriggerDisabled(trigger);
                 }
             }
-        }));
+        });
+        triggerList.setAdapter(adapter);
+
+        setupSwipeToDismiss();
+    }
+
+    private void setupSwipeToDismiss() {
+        final SwipeToDismissTouchListener<ListViewAdapter> touchListener =
+                new SwipeToDismissTouchListener<>(
+                        new ListViewAdapter(triggerList),
+                        new SwipeToDismissTouchListener.DismissCallbacks<ListViewAdapter>() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(ListViewAdapter view, int position) {
+                                callback.onTriggerRemoved((Trigger) triggerList.getAdapter().getItem(position));
+                            }
+                        });
+
+        triggerList.setOnTouchListener(touchListener);
+        triggerList.setOnScrollListener((AbsListView.OnScrollListener) touchListener.makeScrollListener());
     }
 }

@@ -87,6 +87,12 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
         trigger.save();
     }
 
+    @Override
+    public void onTriggerRemoved(Trigger trigger) {
+        trigger.delete();
+        updateTriggerList();
+    }
+
     private void updateTriggerList() {
         List<Trigger> triggers = Trigger.listAll(Trigger.class);
         Log.d("easyprofiles", "Found " + triggers.size() + " triggers");

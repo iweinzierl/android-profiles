@@ -1,40 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/AppTheme.List.Item"
-    android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/trigger_type"
-        style="@style/AppTheme.List.Item.PrimaryIcon"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:scaleType="center" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme.List.Item">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/trigger_details"
-            style="@style/AppTheme.List.Item.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/trigger_type"
+            style="@style/AppTheme.List.Item.PrimaryIcon"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:scaleType="center" />
 
-        <TextView
-            android:id="@+id/profile"
-            style="@style/AppTheme.List.Item.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/trigger_details"
+                style="@style/AppTheme.List.Item.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/profile"
+                style="@style/AppTheme.List.Item.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/enabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
 
     </LinearLayout>
 
-    <Switch
-        android:id="@+id/enabled"
-        android:layout_gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!-- swipe to dismiss layout -->
+    <LinearLayout
+        style="@style/AppTheme.List.SwipeDelete"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txt_delete"
+            style="@style/AppTheme.List.SwipeDelete.InfoText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:gravity="center_vertical"
+            android:hapticFeedbackEnabled="true"
+            android:text="@string/triggerlist_item_deleted" />
+
+    </LinearLayout>
+
+</FrameLayout>

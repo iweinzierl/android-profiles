@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="activity_triggerlist">Triggers</string>
+
+    <string name="triggerlist_item_deleted">Auslöser Entfernt</string>
+    <string name="triggerlist_item_undo">Rückgängig</string>
 </resources>
