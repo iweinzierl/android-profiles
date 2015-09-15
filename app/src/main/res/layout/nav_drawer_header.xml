@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme.Navigation.Header">
+
+    <TextView
+        android:id="@+id/header_text"
+        style="@style/AppTheme.Navigation.Header.Text"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/navigation_header"
+        android:textAlignment="gravity" />
+
+    <ImageView
+        android:id="@+id/header_icon"
+        style="@style/AppTheme.Navigation.Header.Logo"
+        android:src="@drawable/logo" />
+
+    <FrameLayout
+        style="@style/AppTheme.Navigation.Header.Border"
+        android:layout_below="@+id/header_icon" />
+
+</RelativeLayout>

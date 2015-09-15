@@ -29,6 +29,34 @@
         <item name="android:background">@color/ColorBright</item>
     </style>
 
+    <style name="AppTheme.Navigation.Header">
+        <item name="android:background">@color/ColorSecondary</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">100dp</item>
+    </style>
+
+    <style name="AppTheme.Navigation.Header.Text">
+        <item name="android:background">@color/ColorPrimary</item>
+        <item name="android:textColor">@color/ColorBright</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">96dp</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:paddingLeft">96dp</item>
+    </style>
+
+    <style name="AppTheme.Navigation.Header.Logo">
+        <item name="android:layout_width">96dp</item>
+        <item name="android:layout_height">96dp</item>
+    </style>
+
+    <style name="AppTheme.Navigation.Header.Border">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">4dp</item>
+        <item name="android:background">@color/ColorSecondaryDark</item>
+    </style>
+
     <style name="AppTheme.Navigation.Item">
         <item name="android:background">@drawable/click_effect</item>
         <item name="android:paddingTop">8dp</item>

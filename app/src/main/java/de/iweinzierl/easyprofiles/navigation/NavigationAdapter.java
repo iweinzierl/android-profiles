@@ -18,6 +18,7 @@ import de.iweinzierl.easyprofiles.adapter.ListAdapter;
 public class NavigationAdapter extends ListAdapter<Integer> {
 
     private static final List<Integer> ITEMS = Lists.newArrayList(
+            R.string.navigation_header,
             R.string.activity_profilelist,
             R.string.activity_triggerlist
     );
@@ -28,6 +29,19 @@ public class NavigationAdapter extends ListAdapter<Integer> {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        if (i == 0) {
+            return setupHeader(view, viewGroup);
+        } else {
+            return setupItem(i, view, viewGroup);
+        }
+    }
+
+    private View setupHeader(View view, ViewGroup viewGroup) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        return inflater.inflate(R.layout.nav_drawer_header, null);
+    }
+
+    private View setupItem(int i, View view, ViewGroup viewGroup) {
         int navItem = (int) getItem(i);
 
         Resources res = context.getResources();
