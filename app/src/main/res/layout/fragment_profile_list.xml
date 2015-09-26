@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,4 +14,26 @@
         android:layout_height="match_parent"
         android:clickable="false" />
 
-</FrameLayout>
+    <RelativeLayout
+        android:id="@+id/list_empty_view"
+        style="@style/AppTheme.List.Hint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/AppTheme.List.Hint.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_list_view_profiles_title" />
+
+        <TextView
+            style="@style/AppTheme.List.Hint.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:text="@string/empty_list_view_profiles_text" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

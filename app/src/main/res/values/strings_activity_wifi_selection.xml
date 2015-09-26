@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="activity_wifi_selection">Wifi Auswählen</string>
+
+    <string name="empty_list_view_wifi_title">Kein konfiguriertes Wifi gefunden</string>
+    <string name="empty_list_view_wifi_text">Verbinde dich zunächst mit einem Wifi um dies dann hier auswählen zu können.</string>
 </resources>

@@ -42,7 +42,10 @@ public class TriggerListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        View emptyListView = view.findViewById(R.id.list_empty_view);
+
         triggerList = (ListView) view.findViewById(R.id.trigger_list);
+        triggerList.setEmptyView(emptyListView);
     }
 
     @Override

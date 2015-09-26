@@ -38,7 +38,10 @@ public class ProfileListFragment extends Fragment implements ProfileAdapter.Clic
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        View emptyListView = view.findViewById(R.id.list_empty_view);
+
         profileList = (ListView) view.findViewById(R.id.profile_list);
+        profileList.setEmptyView(emptyListView);
     }
 
     @Override

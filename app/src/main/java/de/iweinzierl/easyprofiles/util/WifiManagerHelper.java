@@ -7,6 +7,7 @@ import android.net.wifi.WifiManager;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
+import java.util.Collections;
 import java.util.List;
 
 public class WifiManagerHelper {
@@ -18,7 +19,13 @@ public class WifiManagerHelper {
     }
 
     public List<String> listSSIDs() {
-        return Lists.transform(wifiManager.getConfiguredNetworks(), new Function<WifiConfiguration, String>() {
+        List<WifiConfiguration> configuredNetworks = wifiManager.getConfiguredNetworks();
+
+        if (configuredNetworks == null) {
+            return Collections.emptyList();
+        }
+
+        return Lists.transform(configuredNetworks, new Function<WifiConfiguration, String>() {
             @Override
             public String apply(WifiConfiguration input) {
                 return input.SSID;

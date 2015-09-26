@@ -35,7 +35,10 @@ public class WifiListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        View emptyView = view.findViewById(R.id.list_empty_view);
+
         wifiList = (ListView) view.findViewById(R.id.wifi_list);
+        wifiList.setEmptyView(emptyView);
         wifiList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
