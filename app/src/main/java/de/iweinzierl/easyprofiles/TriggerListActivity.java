@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.software.shell.fab.ActionButton;
 
@@ -12,14 +13,16 @@ import java.util.List;
 import de.iweinzierl.easyprofiles.fragments.TriggerListFragment;
 import de.iweinzierl.easyprofiles.persistence.Trigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
+import de.iweinzierl.easyprofiles.util.TriggerBuilder;
 
 public class TriggerListActivity extends BaseActivity implements TriggerListFragment.Callback {
 
-    private static final int REQUEST_PICK_WIFI = 100;
-    private static final int REQUEST_PICK_PROFILE = 200;
+    private static final int REQUEST_PICK_TRIGGERTYPE = 100;
+    private static final int REQUEST_PICK_WIFI = 200;
+    private static final int REQUEST_PICK_PROFILE = 300;
 
     private TriggerListFragment triggerListFragment;
-    private Trigger newTriggerSetup;
+    private TriggerBuilder triggerBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,20 +56,13 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode != RESULT_OK) {
-            newTriggerSetup = null;
+            triggerBuilder = null;
+        } else if (requestCode == REQUEST_PICK_TRIGGERTYPE) {
+            onTriggerTypeSelected(data);
         } else if (requestCode == REQUEST_PICK_WIFI) {
-            String ssid = data.getStringExtra(WifiSelectionListActivity.EXTRA_WIFI_SSID);
-            newTriggerSetup.setType(TriggerType.WIFI);
-            newTriggerSetup.setData(ssid);
-
-            startActivityForResult(new Intent(this, ProfileSelectionListActivity.class), REQUEST_PICK_PROFILE);
+            onWifiSelected(data);
         } else if (requestCode == REQUEST_PICK_PROFILE) {
-            long profileId = data.getLongExtra(ProfileSelectionListActivity.EXTRA_PROFILE_ID, 0);
-            newTriggerSetup.setProfileId(profileId);
-
-            newTriggerSetup.save();
-            newTriggerSetup = null;
-            updateTriggerList();
+            onProfileSelected(data);
         }
     }
 
@@ -101,9 +97,39 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
     }
 
     private void onAddTriggerClicked() {
-        newTriggerSetup = new Trigger();
+        triggerBuilder = new TriggerBuilder();
+        startActivityForResult(new Intent(this, TriggerTypeSelectionActivity.class), REQUEST_PICK_TRIGGERTYPE);
+    }
 
-        // TODO bring up dialog to choose between trigger type
-        startActivityForResult(new Intent(this, WifiSelectionListActivity.class), REQUEST_PICK_WIFI);
+    private void onTriggerTypeSelected(Intent data) {
+        String triggerTypeName = data.getStringExtra(TriggerTypeSelectionActivity.EXTRA_TRIGGER_TYPE);
+        TriggerType triggerType = TriggerType.valueOf(triggerTypeName);
+
+        switch (triggerType) {
+            case WIFI:
+                triggerBuilder.setTriggerType(TriggerType.WIFI);
+                startActivityForResult(new Intent(this, WifiSelectionListActivity.class), REQUEST_PICK_WIFI);
+                break;
+            case TIME_BASED:
+                triggerBuilder.setTriggerType(TriggerType.TIME_BASED);
+                Toast.makeText(this, "TIME BASED NOT IMPLEMENTED", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    private void onProfileSelected(Intent data) {
+        long profileId = data.getLongExtra(ProfileSelectionListActivity.EXTRA_PROFILE_ID, 0);
+        triggerBuilder.setOnActivateProfile(profileId);
+
+        triggerBuilder.build().save();
+        triggerBuilder = null;
+        updateTriggerList();
+    }
+
+    private void onWifiSelected(Intent data) {
+        String ssid = data.getStringExtra(WifiSelectionListActivity.EXTRA_WIFI_SSID);
+        triggerBuilder.setData(ssid);
+
+        startActivityForResult(new Intent(this, ProfileSelectionListActivity.class), REQUEST_PICK_PROFILE);
     }
 }

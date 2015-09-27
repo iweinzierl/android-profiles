@@ -8,4 +8,7 @@
     <string name="ringtone_mode_vibrate">Vibrieren</string>
 
     <string name="navigation_header">EasyProfiles</string>
+
+    <!-- trigger type selection -->
+    <string name="activity_trigger_type_selection">Auswahl: Auslöser</string>
 </resources>

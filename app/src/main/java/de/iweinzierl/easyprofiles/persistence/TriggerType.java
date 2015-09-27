@@ -2,5 +2,7 @@ package de.iweinzierl.easyprofiles.persistence;
 
 public enum TriggerType {
 
-    WIFI
+    WIFI,
+
+    TIME_BASED
 }
