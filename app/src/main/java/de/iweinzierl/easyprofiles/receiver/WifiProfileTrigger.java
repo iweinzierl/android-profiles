@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.List;
 
 import de.iweinzierl.easyprofiles.persistence.Profile;
-import de.iweinzierl.easyprofiles.persistence.Trigger;
+import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 import de.iweinzierl.easyprofiles.util.WifiManagerHelper;
 
@@ -31,30 +31,30 @@ public class WifiProfileTrigger extends BroadcastReceiver {
     private void onWifiConnected(Context context, String ssid) {
         Log.d("easyprofiles", "Received WiFi connection broadcast: " + ssid);
 
-        Trigger trigger = findTrigger(ssid);
-        if (trigger != null) {
-            Log.d("easyprofiles", "Found Wifi trigger: " + trigger);
+        PersistentTrigger persistentTrigger = findTrigger(ssid);
+        if (persistentTrigger != null) {
+            Log.d("easyprofiles", "Found Wifi trigger: " + persistentTrigger);
 
-            Profile profile = Profile.findById(Profile.class, trigger.getProfileId());
+            Profile profile = Profile.findById(Profile.class, persistentTrigger.getOnActivateProfileId());
             if (profile != null) {
                 profile.activate(context);
             } else {
-                Log.w("easyprofiles", "Could not find profile for trigger: " + trigger);
+                Log.w("easyprofiles", "Could not find profile for trigger: " + persistentTrigger);
             }
         }
     }
 
-    private Trigger findTrigger(String ssid) {
-        List<Trigger> triggers = Trigger.find(
-                Trigger.class, "type = ? and data = ? and enabled = 1",
+    private PersistentTrigger findTrigger(String ssid) {
+        List<PersistentTrigger> persistentTriggers = PersistentTrigger.find(
+                PersistentTrigger.class, "type = ? and data = ? and enabled = 1",
                 TriggerType.WIFI.name(), ssid);
 
-        if (triggers != null && !triggers.isEmpty()) {
-            if (triggers.size() > 1) {
-                Log.w("easyprofiles", "Found more than one Wifi trigger for ssid '" + ssid + "': " + triggers);
+        if (persistentTriggers != null && !persistentTriggers.isEmpty()) {
+            if (persistentTriggers.size() > 1) {
+                Log.w("easyprofiles", "Found more than one Wifi trigger for ssid '" + ssid + "': " + persistentTriggers);
             }
 
-            return triggers.get(0);
+            return persistentTriggers.get(0);
         }
 
         return null;

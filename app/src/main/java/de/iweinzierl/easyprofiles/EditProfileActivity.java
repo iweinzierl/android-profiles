@@ -12,9 +12,10 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.fragments.EditProfileFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
-import de.iweinzierl.easyprofiles.persistence.Trigger;
+import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
@@ -133,13 +134,16 @@ public class EditProfileActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // TODO ADD SUPPORT FOR FURTHER TRIGGERS (GENERIC SUPPORT!)
         if (requestCode == WifiSelectionListActivity.REQUEST_WIFI_SSID && resultCode == RESULT_OK) {
             String ssid = data.getStringExtra(WifiSelectionListActivity.EXTRA_WIFI_SSID);
             Log.d("easyprofiles", "Received selected wifi ssid: " + ssid);
 
             if (initProfile != null) {
-                Trigger trigger = Trigger.of(TriggerType.WIFI, ssid, initProfile.getId());
-                trigger.save();
+                WifiBasedTrigger trigger = new WifiBasedTrigger();
+                trigger.setSsid(ssid);
+                trigger.setOnActivateProfile(initProfile);
+                trigger.export().save();
 
                 Toast.makeText(this, "Added WIFI trigger to profile", Toast.LENGTH_SHORT).show();
             }

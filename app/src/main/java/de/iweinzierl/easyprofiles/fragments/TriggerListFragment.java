@@ -17,16 +17,16 @@ import java.util.List;
 
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.adapter.TriggerAdapter;
-import de.iweinzierl.easyprofiles.persistence.Trigger;
+import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 
 public class TriggerListFragment extends Fragment {
 
     public interface Callback {
-        void onTriggerEnabled(Trigger trigger);
+        void onTriggerEnabled(PersistentTrigger persistentTrigger);
 
-        void onTriggerDisabled(Trigger trigger);
+        void onTriggerDisabled(PersistentTrigger persistentTrigger);
 
-        void onTriggerRemoved(Trigger trigger);
+        void onTriggerRemoved(PersistentTrigger persistentTrigger);
     }
 
     private ListView triggerList;
@@ -57,17 +57,17 @@ public class TriggerListFragment extends Fragment {
         }
     }
 
-    public void setTriggers(List<Trigger> triggers) {
-        final TriggerAdapter adapter = new TriggerAdapter(getActivity(), triggers, new TriggerAdapter.Callback() {
+    public void setTriggers(List<PersistentTrigger> persistentTriggers) {
+        final TriggerAdapter adapter = new TriggerAdapter(getActivity(), persistentTriggers, new TriggerAdapter.Callback() {
             @Override
-            public void onTriggerEnabled(Trigger trigger) {
+            public void onTriggerEnabled(PersistentTrigger trigger) {
                 if (callback != null) {
                     callback.onTriggerEnabled(trigger);
                 }
             }
 
             @Override
-            public void onTriggerDisabled(Trigger trigger) {
+            public void onTriggerDisabled(PersistentTrigger trigger) {
                 if (callback != null) {
                     callback.onTriggerDisabled(trigger);
                 }
@@ -90,7 +90,7 @@ public class TriggerListFragment extends Fragment {
 
                             @Override
                             public void onDismiss(ListViewAdapter view, int position) {
-                                callback.onTriggerRemoved((Trigger) triggerList.getAdapter().getItem(position));
+                                callback.onTriggerRemoved((PersistentTrigger) triggerList.getAdapter().getItem(position));
                             }
                         });
 

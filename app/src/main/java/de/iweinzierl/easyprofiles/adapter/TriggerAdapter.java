@@ -13,28 +13,28 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.iweinzierl.easyprofiles.R;
+import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.Profile;
-import de.iweinzierl.easyprofiles.persistence.Trigger;
 
-public class TriggerAdapter extends ListAdapter<Trigger> {
+public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
 
     public interface Callback {
-        void onTriggerEnabled(Trigger trigger);
+        void onTriggerEnabled(PersistentTrigger persistentTrigger);
 
-        void onTriggerDisabled(Trigger trigger);
+        void onTriggerDisabled(PersistentTrigger persistentTrigger);
     }
 
     private Callback callback;
 
-    public TriggerAdapter(Context context, List<Trigger> items, Callback callback) {
+    public TriggerAdapter(Context context, List<PersistentTrigger> items, Callback callback) {
         super(context, items);
         this.callback = callback;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        final Trigger trigger = (Trigger) getItem(i);
-        final Profile profile = Profile.findById(Profile.class, trigger.getProfileId());
+        final PersistentTrigger persistentTrigger = (PersistentTrigger) getItem(i);
+        final Profile profile = Profile.findById(Profile.class, persistentTrigger.getOnActivateProfileId());
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -47,21 +47,21 @@ public class TriggerAdapter extends ListAdapter<Trigger> {
 
         Resources resources = context.getResources();
         Resources.Theme theme = context.getTheme();
-        switch (trigger.getType()) {
+        switch (persistentTrigger.getType()) {
             case WIFI:
                 triggerType.setImageDrawable(resources.getDrawable(R.drawable.ic_network_wifi_black_48px, theme));
         }
-        triggerDetails.setText(trigger.getData());
+        triggerDetails.setText(persistentTrigger.getData());
         profileName.setText(profile.getName());
-        enabled.setChecked(trigger.isEnabled());
+        enabled.setChecked(persistentTrigger.isEnabled());
 
         enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    callback.onTriggerEnabled(trigger);
+                    callback.onTriggerEnabled(persistentTrigger);
                 } else {
-                    callback.onTriggerDisabled(trigger);
+                    callback.onTriggerDisabled(persistentTrigger);
                 }
             }
         });

@@ -4,22 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.software.shell.fab.ActionButton;
 
 import java.util.List;
 
+import de.iweinzierl.easyprofiles.domain.TriggerBuilder;
 import de.iweinzierl.easyprofiles.fragments.TriggerListFragment;
-import de.iweinzierl.easyprofiles.persistence.Trigger;
+import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
+import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
-import de.iweinzierl.easyprofiles.util.TriggerBuilder;
 
 public class TriggerListActivity extends BaseActivity implements TriggerListFragment.Callback {
 
     private static final int REQUEST_PICK_TRIGGERTYPE = 100;
     private static final int REQUEST_PICK_WIFI = 200;
     private static final int REQUEST_PICK_PROFILE = 300;
+    private static final int REQUEST_PICK_TIME_SETTINGS = 400;
 
     private TriggerListFragment triggerListFragment;
     private TriggerBuilder triggerBuilder;
@@ -63,6 +64,8 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
             onWifiSelected(data);
         } else if (requestCode == REQUEST_PICK_PROFILE) {
             onProfileSelected(data);
+        } else if (requestCode == REQUEST_PICK_TIME_SETTINGS) {
+            onTimeSettingsSelected(data);
         }
     }
 
@@ -72,28 +75,28 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
     }
 
     @Override
-    public void onTriggerEnabled(Trigger trigger) {
-        trigger.setEnabled(true);
-        trigger.save();
+    public void onTriggerEnabled(PersistentTrigger persistentTrigger) {
+        persistentTrigger.setEnabled(true);
+        persistentTrigger.save();
     }
 
     @Override
-    public void onTriggerDisabled(Trigger trigger) {
-        trigger.setEnabled(false);
-        trigger.save();
+    public void onTriggerDisabled(PersistentTrigger persistentTrigger) {
+        persistentTrigger.setEnabled(false);
+        persistentTrigger.save();
     }
 
     @Override
-    public void onTriggerRemoved(Trigger trigger) {
-        trigger.delete();
+    public void onTriggerRemoved(PersistentTrigger persistentTrigger) {
+        persistentTrigger.delete();
         updateTriggerList();
     }
 
     private void updateTriggerList() {
-        List<Trigger> triggers = Trigger.listAll(Trigger.class);
-        Log.d("easyprofiles", "Found " + triggers.size() + " triggers");
+        List<PersistentTrigger> persistentTriggers = PersistentTrigger.listAll(PersistentTrigger.class);
+        Log.d("easyprofiles", "Found " + persistentTriggers.size() + " triggers");
 
-        triggerListFragment.setTriggers(triggers);
+        triggerListFragment.setTriggers(persistentTriggers);
     }
 
     private void onAddTriggerClicked() {
@@ -112,16 +115,16 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
                 break;
             case TIME_BASED:
                 triggerBuilder.setTriggerType(TriggerType.TIME_BASED);
-                Toast.makeText(this, "TIME BASED NOT IMPLEMENTED", Toast.LENGTH_SHORT).show();
+                startActivityForResult(new Intent(this, TimeTriggerSettingsActivity.class), REQUEST_PICK_TIME_SETTINGS);
                 break;
         }
     }
 
     private void onProfileSelected(Intent data) {
-        long profileId = data.getLongExtra(ProfileSelectionListActivity.EXTRA_PROFILE_ID, 0);
+        Profile profileId = Profile.findById(Profile.class, data.getLongExtra(ProfileSelectionListActivity.EXTRA_PROFILE_ID, 0));
         triggerBuilder.setOnActivateProfile(profileId);
 
-        triggerBuilder.build().save();
+        triggerBuilder.build().export().save();
         triggerBuilder = null;
         updateTriggerList();
     }
@@ -129,6 +132,13 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
     private void onWifiSelected(Intent data) {
         String ssid = data.getStringExtra(WifiSelectionListActivity.EXTRA_WIFI_SSID);
         triggerBuilder.setData(ssid);
+
+        startActivityForResult(new Intent(this, ProfileSelectionListActivity.class), REQUEST_PICK_PROFILE);
+    }
+
+    private void onTimeSettingsSelected(Intent data) {
+        String timeTriggerData = data.getStringExtra(TimeTriggerSettingsActivity.EXTRA_TIME_TRIGGER_DATA);
+        triggerBuilder.setData(timeTriggerData);
 
         startActivityForResult(new Intent(this, ProfileSelectionListActivity.class), REQUEST_PICK_PROFILE);
     }

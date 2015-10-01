@@ -45,6 +45,8 @@
 
         <activity android:name=".TriggerTypeSelectionActivity" />
 
+        <activity android:name=".TimeTriggerSettingsActivity" />
+
         <receiver android:name=".receiver.WifiProfileTrigger">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
