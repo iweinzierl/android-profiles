@@ -3,7 +3,7 @@ package de.iweinzierl.easyprofiles.persistence;
 import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 
-public class DataSettings extends SugarRecord<DataSettings> {
+public class DataSettings extends SugarRecord {
 
     private boolean dataSyncEnabled;
     private boolean dataEnabled;

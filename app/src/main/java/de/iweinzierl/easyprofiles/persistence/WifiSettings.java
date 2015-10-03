@@ -3,7 +3,7 @@ package de.iweinzierl.easyprofiles.persistence;
 import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 
-public class WifiSettings extends SugarRecord<WifiSettings> {
+public class WifiSettings extends SugarRecord {
 
     private boolean wifiEnabled;
     private boolean wifiHotspotEnabled;

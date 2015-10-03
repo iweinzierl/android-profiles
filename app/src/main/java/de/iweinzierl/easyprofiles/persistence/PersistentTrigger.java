@@ -3,7 +3,7 @@ package de.iweinzierl.easyprofiles.persistence;
 import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 
-public class PersistentTrigger extends SugarRecord<PersistentTrigger> {
+public class PersistentTrigger extends SugarRecord {
 
     private TriggerType type;
 

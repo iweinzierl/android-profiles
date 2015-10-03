@@ -6,11 +6,13 @@ import android.util.Log;
 
 import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
+import com.orm.entity.annotation.EntityListeners;
 
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 import de.iweinzierl.easyprofiles.util.NotificationHelper;
 
-public class Profile extends SugarRecord<Profile> {
+@EntityListeners({GeneralListener.class})
+public class Profile extends SugarRecord {
 
     private String name;
 
@@ -82,7 +84,7 @@ public class Profile extends SugarRecord<Profile> {
      * NOTE: this is a hack to work around the problem that SugarORM is not saving relations.
      */
     @Override
-    public void save() {
+    public long save() {
         if (wifiSettings != null) {
             wifiSettings.save();
         }
@@ -99,7 +101,7 @@ public class Profile extends SugarRecord<Profile> {
             extraSettings.save();
         }
 
-        super.save();
+        return super.save();
     }
 
     public void activate(Context context) {

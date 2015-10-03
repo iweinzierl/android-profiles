@@ -3,7 +3,7 @@ package de.iweinzierl.easyprofiles.persistence;
 import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 
-public class VolumeSettings extends SugarRecord<VolumeSettings> {
+public class VolumeSettings extends SugarRecord {
 
     private int alarmVolume;
     private int mediaVolume;
