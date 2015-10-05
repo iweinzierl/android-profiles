@@ -15,11 +15,11 @@ import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 import de.iweinzierl.easyprofiles.service.TimeBasedTriggerActivationService;
 
-public class WifiTriggerActivationListener {
+public class TimeBasedTriggerActivationListener {
 
     private final Context context;
 
-    public WifiTriggerActivationListener(Context context) {
+    public TimeBasedTriggerActivationListener(Context context) {
         this.context = context;
     }
 

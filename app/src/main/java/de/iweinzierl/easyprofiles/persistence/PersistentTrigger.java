@@ -4,9 +4,9 @@ import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
 import com.orm.entity.annotation.EntityListeners;
 
-import de.iweinzierl.easyprofiles.persistence.listener.WifiTriggerActivationListener;
+import de.iweinzierl.easyprofiles.persistence.listener.TimeBasedTriggerActivationListener;
 
-@EntityListeners({WifiTriggerActivationListener.class})
+@EntityListeners({TimeBasedTriggerActivationListener.class})
 public class PersistentTrigger extends SugarRecord {
 
     private TriggerType type;
