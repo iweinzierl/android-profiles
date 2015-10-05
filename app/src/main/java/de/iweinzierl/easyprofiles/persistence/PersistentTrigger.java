@@ -2,7 +2,11 @@ package de.iweinzierl.easyprofiles.persistence;
 
 import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
+import com.orm.entity.annotation.EntityListeners;
 
+import de.iweinzierl.easyprofiles.persistence.listener.WifiTriggerActivationListener;
+
+@EntityListeners({WifiTriggerActivationListener.class})
 public class PersistentTrigger extends SugarRecord {
 
     private TriggerType type;

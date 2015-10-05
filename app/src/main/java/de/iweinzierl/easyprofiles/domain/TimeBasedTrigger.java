@@ -3,6 +3,10 @@ package de.iweinzierl.easyprofiles.domain;
 import com.google.common.base.MoreObjects;
 import com.google.gson.Gson;
 
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.Set;
 
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
@@ -10,6 +14,8 @@ import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 
 public class TimeBasedTrigger extends BaseTrigger {
+
+    private static final String DATE_PATTERN = "HH:mm";
 
     public static class Data {
         private String activationTime;
@@ -39,10 +45,18 @@ public class TimeBasedTrigger extends BaseTrigger {
         public void setRepeatOnDays(Set<Day> repeatOnDays) {
             this.repeatOnDays = repeatOnDays;
         }
+
+        public static Data from(LocalTime activationTime, LocalTime deactivationTime, Set<Day> repeatOnDays) {
+            Data data = new Data();
+            data.setActivationTime(activationTime.toString(DATE_PATTERN));
+            data.setDeactivationTime(deactivationTime.toString(DATE_PATTERN));
+            data.setRepeatOnDays(repeatOnDays);
+            return data;
+        }
     }
 
-    private String activationTime;
-    private String deactivationTime;
+    private LocalTime activationTime;
+    private LocalTime deactivationTime;
 
     private Set<Day> repeatOnDays;
 
@@ -50,19 +64,19 @@ public class TimeBasedTrigger extends BaseTrigger {
         super(TriggerType.TIME_BASED);
     }
 
-    public String getActivationTime() {
+    public LocalTime getActivationTime() {
         return activationTime;
     }
 
-    public void setActivationTime(String activationTime) {
+    public void setActivationTime(LocalTime activationTime) {
         this.activationTime = activationTime;
     }
 
-    public String getDeactivationTime() {
+    public LocalTime getDeactivationTime() {
         return deactivationTime;
     }
 
-    public void setDeactivationTime(String deactivationTime) {
+    public void setDeactivationTime(LocalTime deactivationTime) {
         this.deactivationTime = deactivationTime;
     }
 
@@ -76,27 +90,32 @@ public class TimeBasedTrigger extends BaseTrigger {
 
     @Override
     public void apply(PersistentTrigger persistentTrigger) {
+        setId(persistentTrigger.getId());
         setEnabled(persistentTrigger.isEnabled());
         setOnActivateProfile(Profile.findById(Profile.class, persistentTrigger.getOnActivateProfileId()));
         setOnDeactivateProfile(Profile.findById(Profile.class, persistentTrigger.getOnDeactivateProfileId()));
 
         Data data = readJsonData(persistentTrigger.getData());
-        setActivationTime(data.getActivationTime());
-        setDeactivationTime(data.getDeactivationTime());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(DATE_PATTERN);
+        setActivationTime(dateTimeFormatter.parseLocalTime(data.getActivationTime()));
+        setDeactivationTime(dateTimeFormatter.parseLocalTime(data.getDeactivationTime()));
         setRepeatOnDays(data.getRepeatOnDays());
     }
 
     @Override
     public void applyData(String dataJson) {
         Data data = readJsonData(dataJson);
-        setActivationTime(data.getActivationTime());
-        setDeactivationTime(data.getDeactivationTime());
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(DATE_PATTERN);
+        setActivationTime(dateTimeFormatter.parseLocalTime(data.getActivationTime()));
+        setDeactivationTime(dateTimeFormatter.parseLocalTime(data.getDeactivationTime()));
         setRepeatOnDays(data.getRepeatOnDays());
     }
 
     @Override
     public PersistentTrigger export() {
         PersistentTrigger trigger = new PersistentTrigger();
+        trigger.setId(getId());
         trigger.setEnabled(isEnabled());
         trigger.setType(getType());
         trigger.setOnActivateProfileId(getOnActivateProfile().getId());
@@ -113,6 +132,7 @@ public class TimeBasedTrigger extends BaseTrigger {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
+                .add("id", id)
                 .add("onActivateProfile", onActivateProfile)
                 .add("onDeactivateProfile", onDeactivateProfile)
                 .add("activationTime", activationTime)
@@ -124,8 +144,8 @@ public class TimeBasedTrigger extends BaseTrigger {
 
     private String createJsonData() {
         Data data = new Data();
-        data.setActivationTime(getActivationTime());
-        data.setDeactivationTime(getDeactivationTime());
+        data.setActivationTime(getActivationTime().toString(DATE_PATTERN));
+        data.setDeactivationTime(getDeactivationTime().toString(DATE_PATTERN));
         data.setRepeatOnDays(getRepeatOnDays());
 
         return new Gson().toJson(data);

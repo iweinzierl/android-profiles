@@ -36,6 +36,7 @@ public class WifiBasedTrigger extends BaseTrigger {
 
     @Override
     public void apply(PersistentTrigger persistentTrigger) {
+        setId(getId());
         setEnabled(persistentTrigger.isEnabled());
         setOnActivateProfile(Profile.findById(Profile.class, persistentTrigger.getOnActivateProfileId()));
         setOnDeactivateProfile(Profile.findById(Profile.class, persistentTrigger.getOnDeactivateProfileId()));
@@ -53,6 +54,7 @@ public class WifiBasedTrigger extends BaseTrigger {
     @Override
     public PersistentTrigger export() {
         PersistentTrigger trigger = new PersistentTrigger();
+        trigger.setId(getId());
         trigger.setEnabled(isEnabled());
         trigger.setType(getType());
         trigger.setOnActivateProfileId(getOnActivateProfile().getId());

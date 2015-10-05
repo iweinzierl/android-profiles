@@ -6,12 +6,10 @@ import android.util.Log;
 
 import com.google.common.base.MoreObjects;
 import com.orm.SugarRecord;
-import com.orm.entity.annotation.EntityListeners;
 
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 import de.iweinzierl.easyprofiles.util.NotificationHelper;
 
-@EntityListeners({GeneralListener.class})
 public class Profile extends SugarRecord {
 
     private String name;

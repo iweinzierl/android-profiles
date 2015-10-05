@@ -14,17 +14,18 @@ import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
 
 public class TimeTriggerSettingsActivity extends Activity {
 
-    public static final String EXTRA_TIME_TRIGGER_DATA = "extra.timetrigger.data";
+    public static final String EXTRA_TIME_TRIGGER_DATA = "extra.timebasedtrigger.data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // TODO implement and remove this mock
-        TimeBasedTrigger.Data triggerData = new TimeBasedTrigger.Data();
-        triggerData.setActivationTime(LocalTime.now().toString());
-        triggerData.setDeactivationTime(LocalTime.now().toString());
-        triggerData.setRepeatOnDays(Sets.newHashSet(Day.FRIDAY, Day.SATURDAY));
+        TimeBasedTrigger.Data triggerData = TimeBasedTrigger.Data.from(
+                LocalTime.now().plusMinutes(2),
+                LocalTime.now().plusMinutes(3),
+                Sets.newHashSet(Day.FRIDAY, Day.SATURDAY)
+        );
 
         Intent data = new Intent();
         data.putExtra(EXTRA_TIME_TRIGGER_DATA, new Gson().toJson(triggerData));

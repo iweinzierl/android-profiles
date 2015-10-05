@@ -5,6 +5,8 @@ import de.iweinzierl.easyprofiles.persistence.TriggerType;
 
 public abstract class BaseTrigger implements Trigger {
 
+    protected long id;
+
     protected Profile onActivateProfile;
     protected Profile onDeactivateProfile;
 
@@ -14,6 +16,15 @@ public abstract class BaseTrigger implements Trigger {
 
     protected BaseTrigger(TriggerType type) {
         this.type = type;
+    }
+
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override
