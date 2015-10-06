@@ -116,7 +116,7 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
                 break;
             case TIME_BASED:
                 triggerBuilder.setTriggerType(TriggerType.TIME_BASED);
-                startActivityForResult(new Intent(this, TimeTriggerSettingsActivity.class), REQUEST_PICK_TIME_SETTINGS);
+                startActivityForResult(new Intent(this, ProfileSchedulerActivity.class), REQUEST_PICK_TIME_SETTINGS);
                 break;
         }
     }
@@ -131,6 +131,7 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
     }
 
     private void onWifiSelected(Intent data) {
+        // TODO move wifi trigger creation to external activity
         String ssid = data.getStringExtra(WifiSelectionListActivity.EXTRA_WIFI_SSID);
         triggerBuilder.setData(ssid);
 
@@ -138,9 +139,9 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
     }
 
     private void onTimeSettingsSelected(Intent data) {
-        String timeTriggerData = data.getStringExtra(TimeTriggerSettingsActivity.EXTRA_TIME_TRIGGER_DATA);
-        triggerBuilder.setData(timeTriggerData);
+        Long triggerId = data.getLongExtra(ProfileSchedulerActivity.EXTRA_TIME_TRIGGER_ID, -1);
+        triggerBuilder = null;
 
-        startActivityForResult(new Intent(this, ProfileSelectionListActivity.class), REQUEST_PICK_PROFILE);
+        updateTriggerList();
     }
 }

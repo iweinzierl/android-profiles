@@ -45,7 +45,7 @@
 
         <activity android:name=".TriggerTypeSelectionActivity" />
 
-        <activity android:name=".TimeTriggerSettingsActivity" />
+        <activity android:name=".ProfileSchedulerActivity" />
 
         <receiver android:name=".receiver.WifiProfileTrigger">
             <intent-filter>

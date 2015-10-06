@@ -11,4 +11,10 @@
 
     <!-- trigger type selection -->
     <string name="activity_trigger_type_selection">Auswahl: Auslöser</string>
+
+    <!-- profile scheduling -->
+    <string name="activation_profile_tab">Aktivierung</string>
+    <string name="deactivation_profile_tab">Deaktivierung</string>
+    <string name="profilescheduler_save_button">Fertig</string>
+    <string name="profilescheduler_cancel_button">Abbrechen</string>
 </resources>
