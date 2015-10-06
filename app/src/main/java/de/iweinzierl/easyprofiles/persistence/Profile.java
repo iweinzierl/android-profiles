@@ -5,12 +5,18 @@ import android.media.AudioManager;
 import android.util.Log;
 
 import com.google.common.base.MoreObjects;
-import com.orm.SugarRecord;
+import com.orm.dsl.Table;
+import com.orm.entity.annotation.EntityListeners;
 
+import de.iweinzierl.easyprofiles.persistence.listener.ProfileEntityListener;
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 import de.iweinzierl.easyprofiles.util.NotificationHelper;
 
-public class Profile extends SugarRecord {
+@EntityListeners({ProfileEntityListener.class})
+@Table
+public class Profile {
+
+    private Long id;
 
     private String name;
 
@@ -24,6 +30,14 @@ public class Profile extends SugarRecord {
         this.volumeSettings = new VolumeSettings();
         this.dataSettings = new DataSettings();
         this.extraSettings = new ExtraSettings();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -74,32 +88,6 @@ public class Profile extends SugarRecord {
                 .add("dataSettings", dataSettings)
                 .add("extraSettings", extraSettings)
                 .toString();
-    }
-
-    /**
-     * Save a profile to database and also persist relations.
-     * <p/>
-     * NOTE: this is a hack to work around the problem that SugarORM is not saving relations.
-     */
-    @Override
-    public long save() {
-        if (wifiSettings != null) {
-            wifiSettings.save();
-        }
-
-        if (volumeSettings != null) {
-            volumeSettings.save();
-        }
-
-        if (dataSettings != null) {
-            dataSettings.save();
-        }
-
-        if (extraSettings != null) {
-            extraSettings.save();
-        }
-
-        return super.save();
     }
 
     public void activate(Context context) {

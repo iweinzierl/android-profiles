@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.orm.SugarRecord;
+
 import org.joda.time.LocalTime;
 
 import java.util.List;
@@ -70,11 +72,11 @@ public class TimeBasedTriggerActivationService extends Service {
         if (triggerId > 0) {
             Log.d("easyprofiles", "Find trigger by id: " + triggerId);
 
-            PersistentTrigger trigger = PersistentTrigger.findById(PersistentTrigger.class, triggerId);
+            PersistentTrigger trigger = SugarRecord.findById(PersistentTrigger.class, triggerId);
             return transformTrigger(trigger);
         }
 
-        List<PersistentTrigger> triggers = PersistentTrigger.find(
+        List<PersistentTrigger> triggers = SugarRecord.find(
                 PersistentTrigger.class,
                 "type = ? and enabled = 1",
                 TriggerType.TIME_BASED.name());

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.orm.SugarRecord;
 import com.software.shell.fab.ActionButton;
 
 import java.util.List;
@@ -77,23 +78,23 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
     @Override
     public void onTriggerEnabled(PersistentTrigger persistentTrigger) {
         persistentTrigger.setEnabled(true);
-        persistentTrigger.save();
+        SugarRecord.save(persistentTrigger);
     }
 
     @Override
     public void onTriggerDisabled(PersistentTrigger persistentTrigger) {
         persistentTrigger.setEnabled(false);
-        persistentTrigger.save();
+        SugarRecord.save(persistentTrigger);
     }
 
     @Override
     public void onTriggerRemoved(PersistentTrigger persistentTrigger) {
-        persistentTrigger.delete();
+        SugarRecord.delete(persistentTrigger);
         updateTriggerList();
     }
 
     private void updateTriggerList() {
-        List<PersistentTrigger> persistentTriggers = PersistentTrigger.listAll(PersistentTrigger.class);
+        List<PersistentTrigger> persistentTriggers = SugarRecord.listAll(PersistentTrigger.class);
         Log.d("easyprofiles", "Found " + persistentTriggers.size() + " triggers");
 
         triggerListFragment.setTriggers(persistentTriggers);
@@ -121,10 +122,10 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
     }
 
     private void onProfileSelected(Intent data) {
-        Profile profileId = Profile.findById(Profile.class, data.getLongExtra(ProfileSelectionListActivity.EXTRA_PROFILE_ID, 0));
+        Profile profileId = SugarRecord.findById(Profile.class, data.getLongExtra(ProfileSelectionListActivity.EXTRA_PROFILE_ID, 0));
         triggerBuilder.setOnActivateProfile(profileId);
 
-        triggerBuilder.build().export().save();
+        SugarRecord.save(triggerBuilder.build().export());
         triggerBuilder = null;
         updateTriggerList();
     }

@@ -1,9 +1,12 @@
 package de.iweinzierl.easyprofiles.persistence;
 
 import com.google.common.base.MoreObjects;
-import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
-public class VolumeSettings extends SugarRecord {
+@Table
+public class VolumeSettings {
+
+    private Long id;
 
     private int alarmVolume;
     private int mediaVolume;
@@ -26,6 +29,14 @@ public class VolumeSettings extends SugarRecord {
         this.ringtoneVolume = ringtoneVolume;
         this.notificationVolume = notificationVolume;
         this.ringtoneMode = ringtoneMode;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getAlarmVolume() {

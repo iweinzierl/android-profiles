@@ -40,7 +40,7 @@ public class TriggerTypeAdapter extends ListAdapter<TriggerType> {
 
         switch (triggerType) {
             case WIFI:
-                icon.setImageDrawable(res.getDrawable(R.drawable.ic_network_wifi_black_36px, theme));
+                icon.setImageDrawable(res.getDrawable(R.drawable.ic_network_wifi_black_48px, theme));
                 name.setText("WIFI");
                 break;
             case TIME_BASED:

@@ -1,9 +1,12 @@
 package de.iweinzierl.easyprofiles.persistence;
 
 import com.google.common.base.MoreObjects;
-import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
-public class DataSettings extends SugarRecord {
+@Table
+public class DataSettings {
+
+    private Long id;
 
     private boolean dataSyncEnabled;
     private boolean dataEnabled;
@@ -16,6 +19,14 @@ public class DataSettings extends SugarRecord {
     public DataSettings(boolean dataSyncEnabled, boolean dataEnabled) {
         this.dataSyncEnabled = dataSyncEnabled;
         this.dataEnabled = dataEnabled;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean isDataSyncEnabled() {

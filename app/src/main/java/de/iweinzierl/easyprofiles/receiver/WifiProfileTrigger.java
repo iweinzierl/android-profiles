@@ -8,10 +8,12 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
+import com.orm.SugarRecord;
+
 import java.util.List;
 
-import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
+import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 import de.iweinzierl.easyprofiles.util.WifiManagerHelper;
 
@@ -35,7 +37,7 @@ public class WifiProfileTrigger extends BroadcastReceiver {
         if (persistentTrigger != null) {
             Log.d("easyprofiles", "Found Wifi trigger: " + persistentTrigger);
 
-            Profile profile = Profile.findById(Profile.class, persistentTrigger.getOnActivateProfileId());
+            Profile profile = SugarRecord.findById(Profile.class, persistentTrigger.getOnActivateProfileId());
             if (profile != null) {
                 profile.activate(context);
             } else {
@@ -45,7 +47,7 @@ public class WifiProfileTrigger extends BroadcastReceiver {
     }
 
     private PersistentTrigger findTrigger(String ssid) {
-        List<PersistentTrigger> persistentTriggers = PersistentTrigger.find(
+        List<PersistentTrigger> persistentTriggers = SugarRecord.find(
                 PersistentTrigger.class, "type = ? and data = ? and enabled = 1",
                 TriggerType.WIFI.name(), ssid);
 

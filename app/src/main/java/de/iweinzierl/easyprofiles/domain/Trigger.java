@@ -6,7 +6,7 @@ import de.iweinzierl.easyprofiles.persistence.TriggerType;
 
 public interface Trigger {
 
-    long getId();
+    Long getId();
 
     TriggerType getType();
 

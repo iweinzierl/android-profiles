@@ -2,6 +2,7 @@ package de.iweinzierl.easyprofiles.domain;
 
 import com.google.common.base.MoreObjects;
 import com.google.gson.Gson;
+import com.orm.SugarRecord;
 
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
@@ -92,8 +93,8 @@ public class TimeBasedTrigger extends BaseTrigger {
     public void apply(PersistentTrigger persistentTrigger) {
         setId(persistentTrigger.getId());
         setEnabled(persistentTrigger.isEnabled());
-        setOnActivateProfile(Profile.findById(Profile.class, persistentTrigger.getOnActivateProfileId()));
-        setOnDeactivateProfile(Profile.findById(Profile.class, persistentTrigger.getOnDeactivateProfileId()));
+        setOnActivateProfile(SugarRecord.findById(Profile.class, persistentTrigger.getOnActivateProfileId()));
+        setOnDeactivateProfile(SugarRecord.findById(Profile.class, persistentTrigger.getOnDeactivateProfileId()));
 
         Data data = readJsonData(persistentTrigger.getData());
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(DATE_PATTERN);

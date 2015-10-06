@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.orm.entity.annotation.PrePersist;
+import com.orm.entity.annotation.PostPersist;
 
 import java.util.Date;
 
@@ -23,8 +23,10 @@ public class TimeBasedTriggerActivationListener {
         this.context = context;
     }
 
-    @PrePersist
-    public void prePersist(PersistentTrigger trigger) {
+    @PostPersist
+    public void postPersist(PersistentTrigger trigger) {
+        Log.i("easyprofiles", "Persisted trigger: " + trigger);
+
         if (trigger.getType() == TriggerType.TIME_BASED && trigger.isEnabled()) {
             TimeBasedTrigger timeTrigger = new TimeBasedTrigger();
             timeTrigger.apply(trigger);

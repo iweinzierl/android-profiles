@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orm.SugarRecord;
 import com.software.shell.fab.ActionButton;
 
 import java.util.List;
@@ -95,7 +96,7 @@ public class ProfileListActivity extends BaseActivity implements ProfileListFrag
     }
 
     private void updateProfileList() {
-        List<Profile> profiles = Profile.listAll(Profile.class);
+        List<Profile> profiles = SugarRecord.listAll(Profile.class);
         Log.d("easyprofiles", "Found " + profiles.size() + " profiles in database");
 
         profileListFragment.setProfiles(profiles, true);

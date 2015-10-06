@@ -1,13 +1,16 @@
 package de.iweinzierl.easyprofiles.persistence;
 
 import com.google.common.base.MoreObjects;
-import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 import com.orm.entity.annotation.EntityListeners;
 
 import de.iweinzierl.easyprofiles.persistence.listener.TimeBasedTriggerActivationListener;
 
 @EntityListeners({TimeBasedTriggerActivationListener.class})
-public class PersistentTrigger extends SugarRecord {
+@Table(name = "trigger")
+public class PersistentTrigger {
+
+    private Long id;
 
     private TriggerType type;
 
@@ -17,6 +20,14 @@ public class PersistentTrigger extends SugarRecord {
     private long onDeactivateProfileId;
 
     private boolean enabled;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getData() {
         return data;

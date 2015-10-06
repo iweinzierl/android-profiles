@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.orm.SugarRecord;
+
 import java.util.List;
 
 import de.iweinzierl.easyprofiles.R;
@@ -34,7 +36,7 @@ public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         final PersistentTrigger persistentTrigger = (PersistentTrigger) getItem(i);
-        final Profile profile = Profile.findById(Profile.class, persistentTrigger.getOnActivateProfileId());
+        final Profile profile = SugarRecord.findById(Profile.class, persistentTrigger.getOnActivateProfileId());
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -50,6 +52,8 @@ public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
         switch (persistentTrigger.getType()) {
             case WIFI:
                 triggerType.setImageDrawable(resources.getDrawable(R.drawable.ic_network_wifi_black_48px, theme));
+            case TIME_BASED:
+                triggerType.setImageDrawable(resources.getDrawable(R.drawable.time_schedule_36px, theme));
         }
         triggerDetails.setText(persistentTrigger.getData());
         profileName.setText(profile.getName());

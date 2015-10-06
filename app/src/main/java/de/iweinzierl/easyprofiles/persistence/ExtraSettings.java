@@ -1,9 +1,12 @@
 package de.iweinzierl.easyprofiles.persistence;
 
 import com.google.common.base.MoreObjects;
-import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
-public class ExtraSettings extends SugarRecord {
+@Table
+public class ExtraSettings {
+
+    private Long id;
 
     private boolean gpsEnabled;
     private boolean bluetoothEnabled;
@@ -19,6 +22,14 @@ public class ExtraSettings extends SugarRecord {
         this.gpsEnabled = gpsEnabled;
         this.bluetoothEnabled = bluetoothEnabled;
         this.nfcEnabled = nfcEnabled;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean isGpsEnabled() {

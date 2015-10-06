@@ -12,11 +12,11 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.orm.SugarRecord;
+
 import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.fragments.EditProfileFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
-import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
-import de.iweinzierl.easyprofiles.persistence.TriggerType;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
 import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 import de.iweinzierl.easyprofiles.widget.validation.ValidationError;
@@ -50,7 +50,7 @@ public class EditProfileActivity extends Activity {
         Intent caller = getIntent();
         if (caller != null) {
             long profileId = caller.getLongExtra(EXTRA_PROFILE_ID, 0);
-            initProfile = Profile.findById(Profile.class, profileId);
+            initProfile = SugarRecord.findById(Profile.class, profileId);
 
             if (initProfile != null) {
                 Log.d("easyprofiles", "Init activity with profile: " + initProfile);
@@ -143,7 +143,7 @@ public class EditProfileActivity extends Activity {
                 WifiBasedTrigger trigger = new WifiBasedTrigger();
                 trigger.setSsid(ssid);
                 trigger.setOnActivateProfile(initProfile);
-                trigger.export().save();
+                SugarRecord.save(trigger.export());
 
                 Toast.makeText(this, "Added WIFI trigger to profile", Toast.LENGTH_SHORT).show();
             }
@@ -157,8 +157,8 @@ public class EditProfileActivity extends Activity {
     }
 
     public void onSaveProfile(Profile profile) {
-        profile.save();
-        if (profile.getId() > 0) {
+        SugarRecord.save(profile);
+        if (profile.getId() != null && profile.getId() > 0) {
             Log.d("easyprofile", "Successfully persisted profile: " + profile);
             finish();
         } else {
@@ -168,8 +168,9 @@ public class EditProfileActivity extends Activity {
 
     private void deleteProfile() {
         if (initProfile != null) {
-            Profile.deleteAll(Profile.class, "id = ?", String.valueOf(initProfile.getId()));
+            SugarRecord.delete(initProfile);
             Toast.makeText(this, R.string.editprofile_info_delete_successful, Toast.LENGTH_LONG).show();
+            initProfile = null;
         }
 
         finish();

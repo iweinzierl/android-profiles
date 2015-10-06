@@ -1,6 +1,7 @@
 package de.iweinzierl.easyprofiles.domain;
 
 import com.google.gson.Gson;
+import com.orm.SugarRecord;
 
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.Profile;
@@ -38,8 +39,8 @@ public class WifiBasedTrigger extends BaseTrigger {
     public void apply(PersistentTrigger persistentTrigger) {
         setId(getId());
         setEnabled(persistentTrigger.isEnabled());
-        setOnActivateProfile(Profile.findById(Profile.class, persistentTrigger.getOnActivateProfileId()));
-        setOnDeactivateProfile(Profile.findById(Profile.class, persistentTrigger.getOnDeactivateProfileId()));
+        setOnActivateProfile(SugarRecord.findById(Profile.class, persistentTrigger.getOnActivateProfileId()));
+        setOnDeactivateProfile(SugarRecord.findById(Profile.class, persistentTrigger.getOnDeactivateProfileId()));
 
         Data data = readJsonData(persistentTrigger.getData());
         setSsid(data.getSsid());

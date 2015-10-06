@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toolbar;
 
+import com.orm.SugarRecord;
+
 import java.util.List;
 
 import de.iweinzierl.easyprofiles.fragments.ProfileListFragment;
@@ -42,7 +44,7 @@ public class ProfileSelectionListActivity extends Activity implements ProfileLis
     protected void onStart() {
         super.onStart();
 
-        List<Profile> profiles = Profile.listAll(Profile.class);
+        List<Profile> profiles = SugarRecord.listAll(Profile.class);
         profileListFragment.setProfiles(profiles, false);
     }
 
