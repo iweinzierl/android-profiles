@@ -12,7 +12,9 @@ import com.orm.SugarRecord;
 import org.joda.time.LocalTime;
 
 import java.util.List;
+import java.util.Set;
 
+import de.iweinzierl.easyprofiles.domain.Day;
 import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
 import de.iweinzierl.easyprofiles.fragments.ProfileSchedulerTabsFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
@@ -68,6 +70,7 @@ public class ProfileSchedulerActivity extends Activity {
         Profile deactivationProfile = profileSchedulerTabsFragment.getDeactivationProfile();
         LocalTime activationTime = profileSchedulerTabsFragment.getActivationTime();
         LocalTime deactivationTime = profileSchedulerTabsFragment.getDeactivationTime();
+        Set<Day> repeatingDays = profileSchedulerTabsFragment.getRepeatingDays();
 
         Log.d("easyprofiles", "Schedule start: " + activationTime.toString("HH:mm") + " --> " + activationProfile);
         Log.d("easyprofiles", "Schedule stop :   " + deactivationTime.toString("HH:mm") + " --> " + deactivationProfile);
@@ -77,6 +80,7 @@ public class ProfileSchedulerActivity extends Activity {
         trigger.setOnActivateProfile(activationProfile);
         trigger.setDeactivationTime(deactivationTime);
         trigger.setOnDeactivateProfile(deactivationProfile);
+        trigger.setRepeatOnDays(repeatingDays);
         trigger.setEnabled(true);
 
         long id = SugarRecord.save(trigger.export());

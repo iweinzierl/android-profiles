@@ -11,17 +11,21 @@ import android.widget.TabHost;
 import org.joda.time.LocalTime;
 
 import java.util.List;
+import java.util.Set;
 
 import de.iweinzierl.easyprofiles.R;
+import de.iweinzierl.easyprofiles.domain.Day;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 
 public class ProfileSchedulerTabsFragment extends Fragment implements TabHost.OnTabChangeListener {
 
     private ProfileSchedulerFragment activationFragment;
     private ProfileSchedulerFragment deactivationFragment;
+    private SelectableWeekDayListFragment weekDayListFragment;
 
     private static final String TAB_ACTIVATION = "activation";
     private static final String TAB_DEACTIVATION = "deactivation";
+    private static final String TAB_REPEAT = "repeat";
 
     @Nullable
     @Override
@@ -30,6 +34,7 @@ public class ProfileSchedulerTabsFragment extends Fragment implements TabHost.On
 
         activationFragment = new ProfileSchedulerFragment();
         deactivationFragment = new ProfileSchedulerFragment();
+        weekDayListFragment = new SelectableWeekDayListFragment();
 
         TabHost tabHost = (TabHost) view.findViewById(android.R.id.tabhost);
         tabHost.setup();
@@ -43,8 +48,13 @@ public class ProfileSchedulerTabsFragment extends Fragment implements TabHost.On
         deactivation.setIndicator("Deactivation");
         deactivation.setContent(R.id.deactivation);
 
+        TabHost.TabSpec repeat = tabHost.newTabSpec(TAB_REPEAT);
+        repeat.setIndicator("Repeat");
+        repeat.setContent(R.id.repeat);
+
         tabHost.addTab(activation);
         tabHost.addTab(deactivation);
+        tabHost.addTab(repeat);
 
         return view;
     }
@@ -57,6 +67,9 @@ public class ProfileSchedulerTabsFragment extends Fragment implements TabHost.On
                 break;
             case TAB_DEACTIVATION:
                 getFragmentManager().beginTransaction().replace(R.id.deactivation, deactivationFragment).commit();
+                break;
+            case TAB_REPEAT:
+                getFragmentManager().beginTransaction().replace(R.id.repeat, weekDayListFragment).commit();
                 break;
         }
     }
@@ -80,5 +93,9 @@ public class ProfileSchedulerTabsFragment extends Fragment implements TabHost.On
 
     public Profile getDeactivationProfile() {
         return deactivationFragment.getProfile();
+    }
+
+    public Set<Day> getRepeatingDays() {
+        return weekDayListFragment.getSelectedDays();
     }
 }

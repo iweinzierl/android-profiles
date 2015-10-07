@@ -17,4 +17,12 @@
     <string name="deactivation_profile_tab">Deaktivierung</string>
     <string name="profilescheduler_save_button">Fertig</string>
     <string name="profilescheduler_cancel_button">Abbrechen</string>
+
+    <string name="monday">Montag</string>
+    <string name="tuesday">Dienstag</string>
+    <string name="wednesday">Mittwoch</string>
+    <string name="thursday">Donnerstag</string>
+    <string name="friday">Freitag</string>
+    <string name="saturday">Samstag</string>
+    <string name="sunday">Sonntag</string>
 </resources>
