@@ -2,6 +2,7 @@ package de.iweinzierl.easyprofiles.adapter;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SpinnerAdapter;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 
 public class ProfileSpinnerAdapter implements SpinnerAdapter {
@@ -23,13 +25,15 @@ public class ProfileSpinnerAdapter implements SpinnerAdapter {
 
     @Override
     public View getDropDownView(int i, View view, ViewGroup viewGroup) {
-        // TODO
         final Profile profile = (Profile) getItem(i);
 
-        TextView tv = new TextView(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View item = inflater.inflate(R.layout.spinner_item_dropdown_profile, null, false);
+
+        TextView tv = (TextView) item.findViewById(R.id.name);
         tv.setText(profile.getName());
 
-        return tv;
+        return item;
     }
 
     @Override

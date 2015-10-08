@@ -140,6 +140,16 @@
         <item name="android:textColor">@color/ColorPrimary</item>
     </style>
 
+    <style name="AppTheme.Spinner"></style>
+
+    <style name="AppTheme.Spinner.Item">
+        <item name="android:background">@drawable/click_effect</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
     <style name="AppTheme.EditProfile"></style>
 
     <style name="AppTheme.EditProfile.Devider">
