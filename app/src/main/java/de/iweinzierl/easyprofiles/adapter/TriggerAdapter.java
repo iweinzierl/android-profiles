@@ -57,9 +57,6 @@ public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
         TimeBasedTrigger trigger = new TimeBasedTrigger();
         trigger.apply(persistentTrigger);
 
-        Resources resources = context.getResources();
-        Resources.Theme theme = context.getTheme();
-
         View view = layoutInflater.inflate(R.layout.list_item_time_based_trigger, viewGroup, false);
 
         Switch enabled = (Switch) view.findViewById(R.id.enabled);
@@ -100,7 +97,7 @@ public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
     }
 
     private void markDayIfActivatedForRepeat(Set<Day> repeatDays, Day day, TextView dayView) {
-        if (repeatDays != null &&    repeatDays.contains(day)) {
+        if (repeatDays != null && repeatDays.contains(day)) {
             Resources resources = context.getResources();
             dayView.setTextColor(resources.getColor(R.color.ColorPrimary));
             dayView.setTypeface(null, Typeface.BOLD);
