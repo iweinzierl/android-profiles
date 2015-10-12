@@ -14,7 +14,6 @@ import android.widget.Toolbar;
 
 import com.orm.SugarRecord;
 
-import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.fragments.EditProfileFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
@@ -120,34 +119,8 @@ public class EditProfileActivity extends Activity {
             case R.id.delete:
                 deleteProfile();
                 return true;
-            case R.id.trigger:
-                // TODO REMOVE TRIGGER SELECTION AND REPLACE WITH TRIGGER SELECTION IN FRAGMENT AS SETTING
-                startActivityForResult(
-                        new Intent(this, WifiSelectionListActivity.class),
-                        WifiSelectionListActivity.REQUEST_WIFI_SSID);
-                return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // TODO ADD SUPPORT FOR FURTHER TRIGGERS (GENERIC SUPPORT!)
-        if (requestCode == WifiSelectionListActivity.REQUEST_WIFI_SSID && resultCode == RESULT_OK) {
-            String ssid = data.getStringExtra(WifiSelectionListActivity.EXTRA_WIFI_SSID);
-            Log.d("easyprofiles", "Received selected wifi ssid: " + ssid);
-
-            if (initProfile != null) {
-                WifiBasedTrigger trigger = new WifiBasedTrigger();
-                trigger.setSsid(ssid);
-                trigger.setOnActivateProfile(initProfile);
-                SugarRecord.save(trigger.export());
-
-                Toast.makeText(this, "Added WIFI trigger to profile", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     @Override

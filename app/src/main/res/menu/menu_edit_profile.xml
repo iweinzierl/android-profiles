@@ -9,9 +9,4 @@
         android:title="@string/editprofile_menu_delete"
         app:showAsAction="ifRoom" />
 
-    <!-- TODO replace by slide menu -->
-    <item
-        android:id="@+id/trigger"
-        android:title="Trigger" />
-
 </menu>
