@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.util.Log;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import com.orm.dsl.Table;
 import com.orm.entity.annotation.EntityListeners;
 
@@ -81,8 +82,28 @@ public class Profile {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Profile profile = (Profile) o;
+        return Objects.equal(id, profile.id) &&
+                Objects.equal(name, profile.name) &&
+                Objects.equal(wifiSettings, profile.wifiSettings) &&
+                Objects.equal(volumeSettings, profile.volumeSettings) &&
+                Objects.equal(dataSettings, profile.dataSettings) &&
+                Objects.equal(extraSettings, profile.extraSettings);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, name, wifiSettings, volumeSettings, dataSettings, extraSettings);
+    }
+
+    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("name", name)
                 .add("wifiSettings", wifiSettings)
                 .add("volumeSettings", volumeSettings)
                 .add("dataSettings", dataSettings)

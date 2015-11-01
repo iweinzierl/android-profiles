@@ -12,6 +12,7 @@ import com.orm.SugarRecord;
 
 import java.util.List;
 
+import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
@@ -47,16 +48,30 @@ public class WifiProfileTrigger extends BroadcastReceiver {
     }
 
     private PersistentTrigger findTrigger(String ssid) {
-        List<PersistentTrigger> persistentTriggers = SugarRecord.find(
-                PersistentTrigger.class, "type = ? and data = ? and enabled = 1",
-                TriggerType.WIFI.name(), ssid);
+        List<PersistentTrigger> persistentTriggerList = SugarRecord.find(
+                PersistentTrigger.class,
+                "enabled = 1 and type = ?",
+                TriggerType.WIFI.name());
 
-        if (persistentTriggers != null && !persistentTriggers.isEmpty()) {
-            if (persistentTriggers.size() > 1) {
-                Log.w("easyprofiles", "Found more than one Wifi trigger for ssid '" + ssid + "': " + persistentTriggers);
+        Log.d("easyprofiles", "Found " + persistentTriggerList.size() + " Wifi triggers");
+
+        for (PersistentTrigger trigger : persistentTriggerList) {
+            if (trigger.getType() == TriggerType.WIFI) {
+                Log.d("easyprofiles", "Test wifi trigger: " + trigger);
+
+                WifiBasedTrigger wifiTrigger = new WifiBasedTrigger();
+                wifiTrigger.apply(trigger);
+
+                String triggerSsid = wifiTrigger.getSsid().replaceAll("\"", "");
+                String testSsid = ssid.replaceAll("\"", "");
+
+                if (testSsid.equals(triggerSsid)) {
+                    Log.i("easyprofiles", "Trigger matched.");
+                    return trigger;
+                } else {
+                    Log.d("easyprofiles", "Trigger did not match.");
+                }
             }
-
-            return persistentTriggers.get(0);
         }
 
         return null;

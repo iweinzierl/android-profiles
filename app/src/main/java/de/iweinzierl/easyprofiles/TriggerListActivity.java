@@ -13,14 +13,12 @@ import java.util.List;
 import de.iweinzierl.easyprofiles.domain.TriggerBuilder;
 import de.iweinzierl.easyprofiles.fragments.TriggerListFragment;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
-import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 
 public class TriggerListActivity extends BaseActivity implements TriggerListFragment.Callback {
 
     private static final int REQUEST_PICK_TRIGGERTYPE = 100;
     private static final int REQUEST_PICK_WIFI = 200;
-    private static final int REQUEST_PICK_PROFILE = 300;
     private static final int REQUEST_PICK_TIME_SETTINGS = 400;
 
     private TriggerListFragment triggerListFragment;
@@ -62,11 +60,9 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
         } else if (requestCode == REQUEST_PICK_TRIGGERTYPE) {
             onTriggerTypeSelected(data);
         } else if (requestCode == REQUEST_PICK_WIFI) {
-            onWifiSelected(data);
-        } else if (requestCode == REQUEST_PICK_PROFILE) {
-            onProfileSelected(data);
+            onWifiTriggerCreated();
         } else if (requestCode == REQUEST_PICK_TIME_SETTINGS) {
-            onTimeSettingsSelected(data);
+            onTimeSettingsSelected();
         }
     }
 
@@ -112,7 +108,7 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
         switch (triggerType) {
             case WIFI:
                 triggerBuilder.setTriggerType(TriggerType.WIFI);
-                startActivityForResult(new Intent(this, WifiSelectionListActivity.class), REQUEST_PICK_WIFI);
+                startActivityForResult(new Intent(this, WifiTriggerActivity.class), REQUEST_PICK_WIFI);
                 break;
             case TIME_BASED:
                 triggerBuilder.setTriggerType(TriggerType.TIME_BASED);
@@ -121,27 +117,12 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
         }
     }
 
-    private void onProfileSelected(Intent data) {
-        Profile profileId = SugarRecord.findById(Profile.class, data.getLongExtra(ProfileSelectionListActivity.EXTRA_PROFILE_ID, 0));
-        triggerBuilder.setOnActivateProfile(profileId);
-
-        SugarRecord.save(triggerBuilder.build().export());
-        triggerBuilder = null;
+    private void onWifiTriggerCreated() {
         updateTriggerList();
     }
 
-    private void onWifiSelected(Intent data) {
-        // TODO move wifi trigger creation to external activity
-        String ssid = data.getStringExtra(WifiSelectionListActivity.EXTRA_WIFI_SSID);
-        triggerBuilder.setData(ssid);
-
-        startActivityForResult(new Intent(this, ProfileSelectionListActivity.class), REQUEST_PICK_PROFILE);
-    }
-
-    private void onTimeSettingsSelected(Intent data) {
-        Long triggerId = data.getLongExtra(ProfileSchedulerActivity.EXTRA_TIME_TRIGGER_ID, -1);
+    private void onTimeSettingsSelected() {
         triggerBuilder = null;
-
         updateTriggerList();
     }
 }

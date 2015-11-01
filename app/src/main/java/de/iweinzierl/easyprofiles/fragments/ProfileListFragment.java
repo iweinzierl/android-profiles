@@ -11,10 +11,10 @@ import android.widget.ListView;
 import java.util.List;
 
 import de.iweinzierl.easyprofiles.R;
-import de.iweinzierl.easyprofiles.adapter.ProfileAdapter;
+import de.iweinzierl.easyprofiles.adapter.ModifiableProfileAdapter;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 
-public class ProfileListFragment extends Fragment implements ProfileAdapter.ClickListener {
+public class ProfileListFragment extends Fragment implements ModifiableProfileAdapter.ClickListener {
 
     public interface Callback {
         void onProfileClick(Profile profile);
@@ -63,6 +63,6 @@ public class ProfileListFragment extends Fragment implements ProfileAdapter.Clic
     }
 
     public void setProfiles(List<Profile> profiles, boolean modifiable) {
-        profileList.setAdapter(new ProfileAdapter(getActivity(), this, profiles, modifiable));
+        profileList.setAdapter(new ModifiableProfileAdapter(getActivity(), this, profiles, modifiable));
     }
 }

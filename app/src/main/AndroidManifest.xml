@@ -37,7 +37,7 @@
 
         <activity android:name=".EditProfileActivity" />
 
-        <activity android:name=".WifiSelectionListActivity" />
+        <activity android:name=".WifiTriggerActivity" />
 
         <activity android:name=".ProfileSelectionListActivity" />
 

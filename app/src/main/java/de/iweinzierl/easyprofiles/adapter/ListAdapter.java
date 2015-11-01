@@ -29,4 +29,8 @@ public abstract class ListAdapter<T> extends BaseAdapter {
     public long getItemId(int i) {
         return i;
     }
+
+    public int getItemPosition(T item) {
+        return items.indexOf(item);
+    }
 }

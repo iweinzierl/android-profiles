@@ -11,7 +11,7 @@ import java.util.List;
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 
-public class ProfileAdapter extends ListAdapter<Profile> {
+public class ModifiableProfileAdapter extends ListAdapter<Profile> {
 
     public interface ClickListener {
         void onNameClicked(Profile profile);
@@ -22,7 +22,7 @@ public class ProfileAdapter extends ListAdapter<Profile> {
     private final ClickListener clickListener;
     private final boolean modifiable;
 
-    public ProfileAdapter(Context context, ClickListener clickListener, List<Profile> profiles, boolean modifiable) {
+    public ModifiableProfileAdapter(Context context, ClickListener clickListener, List<Profile> profiles, boolean modifiable) {
         super(context, profiles);
         this.clickListener = clickListener;
         this.modifiable = modifiable;
