@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">EasyProfiles</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Einstellungen</string>
     <string name="notification_active_profile">Aktives Profil: </string>
 
     <string name="ringtone_mode_normal">Normal</string>
@@ -9,21 +9,56 @@
 
     <string name="navigation_header">EasyProfiles</string>
 
-    <!-- trigger type selection -->
-    <string name="activity_trigger_type_selection">Auswahl: Auslöser</string>
+    <!-- profiles -->
+    <string name="activity_profilelist">Profiles</string>
+    <string name="activity_profile_selection">Auswahl: Profil</string>
+    <string name="profilelist_add_hint">Neues Profil hinzufügen</string>
+    <string name="profilelist_edit_hint">Profil bearbeiten </string>
 
-    <!-- wifi trigger creation -->
-    <string name="activity_wifi_trigger_incomplete_error_title">Fehler beim Anlegen</string>
-    <string name="activity_wifi_trigger_incomplete_error_message">Der Wifi Auslöser konnte nicht angelegt werden. Unvollständige Eingabe.</string>
+    <string name="empty_list_view_profiles_title">Keine Profile gefunden</string>
+    <string name="empty_list_view_profiles_text">Du hast noch keine Profile erstellt. Benutze den Knopf zum Hinzufügen neuer Profile..</string>
 
-    <string name="trigger_type_adapter_wifi">Wifi gesteuert</string>
-    <string name="trigger_type_adapter_time">Zeitgesteuert</string>
-
-    <!-- profile scheduling -->
     <string name="activation_profile_tab">Aktivierung</string>
     <string name="deactivation_profile_tab">Deaktivierung</string>
     <string name="profilescheduler_save_button">Fertig</string>
     <string name="profilescheduler_cancel_button">Abbrechen</string>
+
+    <string name="editprofile_volume_set_to">Gesetzt auf {volume} / 10</string>
+    <string name="editprofile_name">Name</string>
+    <string name="editprofile_section_volume">Lautstärke festlegen</string>
+    <string name="editprofile_alarm_volume">Alarm</string>
+    <string name="editprofile_media_volume">Medien</string>
+    <string name="editprofile_ringtone_volume">Klingelton</string>
+    <string name="editprofile_notification_volume">Benachrichtigungen</string>
+    <string name="editprofile_ringtone_mode">Soundprofil</string>
+    <string name="editprofile_cancel_button">Zurück</string>
+    <string name="editprofile_save_button">Fertig</string>
+    <string name="editprofile_menu_delete">Löschen</string>
+    <string name="editprofile_info_delete_successful">Profile erfolgreich gelöscht.</string>
+
+    <!-- triggers -->
+    <string name="activity_triggerlist">Auslöser</string>
+    <string name="triggerlist_item_deleted">Auslöser Entfernt</string>
+    <string name="triggerlist_item_undo">Rückgängig</string>
+    <string name="empty_list_view_trigger_title">Keine Auslöser gefunden</string>
+    <string name="empty_list_view_trigger_text">Du hast noch keine Auslöser konfiguriert. Benutze den Knopf zum Hinzufügen neuer Auslöser.</string>
+    <string name="wifi_trigger_activation_label">Beim Verbinden: </string>
+    <string name="wifi_trigger_deactivation_label">Beim Trennen: </string>
+
+    <string name="activity_trigger_type_selection">Auswahl: Auslöser</string>
+    <string name="trigger_type_adapter_wifi">Wifi gesteuert</string>
+    <string name="trigger_type_adapter_time">Zeit gesteuert</string>
+
+    <string name="activity_wifi_trigger_incomplete_error_title">Fehler beim Anlegen</string>
+    <string name="activity_wifi_trigger_incomplete_error_message">Der Wifi Auslöser konnte nicht angelegt werden. Unvollständige Eingabe.</string>
+    <string name="activity_wifi_selection">Wifi Auswählen</string>
+    <string name="empty_list_view_wifi_title">Kein konfiguriertes Wifi gefunden</string>
+    <string name="empty_list_view_wifi_text">Verbinde dich zunächst mit einem Wifi um dies dann hier auswählen zu können.</string>
+
+    <!-- dialogs -->
+    <string name="edittextdialog_title">Umbenennen</string>
+    <string name="edittextdialog_ok_button">OK</string>
+    <string name="edittextdialog_cancel_button">Abbrechen</string>
 
     <!-- days -->
     <string name="monday">Montag</string>

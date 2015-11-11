@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="edittextdialog_title">Umbenennen</string>
-    <string name="edittextdialog_ok_button">OK</string>
-    <string name="edittextdialog_cancel_button">Abbrechen</string>
-</resources>

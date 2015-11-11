@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="activity_profilelist">Profiles</string>
-    <string name="profilelist_add_hint">Add Profile</string>
-    <string name="profilelist_edit_hint">Edit Profile</string>
-
-    <string name="empty_list_view_profiles_title">Keine Profile gefunden</string>
-    <string name="empty_list_view_profiles_text">Du hast noch keine Profile erstellt. Benutze den Knopf zum Hinzufügen neuer Profile..</string>
-</resources>
