@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:scaleType="center"
-            android:src="@drawable/ic_network_wifi_black_48px" />
+            android:src="@drawable/wifi_48px" />
 
         <LinearLayout
             android:id="@+id/detailsContainer"

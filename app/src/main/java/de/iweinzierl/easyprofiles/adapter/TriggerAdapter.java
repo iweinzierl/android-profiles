@@ -108,16 +108,11 @@ public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
 
         View view = layoutInflater.inflate(R.layout.list_item_wifi_based_trigger, viewGroup, false);
 
-        ImageView triggerType = (ImageView) view.findViewById(R.id.trigger_type);
         TextView wifi = (TextView) view.findViewById(R.id.wifi);
         TextView profileActivation = (TextView) view.findViewById(R.id.profile_activation);
         TextView profileDeactivation = (TextView) view.findViewById(R.id.profile_deactivation);
         Switch enabled = (Switch) view.findViewById(R.id.enabled);
 
-        Resources resources = context.getResources();
-        Resources.Theme theme = context.getTheme();
-
-        triggerType.setImageDrawable(resources.getDrawable(R.drawable.ic_network_wifi_black_48px, theme));
         wifi.setText(wifiTrigger.getSsid().replaceAll("\"", ""));
         profileActivation.setText(wifiTrigger.getOnActivateProfile().getName());
         if (wifiTrigger.getOnDeactivateProfile() == null) {

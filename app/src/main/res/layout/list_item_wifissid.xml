@@ -16,7 +16,7 @@
         android:paddingTop="5dp"
         android:scaleType="center"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_network_wifi_black_36px" />
+        android:src="@drawable/wifi_36px" />
 
     <TextView
         android:id="@+id/ssid"
