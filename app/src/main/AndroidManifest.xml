@@ -47,7 +47,7 @@
 
         <activity android:name=".ProfileSchedulerActivity" />
 
-        <receiver android:name=".receiver.WifiProfileTrigger">
+        <receiver android:name=".receiver.ConnectionChangedBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

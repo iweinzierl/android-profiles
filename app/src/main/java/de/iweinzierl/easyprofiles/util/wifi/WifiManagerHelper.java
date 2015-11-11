@@ -1,4 +1,4 @@
-package de.iweinzierl.easyprofiles.util;
+package de.iweinzierl.easyprofiles.util.wifi;
 
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;

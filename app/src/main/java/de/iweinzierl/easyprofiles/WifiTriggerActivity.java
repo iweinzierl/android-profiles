@@ -17,7 +17,7 @@ import java.util.List;
 import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.fragments.WifiTriggerTabFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
-import de.iweinzierl.easyprofiles.util.WifiManagerHelper;
+import de.iweinzierl.easyprofiles.util.wifi.WifiManagerHelper;
 
 public class WifiTriggerActivity extends Activity implements WifiTriggerTabFragment.Callback {
 
