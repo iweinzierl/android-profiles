@@ -10,7 +10,7 @@
     <string name="navigation_header">EasyProfiles</string>
 
     <!-- profiles -->
-    <string name="activity_profilelist">Profiles</string>
+    <string name="activity_profilelist">Profile</string>
     <string name="activity_profile_selection">Auswahl: Profil</string>
     <string name="profilelist_add_hint">Neues Profil hinzufügen</string>
     <string name="profilelist_edit_hint">Profil bearbeiten </string>
