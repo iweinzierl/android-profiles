@@ -11,16 +11,14 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.orm.SugarRecord;
-
 import java.util.List;
 import java.util.Set;
 
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.domain.Day;
 import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
+import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
-import de.iweinzierl.easyprofiles.persistence.Profile;
 
 public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
 
@@ -105,22 +103,29 @@ public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
     }
 
     private View buildWifiView(final PersistentTrigger persistentTrigger, final LayoutInflater layoutInflater, final ViewGroup viewGroup) {
-        final Profile profile = SugarRecord.findById(Profile.class, persistentTrigger.getOnActivateProfileId());
+        WifiBasedTrigger wifiTrigger = new WifiBasedTrigger();
+        wifiTrigger.apply(persistentTrigger);
 
-        View view = layoutInflater.inflate(R.layout.list_item_trigger, viewGroup, false);
+        View view = layoutInflater.inflate(R.layout.list_item_wifi_based_trigger, viewGroup, false);
 
         ImageView triggerType = (ImageView) view.findViewById(R.id.trigger_type);
-        TextView triggerDetails = (TextView) view.findViewById(R.id.trigger_details);
-        TextView profileName = (TextView) view.findViewById(R.id.profile);
+        TextView wifi = (TextView) view.findViewById(R.id.wifi);
+        TextView profileActivation = (TextView) view.findViewById(R.id.profile_activation);
+        TextView profileDeactivation = (TextView) view.findViewById(R.id.profile_deactivation);
         Switch enabled = (Switch) view.findViewById(R.id.enabled);
 
         Resources resources = context.getResources();
         Resources.Theme theme = context.getTheme();
 
-        triggerDetails.setText(persistentTrigger.getData());
-        profileName.setText(profile.getName());
-        enabled.setChecked(persistentTrigger.isEnabled());
         triggerType.setImageDrawable(resources.getDrawable(R.drawable.ic_network_wifi_black_48px, theme));
+        wifi.setText(wifiTrigger.getSsid().replaceAll("\"", ""));
+        profileActivation.setText(wifiTrigger.getOnActivateProfile().getName());
+        if (wifiTrigger.getOnDeactivateProfile() == null) {
+            profileDeactivation.setText("");
+        } else {
+            profileDeactivation.setText(wifiTrigger.getOnDeactivateProfile().getName());
+        }
+        enabled.setChecked(persistentTrigger.isEnabled());
 
         enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

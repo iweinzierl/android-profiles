@@ -7,4 +7,7 @@
 
     <string name="empty_list_view_trigger_title">Keine Auslöser gefunden</string>
     <string name="empty_list_view_trigger_text">Du hast noch keine Auslöser konfiguriert. Benutze den Knopf zum Hinzufügen neuer Auslöser.</string>
+
+    <string name="wifi_trigger_activation_label">Connect: </string>
+    <string name="wifi_trigger_deactivation_label">Disconnect: </string>
 </resources>
