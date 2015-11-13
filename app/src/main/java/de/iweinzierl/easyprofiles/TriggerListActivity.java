@@ -19,6 +19,7 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
 
     private static final int REQUEST_PICK_TRIGGERTYPE = 100;
     private static final int REQUEST_PICK_WIFI = 200;
+    private static final int REQUEST_PICK_LOCATION = 300;
     private static final int REQUEST_PICK_TIME_SETTINGS = 400;
 
     private TriggerListFragment triggerListFragment;
@@ -114,6 +115,9 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
                 triggerBuilder.setTriggerType(TriggerType.TIME_BASED);
                 startActivityForResult(new Intent(this, ProfileSchedulerActivity.class), REQUEST_PICK_TIME_SETTINGS);
                 break;
+            case LOCATION_BASED:
+                triggerBuilder.setTriggerType(TriggerType.LOCATION_BASED);
+                startActivityForResult(new Intent(this, PickLocationActivity.class), REQUEST_PICK_LOCATION);
         }
     }
 

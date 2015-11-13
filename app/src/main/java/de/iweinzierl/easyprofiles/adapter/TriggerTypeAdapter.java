@@ -19,7 +19,8 @@ public class TriggerTypeAdapter extends ListAdapter<TriggerType> {
 
     private static List<TriggerType> triggerTypes = Lists.newArrayList(
             TriggerType.WIFI,
-            TriggerType.TIME_BASED);
+            TriggerType.TIME_BASED,
+            TriggerType.LOCATION_BASED);
 
     public TriggerTypeAdapter(Context context) {
         super(context, triggerTypes);
@@ -46,6 +47,11 @@ public class TriggerTypeAdapter extends ListAdapter<TriggerType> {
             case TIME_BASED:
                 icon.setImageDrawable(res.getDrawable(R.drawable.time_schedule_36px, theme));
                 name.setText(R.string.trigger_type_adapter_time);
+                break;
+            case LOCATION_BASED:
+                icon.setImageDrawable(res.getDrawable(R.drawable.location_36px, theme));
+                name.setText(R.string.trigger_type_adapter_location);
+                break;
         }
 
         return listItem;

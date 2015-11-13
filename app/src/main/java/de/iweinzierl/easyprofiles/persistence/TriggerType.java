@@ -4,5 +4,7 @@ public enum TriggerType {
 
     WIFI,
 
+    LOCATION_BASED,
+
     TIME_BASED
 }

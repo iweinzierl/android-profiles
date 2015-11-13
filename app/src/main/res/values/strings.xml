@@ -38,6 +38,7 @@
 
     <!-- triggers -->
     <string name="activity_triggerlist">Auslöser</string>
+    <string name="activity_pick_location">Ort auswählen</string>
     <string name="triggerlist_item_deleted">Auslöser Entfernt</string>
     <string name="triggerlist_item_undo">Rückgängig</string>
     <string name="empty_list_view_trigger_title">Keine Auslöser gefunden</string>
@@ -46,8 +47,9 @@
     <string name="wifi_trigger_deactivation_label">Beim Trennen: </string>
 
     <string name="activity_trigger_type_selection">Auswahl: Auslöser</string>
-    <string name="trigger_type_adapter_wifi">Wifi gesteuert</string>
-    <string name="trigger_type_adapter_time">Zeit gesteuert</string>
+    <string name="trigger_type_adapter_wifi">Beim Verbinden/Trennen von Wifi Netzwerken</string>
+    <string name="trigger_type_adapter_time">Zeitgesteuert</string>
+    <string name="trigger_type_adapter_location">Ortsgebunden</string>
 
     <string name="activity_wifi_trigger_incomplete_error_title">Fehler beim Anlegen</string>
     <string name="activity_wifi_trigger_incomplete_error_message">Der Wifi Auslöser konnte nicht angelegt werden. Unvollständige Eingabe.</string>
