@@ -1,11 +1,16 @@
 package de.iweinzierl.easyprofiles.util;
 
 import android.media.AudioManager;
-import android.util.Log;
+import android.os.Build;
 
+import org.slf4j.Logger;
+
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
 
 public class AudioManagerHelper {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(AudioManagerHelper.class.getName());
 
     private AudioManager audioManager;
 
@@ -20,17 +25,22 @@ public class AudioManagerHelper {
     }
 
     public boolean adjustVolume(VolumeSettings volumeSettings) {
-        Log.d("easyprofiles", "Adjust volume settings to: " + volumeSettings);
+        LOG.debug("Adjust volume settings to: {}", volumeSettings);
+
+        if (audioManager.isVolumeFixed()) {
+            LOG.warn("Volume is fixed and cannot be modified programmatically!");
+        }
+
         if (volumeSettings != null) {
-            setAlarmVolume(volumeSettings.getAlarmVolume());
             setMediaVolume(volumeSettings.getMediaVolume());
+            setAlarmVolume(volumeSettings.getAlarmVolume());
             setRingtoneVolume(volumeSettings.getRingtoneVolume());
             setNotificationVolume(volumeSettings.getNotificationVolume());
             setRingerMode(RingtoneModeHelper.translateToAudioManagerRingerMode(volumeSettings.getRingtoneMode()));
 
             return true;
         } else {
-            Log.w("easyprofiles", "VolumeSettings object is null!");
+            LOG.warn("VolumeSettings object is null!");
             return false;
         }
     }
@@ -54,34 +64,72 @@ public class AudioManagerHelper {
 
     private void setAlarmVolume(int volume) {
         int calculatedVolume = calculateVolume(maxAlarmVolume, volume);
-        Log.d("easyprofiles", "Set alarm volume to: " + calculatedVolume + " / " + maxAlarmVolume);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
 
-        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, calculatedVolume, AudioManager.FLAG_VIBRATE);
+        LOG.debug("Current alarm volume is: {}", currentVolume);
+        LOG.debug("Set alarm volume to: {} / {}", calculatedVolume, maxAlarmVolume);
+
+        setVolume(AudioManager.STREAM_ALARM, currentVolume, calculatedVolume);
     }
 
     private void setMediaVolume(int volume) {
         int calculatedVolume = calculateVolume(maxMediaVolume, volume);
-        Log.d("easyprofiles", "Set media volume to: " + calculatedVolume + " / " + maxMediaVolume);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, calculatedVolume, AudioManager.FLAG_VIBRATE);
+        LOG.debug("Current music volume is: {}", currentVolume);
+        LOG.debug("Set media volume to: {} / {}", calculatedVolume, maxMediaVolume);
+
+        setVolume(AudioManager.STREAM_MUSIC, currentVolume, calculatedVolume);
     }
 
     private void setRingtoneVolume(int volume) {
         int calculatedVolume = calculateVolume(maxRingtoneVolume, volume);
-        Log.d("easyprofiles", "Set ringtone volume to: " + calculatedVolume + " / " + maxRingtoneVolume);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 
-        audioManager.setStreamVolume(AudioManager.STREAM_RING, calculatedVolume, AudioManager.FLAG_VIBRATE);
+        LOG.debug("Current ringtone volume is: {}", currentVolume);
+        LOG.debug("Set ringtone volume to: {} / {}", calculatedVolume, maxRingtoneVolume);
+
+        setVolume(AudioManager.STREAM_RING, currentVolume, calculatedVolume);
     }
 
     private void setNotificationVolume(int volume) {
         int calculatedVolume = calculateVolume(maxNotificationVolume, volume);
-        Log.d("easyprofiles", "Set notification volume to: " + calculatedVolume + " / " + maxNotificationVolume);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
 
-        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, calculatedVolume, AudioManager.FLAG_VIBRATE);
+        LOG.debug("Current notification volume is: {}", currentVolume);
+        LOG.debug("Set notification volume to: {} / {}", calculatedVolume, maxNotificationVolume);
+
+        setVolume(AudioManager.STREAM_NOTIFICATION, currentVolume, calculatedVolume);
+    }
+
+    private void setVolume(int stream, int currentVolume, int newVolume) {
+        if (newVolume == 0) {
+            if (AndroidUtils.getBuildVersion() >= Build.VERSION_CODES.M) {
+                audioManager.adjustStreamVolume(stream, AudioManager.ADJUST_MUTE, 0);
+            } else {
+                audioManager.setStreamMute(stream, true);
+            }
+
+            return;
+        }
+
+        if (currentVolume == 0) {
+            if (AndroidUtils.getBuildVersion() >= Build.VERSION_CODES.M) {
+                audioManager.adjustStreamVolume(stream, AudioManager.ADJUST_UNMUTE, 0);
+            } else {
+                audioManager.setStreamMute(stream, false);
+            }
+        }
+
+        if (newVolume > currentVolume) {
+            audioManager.setStreamVolume(stream, newVolume, 0);
+        } else {
+            audioManager.setStreamVolume(stream, newVolume, 0);
+        }
     }
 
     private void setRingerMode(int ringerMode) {
-        Log.d("easyprofiles", "Set ringer mode to: " + ringerMode);
+        LOG.debug("Set ringer mode to: {}", ringerMode);
         audioManager.setRingerMode(ringerMode);
     }
 

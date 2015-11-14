@@ -40,4 +40,5 @@ dependencies {
 
     // inselhome
     compile 'de.inselhome:android-logging:1.0-SNAPSHOT'
+    compile 'de.inselhome:android-utils:1.2-SNAPSHOT'
 }
