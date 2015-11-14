@@ -23,13 +23,14 @@
     <string name="profilescheduler_save_button">Fertig</string>
     <string name="profilescheduler_cancel_button">Abbrechen</string>
 
-    <string name="editprofile_volume_set_to">Gesetzt auf {volume} / 10</string>
+    <string name="editprofile_volume_set_to">Gesetzt auf {value} / {maxValue}</string>
     <string name="editprofile_name">Name</string>
     <string name="editprofile_section_volume">Lautstärke festlegen</string>
     <string name="editprofile_alarm_volume">Alarm</string>
     <string name="editprofile_media_volume">Medien</string>
     <string name="editprofile_ringtone_volume">Klingelton</string>
     <string name="editprofile_notification_volume">Benachrichtigungen</string>
+    <string name="editprofile_ringtone_and_notification_volume">Klingelton &amp; Benachrichtigungen</string>
     <string name="editprofile_ringtone_mode">Soundprofil</string>
     <string name="editprofile_cancel_button">Zurück</string>
     <string name="editprofile_save_button">Fertig</string>

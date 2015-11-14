@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.common.base.Strings;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,8 @@ public abstract class AbstractSettingsView<T> extends FrameLayout {
     protected List<Validator<T>> inputValidators = new ArrayList<>();
 
     protected OnEditFinishedListener<T> onEditFinishedListener;
+
+    protected String valueTemplate;
 
     protected TextView labelField;
     protected TextView valueField;
@@ -45,11 +49,16 @@ public abstract class AbstractSettingsView<T> extends FrameLayout {
                 0, 0);
 
         try {
+            valueTemplate = a.getString(R.styleable.SettingsView_valueTemplate);
+            if (Strings.isNullOrEmpty(valueTemplate)) {
+                valueTemplate = "{value}";
+            }
+
             String label = a.getString(R.styleable.SettingsView_label);
             String value = a.getString(R.styleable.SettingsView_value);
 
             labelField.setText(label);
-            valueField.setText(value);
+            valueField.setText(getFormattedValue(value));
         } finally {
             a.recycle();
         }
@@ -70,6 +79,23 @@ public abstract class AbstractSettingsView<T> extends FrameLayout {
 
     public String getLabel() {
         return labelField.getText().toString();
+    }
+
+    public void setValueTemplate(String valueTemplate) {
+        this.valueTemplate = valueTemplate;
+    }
+
+    public String getFormattedValue(String value) {
+        String valueToInsert = value;
+        if (Strings.isNullOrEmpty(value)) {
+            valueToInsert = "";
+        }
+
+        if (Strings.isNullOrEmpty(valueTemplate)) {
+            return valueToInsert;
+        } else {
+            return valueTemplate.replaceAll("\\{value\\}", valueToInsert);
+        }
     }
 
     public void addValidator(Validator<T> validator) {

@@ -27,6 +27,7 @@
             android:id="@+id/alarm_volume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            custom:valueTemplate="@string/editprofile_volume_set_to"
             custom:label="@string/editprofile_alarm_volume" />
 
         <FrameLayout
@@ -37,6 +38,7 @@
             android:id="@+id/media_volume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            custom:valueTemplate="@string/editprofile_volume_set_to"
             custom:label="@string/editprofile_media_volume" />
 
         <FrameLayout
@@ -47,9 +49,11 @@
             android:id="@+id/ringtone_volume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            custom:valueTemplate="@string/editprofile_volume_set_to"
             custom:label="@string/editprofile_ringtone_volume" />
 
         <FrameLayout
+            android:id="@+id/notification_volume_devider"
             style="@style/AppTheme.EditProfile.Devider"
             android:layout_width="match_parent" />
 
@@ -57,6 +61,7 @@
             android:id="@+id/notification_volume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            custom:valueTemplate="@string/editprofile_volume_set_to"
             custom:label="@string/editprofile_notification_volume" />
 
         <FrameLayout

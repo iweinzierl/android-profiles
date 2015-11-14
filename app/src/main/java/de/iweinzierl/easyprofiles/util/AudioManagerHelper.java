@@ -63,43 +63,39 @@ public class AudioManagerHelper {
     }
 
     private void setAlarmVolume(int volume) {
-        int calculatedVolume = calculateVolume(maxAlarmVolume, volume);
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
 
         LOG.debug("Current alarm volume is: {}", currentVolume);
-        LOG.debug("Set alarm volume to: {} / {}", calculatedVolume, maxAlarmVolume);
+        LOG.debug("Set alarm volume to: {} / {}", volume, maxAlarmVolume);
 
-        setVolume(AudioManager.STREAM_ALARM, currentVolume, calculatedVolume);
+        setVolume(AudioManager.STREAM_ALARM, currentVolume, volume);
     }
 
     private void setMediaVolume(int volume) {
-        int calculatedVolume = calculateVolume(maxMediaVolume, volume);
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         LOG.debug("Current music volume is: {}", currentVolume);
-        LOG.debug("Set media volume to: {} / {}", calculatedVolume, maxMediaVolume);
+        LOG.debug("Set media volume to: {} / {}", volume, maxMediaVolume);
 
-        setVolume(AudioManager.STREAM_MUSIC, currentVolume, calculatedVolume);
+        setVolume(AudioManager.STREAM_MUSIC, currentVolume, volume);
     }
 
     private void setRingtoneVolume(int volume) {
-        int calculatedVolume = calculateVolume(maxRingtoneVolume, volume);
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 
         LOG.debug("Current ringtone volume is: {}", currentVolume);
-        LOG.debug("Set ringtone volume to: {} / {}", calculatedVolume, maxRingtoneVolume);
+        LOG.debug("Set ringtone volume to: {} / {}", volume, maxRingtoneVolume);
 
-        setVolume(AudioManager.STREAM_RING, currentVolume, calculatedVolume);
+        setVolume(AudioManager.STREAM_RING, currentVolume, volume);
     }
 
     private void setNotificationVolume(int volume) {
-        int calculatedVolume = calculateVolume(maxNotificationVolume, volume);
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
 
         LOG.debug("Current notification volume is: {}", currentVolume);
-        LOG.debug("Set notification volume to: {} / {}", calculatedVolume, maxNotificationVolume);
+        LOG.debug("Set notification volume to: {} / {}", volume, maxNotificationVolume);
 
-        setVolume(AudioManager.STREAM_NOTIFICATION, currentVolume, calculatedVolume);
+        setVolume(AudioManager.STREAM_NOTIFICATION, currentVolume, volume);
     }
 
     private void setVolume(int stream, int currentVolume, int newVolume) {
@@ -131,10 +127,5 @@ public class AudioManagerHelper {
     private void setRingerMode(int ringerMode) {
         LOG.debug("Set ringer mode to: {}", ringerMode);
         audioManager.setRingerMode(ringerMode);
-    }
-
-    private int calculateVolume(int max, int volume) {
-        double ratio = (double) volume / 10;
-        return (int) Math.ceil(max * ratio);
     }
 }

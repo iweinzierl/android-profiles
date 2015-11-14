@@ -1,26 +1,39 @@
 package de.iweinzierl.easyprofiles.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
-
-import com.google.common.base.Strings;
 
 import de.iweinzierl.easyprofiles.R;
 
 public class SettingsViewSlider extends AbstractSettingsView<Integer> {
 
-    public SettingsViewSlider(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+    private int maxValue;
 
     private Integer rawValue;
+
+    public SettingsViewSlider(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.SettingsViewSlider,
+                0, 0);
+
+        try {
+            maxValue = a.getInt(R.styleable.SettingsViewSlider_maxValue, 10);
+        } finally {
+            a.recycle();
+        }
+    }
 
     @Override
     public void setValue(Integer value) {
         this.rawValue = value;
 
-        String volumeSetTo = getContext().getResources().getString(R.string.editprofile_volume_set_to);
-        volumeSetTo = volumeSetTo.replace("{volume}", String.valueOf(value));
+        String volumeSetTo = valueTemplate;
+        volumeSetTo = volumeSetTo.replace("{value}", String.valueOf(value));
+        volumeSetTo = volumeSetTo.replace("{maxValue}", String.valueOf(maxValue));
         valueField.setText(volumeSetTo);
         invalidate();
     }
@@ -38,6 +51,7 @@ public class SettingsViewSlider extends AbstractSettingsView<Integer> {
     @Override
     protected void showEditDialog() {
         new SlideSettingsDialogBuilder()
+                .withMaxValue(getMaxValue())
                 .withContext(getContext())
                 .withLabel(labelField.getText().toString())
                 .withOldValue(getValue())
@@ -47,5 +61,13 @@ public class SettingsViewSlider extends AbstractSettingsView<Integer> {
                         notifyEditFinished(oldValue, newValue);
                     }
                 }).show();
+    }
+
+    public int getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
     }
 }

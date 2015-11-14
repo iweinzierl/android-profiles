@@ -12,6 +12,8 @@ public class SlideSettingsDialogBuilder extends AbstractSettingsDialogBuilder<In
 
     private SeekBar valueField;
 
+    private int maxValue = 10;
+
     @Override
     protected View createContent() {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -24,6 +26,7 @@ public class SlideSettingsDialogBuilder extends AbstractSettingsDialogBuilder<In
         titleField.setText(R.string.edittextdialog_title);
         labelField.setText(getLabel());
         valueField.setProgress(getOldValue());
+        valueField.setMax(maxValue);
 
         return content;
     }
@@ -31,5 +34,10 @@ public class SlideSettingsDialogBuilder extends AbstractSettingsDialogBuilder<In
     @Override
     protected Integer getNewValue() {
         return valueField.getProgress();
+    }
+
+    public SlideSettingsDialogBuilder withMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+        return this;
     }
 }
