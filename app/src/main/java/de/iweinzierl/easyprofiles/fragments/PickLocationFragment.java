@@ -1,4 +1,4 @@
-package de.iweinzierl.easyprofiles;
+package de.iweinzierl.easyprofiles.fragments;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -9,7 +9,10 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,53 +26,66 @@ import com.google.android.gms.maps.model.LatLng;
 import org.slf4j.Logger;
 
 import de.inselhome.android.logging.AndroidLoggerFactory;
+import de.inselhome.android.utils.UiUtils;
+import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.util.AndroidUtils;
 
-public class PickLocationActivity extends FragmentActivity implements OnMapReadyCallback {
+public class PickLocationFragment extends Fragment implements OnMapReadyCallback {
 
-    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(PickLocationActivity.class.getName());
+    public interface Callback {
+        void onLocationSelected(double lat, double lon, int radius);
+    }
 
     private static final int REQUEST_LOCATION_PERMISSION = 100;
 
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(PickLocationFragment.class.getName());
+
+    private Callback callback;
+
     private GoogleMap mMap;
     private Circle circle;
+    private SeekBar radiusBar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pick_location);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_pick_location, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        SupportMapFragment mapFragment = new SupportMapFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.location_map, mapFragment)
+                .commit();
         mapFragment.getMapAsync(this);
 
-        SeekBar seekBar = (SeekBar) findViewById(R.id.radius_bar);
-        seekBar.setProgress(50);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        radiusBar = UiUtils.getGeneric(SeekBar.class, view, R.id.radius_bar);
+        radiusBar.setProgress(50);
+        radiusBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (circle != null) {
-                    int newValue = seekBar.getProgress();
-                    circle.setRadius(newValue);
+                    int newRadius = seekBar.getProgress();
+                    circle.setRadius(newRadius);
+
+                    if (callback != null) {
+                        callback.onLocationSelected(
+                                circle.getCenter().latitude, circle.getCenter().longitude, newRadius);
+                    }
                 }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        init();
     }
 
     @Override
@@ -87,6 +103,28 @@ public class PickLocationActivity extends FragmentActivity implements OnMapReady
                 init();
             }
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        init();
+    }
+
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
+
+    public double getLat() {
+        return circle.getCenter().latitude;
+    }
+
+    public double getLon() {
+        return circle.getCenter().longitude;
+    }
+
+    public double getRadius() {
+        return circle.getRadius();
     }
 
     private void init() {
@@ -119,6 +157,11 @@ public class PickLocationActivity extends FragmentActivity implements OnMapReady
             @Override
             public void onMapClick(LatLng latLng) {
                 circle.setCenter(latLng);
+
+                if (callback != null) {
+                    callback.onLocationSelected(
+                            circle.getCenter().latitude, circle.getCenter().longitude, (int) circle.getRadius());
+                }
             }
         });
     }
@@ -134,7 +177,7 @@ public class PickLocationActivity extends FragmentActivity implements OnMapReady
     }
 
     private LatLng getCurrentLocation() {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         return new LatLng(location.getAltitude(), location.getLongitude());
     }
@@ -157,6 +200,6 @@ public class PickLocationActivity extends FragmentActivity implements OnMapReady
 
     @TargetApi(Build.VERSION_CODES.M)
     private boolean isLocationPermissionGranted() {
-        return checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 }

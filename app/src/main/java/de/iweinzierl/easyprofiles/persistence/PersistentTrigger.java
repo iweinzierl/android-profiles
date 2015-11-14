@@ -4,9 +4,10 @@ import com.google.common.base.MoreObjects;
 import com.orm.dsl.Table;
 import com.orm.entity.annotation.EntityListeners;
 
+import de.iweinzierl.easyprofiles.persistence.listener.LocationBasedTriggerListener;
 import de.iweinzierl.easyprofiles.persistence.listener.TimeBasedTriggerActivationListener;
 
-@EntityListeners({TimeBasedTriggerActivationListener.class})
+@EntityListeners({TimeBasedTriggerActivationListener.class, LocationBasedTriggerListener.class})
 @Table(name = "trigger")
 public class PersistentTrigger {
 

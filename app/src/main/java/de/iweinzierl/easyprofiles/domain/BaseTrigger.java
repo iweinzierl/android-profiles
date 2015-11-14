@@ -18,6 +18,9 @@ public abstract class BaseTrigger implements Trigger {
         this.type = type;
     }
 
+    protected BaseTrigger() {
+    }
+
     @Override
     public Long getId() {
         return id;

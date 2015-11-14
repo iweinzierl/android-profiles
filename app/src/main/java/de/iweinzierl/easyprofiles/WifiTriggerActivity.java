@@ -1,10 +1,10 @@
 package de.iweinzierl.easyprofiles;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toolbar;
@@ -19,7 +19,7 @@ import de.iweinzierl.easyprofiles.fragments.WifiTriggerTabFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.util.wifi.WifiManagerHelper;
 
-public class WifiTriggerActivity extends Activity implements WifiTriggerTabFragment.Callback {
+public class WifiTriggerActivity extends FragmentActivity implements WifiTriggerTabFragment.Callback {
 
     private WifiTriggerTabFragment wifiTriggerTabFragment;
     private WifiBasedTrigger wifiTrigger;
@@ -47,7 +47,7 @@ public class WifiTriggerActivity extends Activity implements WifiTriggerTabFragm
             }
         });
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content, wifiTriggerTabFragment)
                 .commit();

@@ -117,7 +117,7 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
                 break;
             case LOCATION_BASED:
                 triggerBuilder.setTriggerType(TriggerType.LOCATION_BASED);
-                startActivityForResult(new Intent(this, PickLocationActivity.class), REQUEST_PICK_LOCATION);
+                startActivityForResult(new Intent(this, LocationTriggerActivity.class), REQUEST_PICK_LOCATION);
         }
     }
 

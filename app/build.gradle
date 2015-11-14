@@ -23,6 +23,7 @@ dependencies {
     // google libs
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.gms:play-services-maps:8.3.0'
+    compile 'com.google.android.gms:play-services-location:8.3.0'
     compile 'com.android.support:appcompat-v7:23.0.0'
 
     // orm

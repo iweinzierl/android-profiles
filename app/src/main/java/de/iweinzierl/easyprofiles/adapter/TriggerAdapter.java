@@ -7,15 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Set;
 
+import de.inselhome.android.utils.UiUtils;
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.domain.Day;
+import de.iweinzierl.easyprofiles.domain.LocationBasedTrigger;
 import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
 import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
@@ -46,6 +48,8 @@ public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
                 return buildWifiView(persistentTrigger, layoutInflater, viewGroup);
             case TIME_BASED:
                 return buildTimeBasedView(persistentTrigger, layoutInflater, viewGroup);
+            case LOCATION_BASED:
+                return buildLocationBasedView(persistentTrigger, layoutInflater, viewGroup);
             default:
                 return new View(context);
         }
@@ -135,4 +139,42 @@ public class TriggerAdapter extends ListAdapter<PersistentTrigger> {
 
         return view;
     }
+
+    private View buildLocationBasedView(final PersistentTrigger persistentTrigger, LayoutInflater layoutInflater, ViewGroup viewGroup) {
+        LocationBasedTrigger trigger = new LocationBasedTrigger();
+        trigger.apply(persistentTrigger);
+
+        View view = layoutInflater.inflate(R.layout.list_item_location_based_trigger, viewGroup, false);
+
+        TextView location = UiUtils.getGeneric(TextView.class, view, R.id.location);
+        TextView profileActivation = (TextView) view.findViewById(R.id.profile_activation);
+        TextView profileDeactivation = (TextView) view.findViewById(R.id.profile_deactivation);
+        Switch enabled = (Switch) view.findViewById(R.id.enabled);
+
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        nf.setMaximumFractionDigits(3);
+        location.setText(nf.format(trigger.getLat()) + " / " + nf.format(trigger.getLon()));
+
+        profileActivation.setText(trigger.getOnActivateProfile().getName());
+        if (trigger.getOnDeactivateProfile() == null) {
+            profileDeactivation.setText("");
+        } else {
+            profileDeactivation.setText(trigger.getOnDeactivateProfile().getName());
+        }
+
+        enabled.setChecked(persistentTrigger.isEnabled());
+        enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    callback.onTriggerEnabled(persistentTrigger);
+                } else {
+                    callback.onTriggerDisabled(persistentTrigger);
+                }
+            }
+        });
+
+        return view;
+    }
+
 }
