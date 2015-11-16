@@ -9,10 +9,18 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toolbar;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import org.slf4j.Logger;
+
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.navigation.NavigationAdapter;
 import de.iweinzierl.easyprofiles.navigation.NavigationClickListener;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(BaseActivity.class.getName());
 
     private ActionBarDrawerToggle toggle;
 
@@ -54,4 +62,28 @@ public abstract class BaseActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         return toggle.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        EasyProfilesApp.setupGoogleApiClient(this, this, this);
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        LOG.info("Successfully connected to Google APIs");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        LOG.info("Connection to Google APIs suspended: {}", i);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        LOG.error("Connection to Google APIs failed: {} ({})", result.getErrorMessage(), result.getErrorCode());
+        // TODO display error dialog to user
+    }
+
 }

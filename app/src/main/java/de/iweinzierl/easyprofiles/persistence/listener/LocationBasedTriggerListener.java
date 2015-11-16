@@ -10,15 +10,19 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.common.collect.Lists;
 import com.orm.entity.annotation.PostPersist;
+import com.orm.entity.annotation.PreRemove;
 
 import org.slf4j.Logger;
 
 import de.inselhome.android.logging.AndroidLoggerFactory;
+import de.iweinzierl.easyprofiles.EasyProfilesApp;
 import de.iweinzierl.easyprofiles.domain.LocationBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 import de.iweinzierl.easyprofiles.service.GeofenceTransitionsService;
+import de.iweinzierl.easyprofiles.util.geo.GeofenceRequestIdGenerator;
 
 public class LocationBasedTriggerListener implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -67,26 +71,39 @@ public class LocationBasedTriggerListener implements GoogleApiClient.ConnectionC
         }
     }
 
+    @PreRemove
+    public void preRemove(PersistentTrigger persistentTrigger) {
+        if (persistentTrigger.getType() != TriggerType.LOCATION_BASED) {
+            return;
+        }
+
+        LOG.debug("received preRemove event for location based trigger");
+
+        LocationBasedTrigger trigger = new LocationBasedTrigger();
+        trigger.apply(persistentTrigger);
+
+        removeGeofence(trigger);
+    }
+
     private void addGeofence(LocationBasedTrigger trigger) {
         Geofence geofence = createGeofence(trigger);
 
-        LocationServices.GeofencingApi.addGeofences(
-                createGoogleApiClient(),
-                createGeofenceRequest(geofence),
-                createPendingIntent());
-    }
+        GoogleApiClient googleApiClient = EasyProfilesApp.getGoogleApiClient();
 
-    private GoogleApiClient createGoogleApiClient() {
-        return new GoogleApiClient.Builder(context)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
+        if (googleApiClient != null && googleApiClient.isConnected()) {
+            LocationServices.GeofencingApi.addGeofences(
+                    googleApiClient,
+                    createGeofenceRequest(geofence),
+                    createPendingIntent());
+        } else {
+            LOG.error("GoogleApiClient is null or not connected!");
+        }
     }
 
     private Geofence createGeofence(LocationBasedTrigger trigger) {
         return new Geofence.Builder()
-                .setRequestId("location-based-trigger-" + trigger.getId())
+                .setRequestId(new GeofenceRequestIdGenerator().generateRequestId(trigger.getId()))
+                .setExpirationDuration(365 * 24 * 60 * 60 * 1000)
                 .setCircularRegion(trigger.getLat(), trigger.getLon(), trigger.getRadius())
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
                 .build();
@@ -109,6 +126,11 @@ public class LocationBasedTriggerListener implements GoogleApiClient.ConnectionC
     }
 
     private void removeGeofence(LocationBasedTrigger trigger) {
-        // TODO
+        GoogleApiClient googleApiClient = EasyProfilesApp.getGoogleApiClient();
+
+        String requestId = new GeofenceRequestIdGenerator().generateRequestId(trigger.getId());
+        LocationServices.GeofencingApi.removeGeofences(googleApiClient, Lists.newArrayList(requestId));
+
+        // TODO evaluate result
     }
 }
