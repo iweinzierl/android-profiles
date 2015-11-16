@@ -9,12 +9,13 @@ import com.orm.SugarApp;
 import org.slf4j.Logger;
 
 import de.inselhome.android.logging.AndroidLoggerFactory;
+import de.iweinzierl.easyprofiles.logging.DbLogger;
 
 public class EasyProfilesApp extends SugarApp {
 
     private static final String LOG_TAG = "easyprofiles";
 
-    private static final Logger LOG = AndroidLoggerFactory.getInstance(LOG_TAG).getLogger(EasyProfilesApp.class.getName());
+    private Logger LOG;
 
     private static GoogleApiClient googleApiClient;
 
@@ -22,6 +23,12 @@ public class EasyProfilesApp extends SugarApp {
     public void onCreate() {
         super.onCreate();
 
+        AndroidLoggerFactory androidLoggerFactory = AndroidLoggerFactory.getInstance();
+        androidLoggerFactory.setLogTag(LOG_TAG);
+        androidLoggerFactory.setContext(this);
+        androidLoggerFactory.setLoggerClass(DbLogger.class);
+
+        LOG = androidLoggerFactory.getLogger(EasyProfilesApp.class.getName());
         LOG.info("Application startup");
     }
 

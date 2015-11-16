@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 
+import de.iweinzierl.easyprofiles.LogDisplayActivity;
 import de.iweinzierl.easyprofiles.ProfileListActivity;
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.TriggerListActivity;
@@ -28,6 +29,8 @@ public class NavigationClickListener implements AdapterView.OnItemClickListener 
             case R.string.activity_triggerlist:
                 context.startActivity(new Intent(context, TriggerListActivity.class));
                 break;
+            case R.string.activity_logs:
+                context.startActivity(new Intent(context, LogDisplayActivity.class));
         }
     }
 }

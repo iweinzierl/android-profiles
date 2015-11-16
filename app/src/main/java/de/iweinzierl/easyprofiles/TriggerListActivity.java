@@ -2,20 +2,24 @@ package de.iweinzierl.easyprofiles;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.orm.SugarRecord;
 import com.software.shell.fab.ActionButton;
 
+import org.slf4j.Logger;
+
 import java.util.List;
 
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.domain.TriggerBuilder;
 import de.iweinzierl.easyprofiles.fragments.TriggerListFragment;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 
 public class TriggerListActivity extends BaseActivity implements TriggerListFragment.Callback {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(TriggerListActivity.class.getName());
 
     private static final int REQUEST_PICK_TRIGGERTYPE = 100;
     private static final int REQUEST_PICK_WIFI = 200;
@@ -92,7 +96,7 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
 
     private void updateTriggerList() {
         List<PersistentTrigger> persistentTriggers = SugarRecord.listAll(PersistentTrigger.class);
-        Log.d("easyprofiles", "Found " + persistentTriggers.size() + " triggers");
+        LOG.debug("Found {} triggers", persistentTriggers.size());
 
         triggerListFragment.setTriggers(persistentTriggers);
     }

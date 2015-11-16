@@ -25,7 +25,7 @@
             android:value="easy_profiles.db" />
         <meta-data
             android:name="VERSION"
-            android:value="2" />
+            android:value="4" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -47,6 +47,7 @@
         <activity android:name=".TriggerTypeSelectionActivity" />
         <activity android:name=".ProfileSchedulerActivity" />
         <activity android:name=".LocationTriggerActivity" />
+        <activity android:name=".LogDisplayActivity" />
 
         <receiver android:name=".receiver.ConnectionChangedBroadcastReceiver">
             <intent-filter>

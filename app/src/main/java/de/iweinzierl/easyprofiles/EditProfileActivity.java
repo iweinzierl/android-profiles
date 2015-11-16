@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +13,9 @@ import android.widget.Toolbar;
 
 import com.orm.SugarRecord;
 
+import org.slf4j.Logger;
+
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.fragments.EditProfileFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.VolumeSettings;
@@ -21,6 +23,8 @@ import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 import de.iweinzierl.easyprofiles.widget.validation.ValidationError;
 
 public class EditProfileActivity extends Activity {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(EditProfileActivity.class.getName());
 
     public static final String EXTRA_PROFILE_ID = "extra.profile.id";
 
@@ -52,7 +56,7 @@ public class EditProfileActivity extends Activity {
             initProfile = SugarRecord.findById(Profile.class, profileId);
 
             if (initProfile != null) {
-                Log.d("easyprofiles", "Init activity with profile: " + initProfile);
+                LOG.debug("Init activity with profile: {}", initProfile);
                 setTitle(initProfile.getName());
                 toolbarBottom.setVisibility(View.GONE);
             } else {
@@ -69,7 +73,7 @@ public class EditProfileActivity extends Activity {
                         try {
                             onSaveProfile(editProfileFragment.getProfile());
                         } catch (ValidationError e) {
-                            Log.w("easyprofiles", "Error while validating profile", e);
+                            LOG.warn("Error while validating profile", e);
                         }
                     }
                 });
@@ -132,10 +136,10 @@ public class EditProfileActivity extends Activity {
     public void onSaveProfile(Profile profile) {
         SugarRecord.save(profile);
         if (profile.getId() != null && profile.getId() > 0) {
-            Log.d("easyprofile", "Successfully persisted profile: " + profile);
+            LOG.debug("Successfully persisted profile: {}", profile);
             finish();
         } else {
-            Log.w("easyprofiles", "Persistence of profile failed!");
+            LOG.warn("Persistence of profile failed!");
         }
     }
 

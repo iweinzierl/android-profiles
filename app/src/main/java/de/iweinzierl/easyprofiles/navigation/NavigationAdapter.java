@@ -20,7 +20,8 @@ public class NavigationAdapter extends ListAdapter<Integer> {
     private static final List<Integer> ITEMS = Lists.newArrayList(
             R.string.navigation_header,
             R.string.activity_profilelist,
-            R.string.activity_triggerlist
+            R.string.activity_triggerlist,
+            R.string.activity_logs
     );
 
     public NavigationAdapter(Context context) {
@@ -59,6 +60,9 @@ public class NavigationAdapter extends ListAdapter<Integer> {
                 iv.setImageDrawable(res.getDrawable(R.drawable.ic_schedule_black_36dp, theme));
                 break;
             case R.string.activity_profilelist:
+                iv.setImageDrawable(res.getDrawable(R.drawable.ic_group_black_36dp, theme));
+                break;
+            case R.string.activity_logs:
                 iv.setImageDrawable(res.getDrawable(R.drawable.ic_group_black_36dp, theme));
                 break;
         }

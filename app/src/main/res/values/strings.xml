@@ -2,6 +2,7 @@
     <string name="app_name">EasyProfiles</string>
     <string name="action_settings">Einstellungen</string>
     <string name="notification_active_profile">Aktives Profil: </string>
+    <string name="activity_logs">Application Logs</string>
 
     <string name="ringtone_mode_normal">Normal</string>
     <string name="ringtone_mode_silent">Lautlos</string>

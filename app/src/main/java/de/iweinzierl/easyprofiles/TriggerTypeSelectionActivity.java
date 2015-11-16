@@ -3,13 +3,17 @@ package de.iweinzierl.easyprofiles;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toolbar;
 
+import org.slf4j.Logger;
+
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.fragments.TriggerTypeListFragment;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 
 public class TriggerTypeSelectionActivity extends Activity implements TriggerTypeListFragment.Callback {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(TriggerTypeSelectionActivity.class.getName());
 
     public static final int REQUEST_CODE_TRIGGERTYPE = 100;
 
@@ -39,7 +43,7 @@ public class TriggerTypeSelectionActivity extends Activity implements TriggerTyp
 
     @Override
     public void onTriggerTypeClicked(TriggerType triggerType) {
-        Log.d("easyprofiles", "Clicked trigger type: " + triggerType);
+        LOG.debug("Clicked trigger type: {}", triggerType);
 
         Intent data = new Intent();
         data.putExtra(EXTRA_TRIGGER_TYPE, triggerType.name());

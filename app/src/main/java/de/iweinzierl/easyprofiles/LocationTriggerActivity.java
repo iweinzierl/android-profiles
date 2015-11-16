@@ -78,7 +78,7 @@ public class LocationTriggerActivity extends FragmentActivity implements Locatio
 
     private void updateProfileList() {
         List<Profile> profiles = SugarRecord.listAll(Profile.class);
-        LOG.debug("easyprofiles", "Found " + profiles.size() + " Profiles");
+        LOG.debug("Found {} Profiles", profiles.size());
 
         locationTriggerTabFragment.setProfiles(profiles);
     }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +14,11 @@ import android.widget.Toast;
 import com.orm.SugarRecord;
 import com.software.shell.fab.ActionButton;
 
+import org.slf4j.Logger;
+
 import java.util.List;
 
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.animation.NotificationAnimation;
 import de.iweinzierl.easyprofiles.fragments.ProfileListFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
@@ -24,6 +26,8 @@ import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
 import de.iweinzierl.easyprofiles.util.NotificationHelper;
 
 public class ProfileListActivity extends BaseActivity implements ProfileListFragment.Callback {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(ProfileListActivity.class.getName());
 
     private ProfileListFragment profileListFragment;
 
@@ -97,7 +101,7 @@ public class ProfileListActivity extends BaseActivity implements ProfileListFrag
 
     private void updateProfileList() {
         List<Profile> profiles = SugarRecord.listAll(Profile.class);
-        Log.d("easyprofiles", "Found " + profiles.size() + " profiles in database");
+        LOG.debug("Found {} profiles in database", profiles.size());
 
         profileListFragment.setProfiles(profiles, true);
     }
@@ -117,7 +121,7 @@ public class ProfileListActivity extends BaseActivity implements ProfileListFrag
 
         @Override
         public void onClick(View view) {
-            Log.d("easyprofiles", "Clicked to add new profile");
+            LOG.debug("Clicked to add new profile");
             context.startActivity(new Intent(context, EditProfileActivity.class));
         }
     }

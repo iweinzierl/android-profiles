@@ -3,23 +3,26 @@ package de.iweinzierl.easyprofiles;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toolbar;
 
 import com.orm.SugarRecord;
 
 import org.joda.time.LocalTime;
+import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Set;
 
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.domain.Day;
 import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
 import de.iweinzierl.easyprofiles.fragments.ProfileSchedulerTabsFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 
 public class ProfileSchedulerActivity extends Activity {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(ProfileSchedulerActivity.class.getName());
 
     public static final String EXTRA_TIME_TRIGGER_ID = "extra.timebasedtrigger.data";
 
@@ -72,8 +75,8 @@ public class ProfileSchedulerActivity extends Activity {
         LocalTime deactivationTime = profileSchedulerTabsFragment.getDeactivationTime();
         Set<Day> repeatingDays = profileSchedulerTabsFragment.getRepeatingDays();
 
-        Log.d("easyprofiles", "Schedule start: " + activationTime.toString("HH:mm") + " --> " + activationProfile);
-        Log.d("easyprofiles", "Schedule stop :   " + deactivationTime.toString("HH:mm") + " --> " + deactivationProfile);
+        LOG.debug("Schedule start: {} --> {}", activationTime.toString("HH:mm"), activationProfile);
+        LOG.debug("Schedule stop : {} --> {}", deactivationTime.toString("HH:mm"), deactivationProfile);
 
         TimeBasedTrigger trigger = new TimeBasedTrigger();
         trigger.setActivationTime(activationTime);

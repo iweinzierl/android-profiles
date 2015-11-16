@@ -5,21 +5,25 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toolbar;
 
 import com.google.common.base.Strings;
 import com.orm.SugarRecord;
 
+import org.slf4j.Logger;
+
 import java.util.List;
 
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.fragments.WifiTriggerTabFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.util.wifi.WifiManagerHelper;
 
 public class WifiTriggerActivity extends FragmentActivity implements WifiTriggerTabFragment.Callback {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(WifiTriggerActivity.class.getName());
 
     private WifiTriggerTabFragment wifiTriggerTabFragment;
     private WifiBasedTrigger wifiTrigger;
@@ -84,7 +88,7 @@ public class WifiTriggerActivity extends FragmentActivity implements WifiTrigger
             SugarRecord.save(wifiTrigger.export());
             finish();
         } else {
-            Log.w("easyprofiles", "Incomplete configuration for wifi based trigger");
+            LOG.warn("Incomplete configuration for wifi based trigger");
             new AlertDialog.Builder(this)
                     .setTitle(R.string.activity_wifi_trigger_incomplete_error_title)
                     .setMessage(R.string.activity_wifi_trigger_incomplete_error_message)
@@ -98,14 +102,14 @@ public class WifiTriggerActivity extends FragmentActivity implements WifiTrigger
         WifiManagerHelper wifiManagerHelper = new WifiManagerHelper(wifiManager);
 
         List<String> ssids = wifiManagerHelper.listSSIDs();
-        Log.d("easyprofiles", "Found " + ssids.size() + " Wifi SSIDs");
+        LOG.debug("Found {} Wifi SSIDs", ssids.size());
 
         wifiTriggerTabFragment.setWifiSSIDs(ssids);
     }
 
     private void updateProfileList() {
         List<Profile> profiles = SugarRecord.listAll(Profile.class);
-        Log.d("easyprofiles", "Found " + profiles.size() + " Profiles");
+        LOG.debug("Found {} Profiles", profiles.size());
 
         wifiTriggerTabFragment.setProfiles(profiles);
     }
