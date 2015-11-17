@@ -14,7 +14,7 @@ public abstract class LocationProcessor {
 
     private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(LocationProcessor.class.getName());
 
-    private final Context context;
+    protected final Context context;
 
     public LocationProcessor(Context context) {
         this.context = context;

@@ -130,6 +130,15 @@ public class TimeBasedTrigger extends BaseTrigger {
         return trigger;
     }
 
+    public boolean fulfillsCondition(LocalTime testTime) {
+        if (testTime == null) {
+            return false;
+        }
+
+        return (testTime.isEqual(activationTime) || testTime.isAfter(activationTime))
+                && (testTime.isBefore(deactivationTime) || testTime.isEqual(deactivationTime));
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)

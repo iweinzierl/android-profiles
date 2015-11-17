@@ -2,14 +2,12 @@ package de.iweinzierl.easyprofiles;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.orm.SugarRecord;
 import com.software.shell.fab.ActionButton;
@@ -22,8 +20,7 @@ import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.animation.NotificationAnimation;
 import de.iweinzierl.easyprofiles.fragments.ProfileListFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
-import de.iweinzierl.easyprofiles.util.AudioManagerHelper;
-import de.iweinzierl.easyprofiles.util.NotificationHelper;
+import de.iweinzierl.easyprofiles.util.ProfileActivator;
 
 public class ProfileListActivity extends BaseActivity implements ProfileListFragment.Callback {
 
@@ -82,13 +79,10 @@ public class ProfileListActivity extends BaseActivity implements ProfileListFrag
     @Override
     public void onProfileClick(Profile profile) {
         if (profile != null) {
-            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            if (new AudioManagerHelper(audioManager).adjustVolume(profile.getVolumeSettings())) {
-                new NotificationHelper(this).publishProfileNotification(profile);
-                showNotification("Profile '" + profile.getName() + "' set");
-            } else {
-                Toast.makeText(this, "Profile '" + profile.getName() + "' not set!", Toast.LENGTH_SHORT).show();
-            }
+            new ProfileActivator(this).activate(profile);
+
+            // TODO i18n
+            showNotification("Profile '" + profile.getName() + "' set");
         }
     }
 

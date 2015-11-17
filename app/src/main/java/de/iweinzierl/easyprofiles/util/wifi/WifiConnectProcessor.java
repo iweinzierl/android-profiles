@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 
 import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
+import de.iweinzierl.easyprofiles.util.ProfileActivator;
 
 public class WifiConnectProcessor extends WifiProcessor {
 
@@ -22,12 +23,12 @@ public class WifiConnectProcessor extends WifiProcessor {
 
     @Override
     protected void enable(WifiBasedTrigger trigger) {
-        if (trigger == null) {
-            LOG.warn("Wifi trigger that should be activated is null!");
-        } else if (trigger.getOnActivateProfile() == null) {
-            LOG.warn("Activation profile of wifi trigger that should be activated is null!");
-        } else {
-            trigger.getOnActivateProfile().activate(context);
+        try {
+            new ProfileActivator(context).activate(trigger.export());
+        } catch (ProfileActivator.NotFoundException e) {
+            LOG.warn("Unable to activate wifi trigger", e);
+        } catch (ProfileActivator.NotPermittedException e) {
+            LOG.warn("Activation of wifi trigger is not permitted", e);
         }
     }
 }

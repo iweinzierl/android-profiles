@@ -5,21 +5,23 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.orm.SugarRecord;
 
 import org.joda.time.LocalTime;
+import org.slf4j.Logger;
 
 import java.util.List;
 
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
-import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
-import de.iweinzierl.easyprofiles.util.NotificationHelper;
+import de.iweinzierl.easyprofiles.util.ProfileActivator;
 
 public class TimeBasedTriggerActivationService extends Service {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(TimeBasedTriggerActivationService.class.getName());
 
     public static final String EXTRA_TRIGGER_ID = "extra.trigger.id";
 
@@ -32,7 +34,7 @@ public class TimeBasedTriggerActivationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         long triggerId = intent.getLongExtra(EXTRA_TRIGGER_ID, -1);
-        Log.i("easyprofiles", "Service to start/stop time based trigger " + triggerId);
+        LOG.info("Service to start/stop time based trigger: {}", triggerId);
 
         TimeBasedTrigger trigger = findTrigger(triggerId);
 
@@ -46,31 +48,28 @@ public class TimeBasedTriggerActivationService extends Service {
     }
 
     private void activate(TimeBasedTrigger trigger) {
-        if (trigger.getOnActivateProfile() != null) {
-            setProfile(trigger.getOnActivateProfile());
-        } else {
-            Log.w("easyprofiles", "Profile for 'activation' is null!");
+        try {
+            new ProfileActivator(getApplicationContext()).activate(trigger.export());
+        } catch (ProfileActivator.NotFoundException e) {
+            LOG.warn("Unable to activate time based trigger", e);
+        } catch (ProfileActivator.NotPermittedException e) {
+            LOG.warn("Activation of time based trigger not permitted", e);
         }
     }
 
     private void deactivate(TimeBasedTrigger trigger) {
-        if (trigger.getOnDeactivateProfile() != null) {
-            setProfile(trigger.getOnDeactivateProfile());
-        } else {
-            Log.w("easyprofiles", "Profile for 'deactivation' is null!");
+        try {
+            new ProfileActivator(getApplicationContext()).deactivate(trigger.export());
+        } catch (ProfileActivator.NotFoundException e) {
+            LOG.warn("Unable to deactivate time based trigger", e);
+        } catch (ProfileActivator.NotPermittedException e) {
+            LOG.warn("Deactivation of time based trigger not permitted", e);
         }
-    }
-
-    private void setProfile(Profile profile) {
-        profile.activate(getApplicationContext());
-
-        NotificationHelper helper = new NotificationHelper(getApplicationContext());
-        helper.publishProfileNotification(profile);
     }
 
     private TimeBasedTrigger findTrigger(long triggerId) {
         if (triggerId > 0) {
-            Log.d("easyprofiles", "Find trigger by id: " + triggerId);
+            LOG.debug("Find trigger by id: {}", triggerId);
 
             PersistentTrigger trigger = SugarRecord.findById(PersistentTrigger.class, triggerId);
             return transformTrigger(trigger);
