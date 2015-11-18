@@ -7,7 +7,6 @@
 
     <RelativeLayout
         android:id="@+id/fragment"
-        android:name="de.iweinzierl.easyprofiles.fragments.ProfileListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_profile_list">
@@ -20,10 +19,22 @@
             android:background="@color/ColorPrimary"
             android:elevation="4dp" />
 
+        <Spinner
+            android:id="@+id/time_range"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_below="@id/toolbar_top"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp" />
+
         <ListView
             android:id="@+id/log_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/time_range"
+            android:dividerHeight="1dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp" />
 
         <TextView
             android:id="@+id/notification_bar"

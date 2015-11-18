@@ -20,4 +20,9 @@
     <color name="SettingsDialogCancel">@color/ColorSecondaryDark</color>
 
     <color name="EditTextDialogValue">@color/ColorSecondaryDark</color>
+
+    <color name="LogDebug">#788999</color>
+    <color name="LogInfo">#157892</color>
+    <color name="LogWarn">#FF862B</color>
+    <color name="LogError">#FF0E11</color>
 </resources>
