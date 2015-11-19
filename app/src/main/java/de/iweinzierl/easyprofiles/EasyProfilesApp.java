@@ -1,6 +1,7 @@
 package de.iweinzierl.easyprofiles;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -10,10 +11,11 @@ import org.slf4j.Logger;
 
 import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.logging.DbLogger;
+import de.iweinzierl.easyprofiles.service.RestartService;
 
 public class EasyProfilesApp extends SugarApp {
 
-    private static final String LOG_TAG = "easyprofiles";
+    public static final String LOG_TAG = "easyprofiles";
 
     private Logger LOG;
 
@@ -22,6 +24,17 @@ public class EasyProfilesApp extends SugarApp {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        final Thread.UncaughtExceptionHandler defaultUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+                LOG.error("Application crashed!", throwable);
+
+                sendBroadcast(new Intent(RestartService.ACTION_RESTART));
+                defaultUncaughtExceptionHandler.uncaughtException(thread, throwable);
+            }
+        });
 
         AndroidLoggerFactory androidLoggerFactory = AndroidLoggerFactory.getInstance();
         androidLoggerFactory.setLogTag(LOG_TAG);
