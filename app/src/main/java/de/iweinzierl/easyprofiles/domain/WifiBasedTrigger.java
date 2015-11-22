@@ -37,7 +37,7 @@ public class WifiBasedTrigger extends BaseTrigger {
 
     @Override
     public void apply(PersistentTrigger persistentTrigger) {
-        setId(getId());
+        setId(persistentTrigger.getId());
         setEnabled(persistentTrigger.isEnabled());
         setOnActivateProfile(SugarRecord.findById(Profile.class, persistentTrigger.getOnActivateProfileId()));
         setOnDeactivateProfile(SugarRecord.findById(Profile.class, persistentTrigger.getOnDeactivateProfileId()));
