@@ -36,7 +36,11 @@ public class GeofenceTransitionsService extends IntentService {
 
         List<Geofence> geofences = geofencingEvent.getTriggeringGeofences();
         Location location = geofencingEvent.getTriggeringLocation();
-        LOG.debug("geofencing event was triggered by {} geofences at {} | {}", geofences.size(), location.getLatitude(), location.getLongitude());
+        LOG.debug("geofencing event was triggered by {} geofences from type {} at {} | {}",
+                geofences.size(),
+                geofencingEvent.getGeofenceTransition(),
+                location.getLatitude(),
+                location.getLongitude());
 
         try {
             long triggerId = new GeofenceRequestIdGenerator().extractTriggerId(geofences.get(0).getRequestId());
