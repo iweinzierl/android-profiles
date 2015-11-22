@@ -162,7 +162,7 @@ public class LogDisplayActivity extends BaseActivity {
                 "timestamp >= ?",
                 new String[]{String.valueOf(lowerRange.toDate().getTime())},
                 null,
-                "timestamp",
+                "timestamp DESC",
                 null);
 
         LOG.debug("Found {} logs", logs.size());
