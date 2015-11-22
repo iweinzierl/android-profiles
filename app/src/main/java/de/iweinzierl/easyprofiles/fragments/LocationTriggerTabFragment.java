@@ -166,13 +166,17 @@ public class LocationTriggerTabFragment extends Fragment implements TabHost.OnTa
     }
 
     private void saveEnterProfileFragmentState(Bundle outState) {
-        Long profileId = enterProfileFragment.getSelectedProfile().getId();
-        outState.putLong(SAVED_ENTER_PROFILE_ID, profileId);
+        if (enterProfileFragment.getSelectedProfile() != null) {
+            Long profileId = enterProfileFragment.getSelectedProfile().getId();
+            outState.putLong(SAVED_ENTER_PROFILE_ID, profileId);
+        }
     }
 
     private void saveQuitProfileFragment(Bundle outState) {
-        Long profileId = quitProfileFragment.getSelectedProfile().getId();
-        outState.putLong(SAVED_QUIT_PROFILE_ID, profileId);
+        if (quitProfileFragment.getSelectedProfile() != null) {
+            Long profileId = quitProfileFragment.getSelectedProfile().getId();
+            outState.putLong(SAVED_QUIT_PROFILE_ID, profileId);
+        }
     }
 
     private void restoreConnectProfileFragmentState(Bundle savedInstanceState) {
