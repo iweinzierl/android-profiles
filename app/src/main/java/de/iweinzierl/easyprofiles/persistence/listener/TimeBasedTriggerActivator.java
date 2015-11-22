@@ -4,28 +4,32 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.orm.entity.annotation.PostPersist;
 
+import org.slf4j.Logger;
+
 import java.util.Date;
 
+import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 import de.iweinzierl.easyprofiles.service.TimeBasedTriggerActivationService;
 
-public class TimeBasedTriggerActivationListener {
+public class TimeBasedTriggerActivator {
+
+    private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(TimeBasedTriggerActivator.class.getName());
 
     private final Context context;
 
-    public TimeBasedTriggerActivationListener(Context context) {
+    public TimeBasedTriggerActivator(Context context) {
         this.context = context;
     }
 
     @PostPersist
     public void postPersist(PersistentTrigger trigger) {
-        Log.i("easyprofiles", "Persisted trigger: " + trigger);
+        LOG.info("Activate trigger: {}", trigger);
 
         if (trigger.getType() == TriggerType.TIME_BASED && trigger.isEnabled()) {
             TimeBasedTrigger timeTrigger = new TimeBasedTrigger();
@@ -39,7 +43,7 @@ public class TimeBasedTriggerActivationListener {
     private void setProfileActivation(TimeBasedTrigger timeTrigger) {
         long millisToday = timeTrigger.getActivationTime().toDateTimeToday().getMillis();
         Date startDate = new Date(millisToday);
-        Log.i("easyprofiles", "Set up alarm manager to start time based trigger at " + startDate);
+        LOG.info("Set up alarm manager to start time based trigger at: {}", startDate);
 
         setProfileAlarm(timeTrigger, millisToday);
     }
@@ -48,7 +52,7 @@ public class TimeBasedTriggerActivationListener {
         if (timeTrigger.getDeactivationTime() != null) {
             long millisToday = timeTrigger.getDeactivationTime().toDateTimeToday().getMillis();
             Date stopDate = new Date(millisToday);
-            Log.i("easyprofiles", "Set up alarm manager to stop time based trigger at " + stopDate);
+            LOG.info("Set up alarm manager to stop time based trigger at: {}", stopDate);
 
             setProfileAlarm(timeTrigger, millisToday);
         }

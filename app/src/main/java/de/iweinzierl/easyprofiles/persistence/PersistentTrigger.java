@@ -5,9 +5,9 @@ import com.orm.dsl.Table;
 import com.orm.entity.annotation.EntityListeners;
 
 import de.iweinzierl.easyprofiles.persistence.listener.LocationBasedTriggerListener;
-import de.iweinzierl.easyprofiles.persistence.listener.TimeBasedTriggerActivationListener;
+import de.iweinzierl.easyprofiles.persistence.listener.TimeBasedTriggerActivator;
 
-@EntityListeners({TimeBasedTriggerActivationListener.class, LocationBasedTriggerListener.class})
+@EntityListeners({TimeBasedTriggerActivator.class, LocationBasedTriggerListener.class})
 @Table(name = "trigger")
 public class PersistentTrigger {
 
