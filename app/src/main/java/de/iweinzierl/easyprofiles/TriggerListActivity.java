@@ -1,6 +1,7 @@
 package de.iweinzierl.easyprofiles;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
@@ -95,10 +96,17 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
     }
 
     private void updateTriggerList() {
-        List<PersistentTrigger> persistentTriggers = SugarRecord.listAll(PersistentTrigger.class);
-        LOG.debug("Found {} triggers", persistentTriggers.size());
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                List<PersistentTrigger> persistentTriggers = SugarRecord.listAll(PersistentTrigger.class);
+                LOG.debug("Found {} triggers", persistentTriggers.size());
 
-        triggerListFragment.setTriggers(persistentTriggers);
+                triggerListFragment.setTriggers(persistentTriggers);
+
+                return null;
+            }
+        }.execute();
     }
 
     private void onAddTriggerClicked() {

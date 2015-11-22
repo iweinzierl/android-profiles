@@ -2,6 +2,7 @@ package de.iweinzierl.easyprofiles;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -94,10 +95,17 @@ public class ProfileListActivity extends BaseActivity implements ProfileListFrag
     }
 
     private void updateProfileList() {
-        List<Profile> profiles = SugarRecord.listAll(Profile.class);
-        LOG.debug("Found {} profiles in database", profiles.size());
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                List<Profile> profiles = SugarRecord.listAll(Profile.class);
+                LOG.debug("Found {} profiles in database", profiles.size());
 
-        profileListFragment.setProfiles(profiles, true);
+                profileListFragment.setProfiles(profiles, true);
+
+                return null;
+            }
+        }.execute();
     }
 
     private void showNotification(String notificationText) {

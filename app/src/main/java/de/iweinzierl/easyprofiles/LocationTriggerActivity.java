@@ -1,6 +1,7 @@
 package de.iweinzierl.easyprofiles;
 
 import android.app.AlertDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -77,10 +78,18 @@ public class LocationTriggerActivity extends FragmentActivity implements Locatio
     }
 
     private void updateProfileList() {
-        List<Profile> profiles = SugarRecord.listAll(Profile.class);
-        LOG.debug("Found {} Profiles", profiles.size());
+        new AsyncTask<Void, Void, Void>() {
 
-        locationTriggerTabFragment.setProfiles(profiles);
+            @Override
+            protected Void doInBackground(Void... voids) {
+                List<Profile> profiles = SugarRecord.listAll(Profile.class);
+                LOG.debug("Found {} Profiles", profiles.size());
+
+                locationTriggerTabFragment.setProfiles(profiles);
+
+                return null;
+            }
+        }.execute();
     }
 
     private void cancel() {

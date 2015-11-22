@@ -1,6 +1,7 @@
 package de.iweinzierl.easyprofiles;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,8 +139,8 @@ public class LogDisplayActivity extends BaseActivity {
     private void updateLogs() {
         TimePeriod timePeriod = (TimePeriod) timeRangeSpinner.getSelectedItem();
 
-        DateTime now = DateTime.now();
-        DateTime lowerRange;
+        final DateTime now = DateTime.now();
+        final DateTime lowerRange;
 
         switch (timePeriod.getUnit()) {
             case HOUR:
@@ -157,16 +158,28 @@ public class LogDisplayActivity extends BaseActivity {
 
         LOG.debug("Search logs starting of {}", lowerRange.toString("yyyy-MM-dd HH:mm:ss"));
 
-        List<LogEntity> logs = SugarRecord.find(
-                LogEntity.class,
-                "timestamp >= ?",
-                new String[]{String.valueOf(lowerRange.toDate().getTime())},
-                null,
-                "timestamp DESC",
-                null);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                final List<LogEntity> logs = SugarRecord.find(
+                        LogEntity.class,
+                        "timestamp >= ?",
+                        new String[]{String.valueOf(lowerRange.toDate().getTime())},
+                        null,
+                        "timestamp DESC",
+                        null);
 
-        LOG.debug("Found {} logs", logs.size());
+                LOG.debug("Found {} logs", logs.size());
 
-        logsList.setAdapter(new LogAdapter(this, logs));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        logsList.setAdapter(new LogAdapter(LogDisplayActivity.this, logs));
+                    }
+                });
+
+                return null;
+            }
+        }.execute();
     }
 }
