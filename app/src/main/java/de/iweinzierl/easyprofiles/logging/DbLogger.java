@@ -3,6 +3,7 @@ package de.iweinzierl.easyprofiles.logging;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.google.common.base.Throwables;
 import com.orm.SugarRecord;
 
 import java.util.Date;
@@ -196,7 +197,7 @@ public class DbLogger extends AndroidLogger {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    SugarRecord.save(new LogEntity(new Date(), level.name(), message, t.toString()));
+                    SugarRecord.save(new LogEntity(new Date(), level.name(), message, Throwables.getStackTraceAsString(t)));
                     return null;
                 }
             }.execute();
