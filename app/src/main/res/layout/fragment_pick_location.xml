@@ -8,14 +8,15 @@
         android:id="@+id/location_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/radius_wrapper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:layout_height="64dp"
+        android:layout_marginBottom="64dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
