@@ -33,10 +33,16 @@ public class TimeBasedTriggerActivationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        long triggerId = intent.getLongExtra(EXTRA_TRIGGER_ID, -1);
-        LOG.info("Service to start/stop time based trigger: {}", triggerId);
+        LOG.info("Service to start/stop time based triggers is starting");
 
-        TimeBasedTrigger trigger = findTrigger(triggerId);
+        TimeBasedTrigger trigger = findTrigger();
+
+        if (trigger == null) {
+            LOG.warn("Did not find enabled time based trigger that applies to current time");
+            return START_REDELIVER_INTENT;
+        }
+
+        LOG.debug("Found time based trigger: {}", trigger);
 
         if (isActivationTime(trigger)) {
             activate(trigger);
@@ -44,7 +50,7 @@ public class TimeBasedTriggerActivationService extends Service {
             deactivate(trigger);
         }
 
-        return super.onStartCommand(intent, flags, startId);
+        return START_REDELIVER_INTENT;
     }
 
     private void activate(TimeBasedTrigger trigger) {
@@ -67,14 +73,7 @@ public class TimeBasedTriggerActivationService extends Service {
         }
     }
 
-    private TimeBasedTrigger findTrigger(long triggerId) {
-        if (triggerId > 0) {
-            LOG.debug("Find trigger by id: {}", triggerId);
-
-            PersistentTrigger trigger = SugarRecord.findById(PersistentTrigger.class, triggerId);
-            return transformTrigger(trigger);
-        }
-
+    private TimeBasedTrigger findTrigger() {
         List<PersistentTrigger> triggers = SugarRecord.find(
                 PersistentTrigger.class,
                 "type = ? and enabled = 1",

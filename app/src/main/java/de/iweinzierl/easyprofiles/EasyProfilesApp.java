@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 
 import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.logging.DbLogger;
-import de.iweinzierl.easyprofiles.service.RestartService;
+import de.iweinzierl.easyprofiles.receiver.RestartServicesReceiver;
 
 public class EasyProfilesApp extends SugarApp {
 
@@ -31,7 +31,7 @@ public class EasyProfilesApp extends SugarApp {
             public void uncaughtException(Thread thread, Throwable throwable) {
                 LOG.error("Application crashed!", throwable);
 
-                sendBroadcast(new Intent(RestartService.ACTION_RESTART));
+                sendBroadcast(new Intent(RestartServicesReceiver.ACTION_RESTART));
                 defaultUncaughtExceptionHandler.uncaughtException(thread, throwable);
             }
         });

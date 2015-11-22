@@ -1,4 +1,4 @@
-package de.iweinzierl.easyprofiles.service;
+package de.iweinzierl.easyprofiles.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,11 +16,11 @@ import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
 import de.iweinzierl.easyprofiles.persistence.listener.TimeBasedTriggerActivator;
 
-public class RestartService extends BroadcastReceiver {
+public class RestartServicesReceiver extends BroadcastReceiver {
 
     public static final String ACTION_RESTART = "de.iweinzierl.easyprofiles.service.ACTION_RESTART";
 
-    private static final Logger LOG = AndroidLoggerFactory.getInstance(EasyProfilesApp.LOG_TAG).getLogger(RestartService.class.getName());
+    private static final Logger LOG = AndroidLoggerFactory.getInstance(EasyProfilesApp.LOG_TAG).getLogger(RestartServicesReceiver.class.getName());
 
     @Override
     public void onReceive(Context context, Intent intent) {
