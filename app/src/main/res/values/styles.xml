@@ -143,12 +143,10 @@
     <style name="AppTheme.Spinner">
         <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_marginRight">16dp</item>
-        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="AppTheme.Spinner.Item">
         <item name="android:background">@drawable/click_effect</item>
-        <item name="android:textSize">16sp</item>
         <item name="android:layout_marginLeft">0dp</item>
         <item name="android:layout_marginRight">0dp</item>
     </style>
@@ -159,7 +157,7 @@
         <item name="android:paddingBottom">16dp</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_centerInParent">true</item>
     </style>
