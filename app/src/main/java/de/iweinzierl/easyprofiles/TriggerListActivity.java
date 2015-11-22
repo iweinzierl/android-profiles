@@ -99,10 +99,15 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                List<PersistentTrigger> persistentTriggers = SugarRecord.listAll(PersistentTrigger.class);
+                final List<PersistentTrigger> persistentTriggers = SugarRecord.listAll(PersistentTrigger.class);
                 LOG.debug("Found {} triggers", persistentTriggers.size());
 
-                triggerListFragment.setTriggers(persistentTriggers);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        triggerListFragment.setTriggers(persistentTriggers);
+                    }
+                });
 
                 return null;
             }

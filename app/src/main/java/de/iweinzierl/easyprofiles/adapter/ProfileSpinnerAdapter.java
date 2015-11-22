@@ -28,7 +28,7 @@ public class ProfileSpinnerAdapter implements SpinnerAdapter {
         final Profile profile = (Profile) getItem(i);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View item = inflater.inflate(R.layout.spinner_item_dropdown_profile, null, false);
+        View item = inflater.inflate(R.layout.spinner_item_dropdown_profile, viewGroup, false);
 
         TextView tv = (TextView) item.findViewById(R.id.name);
         tv.setText(profile.getName());
