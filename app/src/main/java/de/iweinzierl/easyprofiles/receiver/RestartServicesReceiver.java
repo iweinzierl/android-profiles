@@ -56,7 +56,8 @@ public class RestartServicesReceiver extends BroadcastReceiver {
     }
 
     private boolean restartTimeBasedTrigger(Context context, PersistentTrigger persistentTrigger) {
-        new TimeBasedTriggerActivator(context).postPersist(persistentTrigger);
+        // TODO cancel potential existing alarm
+        new TimeBasedTriggerActivator(context).setProfileAlarms(persistentTrigger);
         return true;
     }
 }

@@ -3,7 +3,6 @@ package de.iweinzierl.easyprofiles.persistence.listener;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 
 import com.orm.entity.annotation.PostPersist;
 
@@ -15,7 +14,9 @@ import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
-import de.iweinzierl.easyprofiles.service.TimeBasedTriggerActivationService;
+import de.iweinzierl.easyprofiles.util.time.PendingIntentGenerator;
+import de.iweinzierl.easyprofiles.util.time.TimeBasedRequestCodeGenerator;
+import de.iweinzierl.easyprofiles.util.time.TriggerActivationServiceIntent;
 
 public class TimeBasedTriggerActivator {
 
@@ -28,7 +29,7 @@ public class TimeBasedTriggerActivator {
     }
 
     @PostPersist
-    public void postPersist(PersistentTrigger trigger) {
+    public void setProfileAlarms(PersistentTrigger trigger) {
         LOG.info("Activate trigger: {}", trigger);
 
         if (trigger.getType() == TriggerType.TIME_BASED && trigger.isEnabled()) {
@@ -40,30 +41,35 @@ public class TimeBasedTriggerActivator {
         }
     }
 
-    private void setProfileActivation(TimeBasedTrigger timeTrigger) {
-        long millisToday = timeTrigger.getActivationTime().toDateTimeToday().getMillis();
+    private void setProfileActivation(TimeBasedTrigger trigger) {
+        long millisToday = trigger.getActivationTime().toDateTimeToday().getMillis();
         Date startDate = new Date(millisToday);
-        LOG.info("Set up alarm manager to start time based trigger at: {}", startDate);
 
-        setProfileAlarm(timeTrigger, millisToday);
-    }
+        int requestCode = new TimeBasedRequestCodeGenerator(trigger).createActivationRequestCode();
 
-    private void setProfileDeactivation(TimeBasedTrigger timeTrigger) {
-        if (timeTrigger.getDeactivationTime() != null) {
-            long millisToday = timeTrigger.getDeactivationTime().toDateTimeToday().getMillis();
-            Date stopDate = new Date(millisToday);
-            LOG.info("Set up alarm manager to stop time based trigger at: {}", stopDate);
+        LOG.info("Set up alarm (request code = {}) to start time based trigger at: {}", requestCode, startDate);
 
-            setProfileAlarm(timeTrigger, millisToday);
-        }
-    }
-
-    private void setProfileAlarm(TimeBasedTrigger trigger, long millisToday) {
-        Intent intent = new Intent(context, TimeBasedTriggerActivationService.class);
-        intent.putExtra(TimeBasedTriggerActivationService.EXTRA_TRIGGER_ID, trigger.getId());
-        PendingIntent operation = PendingIntent.getService(context, (int) millisToday, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent operation = new PendingIntentGenerator(context, trigger)
+                .createDeactivationPendingIntent(new TriggerActivationServiceIntent(context, trigger));
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, millisToday, operation);
+    }
+
+    private void setProfileDeactivation(TimeBasedTrigger trigger) {
+        if (trigger.getDeactivationTime() != null) {
+            long millisToday = trigger.getDeactivationTime().toDateTimeToday().getMillis();
+            Date stopDate = new Date(millisToday);
+
+            int requestCode = new TimeBasedRequestCodeGenerator(trigger).createDeactivationRequestCode();
+
+            LOG.info("Set up alarm (request code = {}) to stop time based trigger at: {}", requestCode, stopDate);
+
+            PendingIntent operation = new PendingIntentGenerator(context, trigger)
+                    .createActivationPendingIntent(new TriggerActivationServiceIntent(context, trigger));
+
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, millisToday, operation);
+        }
     }
 }
