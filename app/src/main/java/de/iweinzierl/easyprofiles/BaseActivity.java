@@ -1,13 +1,13 @@
 package de.iweinzierl.easyprofiles;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toolbar;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -18,7 +18,7 @@ import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.navigation.NavigationAdapter;
 import de.iweinzierl.easyprofiles.navigation.NavigationClickListener;
 
-public abstract class BaseActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public abstract class BaseActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(BaseActivity.class.getName());
 
@@ -42,7 +42,7 @@ public abstract class BaseActivity extends Activity implements GoogleApiClient.C
 
         toolbarTop.setNavigationIcon(R.drawable.ic_menu_black_36dp);
 
-        setActionBar(toolbarTop);
+        setSupportActionBar(toolbarTop);
     }
 
     @Override

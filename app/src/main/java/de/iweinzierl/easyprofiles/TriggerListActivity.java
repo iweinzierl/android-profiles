@@ -45,7 +45,7 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
             }
         });
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.trigger_list_fragment, triggerListFragment)
                 .commit();

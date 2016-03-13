@@ -1,8 +1,8 @@
 package de.iweinzierl.easyprofiles;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toolbar;
 
 import com.orm.SugarRecord;
@@ -12,7 +12,7 @@ import java.util.List;
 import de.iweinzierl.easyprofiles.fragments.ProfileListFragment;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 
-public class ProfileSelectionListActivity extends Activity implements ProfileListFragment.Callback {
+public class ProfileSelectionListActivity extends AppCompatActivity implements ProfileListFragment.Callback {
 
     public static final String EXTRA_PROFILE_ID = "extra.profile.id";
     public static final String EXTRA_PROFILE_NAME = "extra.profile.name";
@@ -34,7 +34,7 @@ public class ProfileSelectionListActivity extends Activity implements ProfileLis
         }
 
         profileListFragment = new ProfileListFragment();
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.profile_list_fragment, profileListFragment)
                 .commit();
@@ -60,5 +60,9 @@ public class ProfileSelectionListActivity extends Activity implements ProfileLis
 
     @Override
     public void onProfileModify(Profile profile) {
+    }
+
+    @Override
+    public void onProfileRemoved(Profile profile) {
     }
 }
