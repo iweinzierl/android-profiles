@@ -61,9 +61,7 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".service.TimeBasedTriggerActivationService"
-            android:process=".EasyProfilesApp_background" />
+        <receiver android:name=".receiver.TimeBasedTriggerReceiver" />
 
         <service
             android:name=".service.GeofenceTransitionsService"

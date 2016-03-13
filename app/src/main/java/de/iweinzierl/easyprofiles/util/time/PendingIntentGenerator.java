@@ -18,19 +18,19 @@ public class PendingIntentGenerator {
 
     public PendingIntent createActivationPendingIntent(final Intent activationIntent) {
         int requestCode = new TimeBasedRequestCodeGenerator(trigger).createActivationRequestCode();
-        return PendingIntent.getService(
+        return PendingIntent.getBroadcast(
                 context,
                 requestCode,
                 activationIntent,
-                PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     public PendingIntent createDeactivationPendingIntent(final Intent deactivationIntent) {
         int requestCode = new TimeBasedRequestCodeGenerator(trigger).createDeactivationRequestCode();
-        return PendingIntent.getService(
+        return PendingIntent.getBroadcast(
                 context,
                 requestCode,
                 deactivationIntent,
-                PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_CANCEL_CURRENT);
     }
 }

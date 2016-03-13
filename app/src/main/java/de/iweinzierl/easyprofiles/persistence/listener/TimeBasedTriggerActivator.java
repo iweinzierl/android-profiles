@@ -53,7 +53,11 @@ public class TimeBasedTriggerActivator {
                 .createDeactivationPendingIntent(new TriggerActivationServiceIntent(context, trigger));
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, millisToday, operation);
+        alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                millisToday,
+                AlarmManager.INTERVAL_DAY,
+                operation);
     }
 
     private void setProfileDeactivation(TimeBasedTrigger trigger) {
@@ -69,7 +73,11 @@ public class TimeBasedTriggerActivator {
                     .createActivationPendingIntent(new TriggerActivationServiceIntent(context, trigger));
 
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, millisToday, operation);
+            alarmManager.setInexactRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    millisToday,
+                    AlarmManager.INTERVAL_DAY,
+                    operation);
         }
     }
 }
