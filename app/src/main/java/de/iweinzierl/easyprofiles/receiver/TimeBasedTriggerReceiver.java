@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.orm.SugarRecord;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.slf4j.Logger;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.EasyProfilesApp;
+import de.iweinzierl.easyprofiles.domain.Day;
 import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
@@ -40,9 +42,9 @@ public class TimeBasedTriggerReceiver extends BroadcastReceiver {
         LOG.info("Trigger: {}", trigger);
 
         if (trigger != null && trigger.isEnabled()) {
-            if (isActivationTime(trigger)) {
+            if (isActivationTime(trigger) && isRepeatingDay(trigger)) {
                 activate(context, trigger);
-            } else if (isDeactivationTime(trigger)) {
+            } else if (isDeactivationTime(trigger) && isRepeatingDay(trigger)) {
                 deactivate(context, trigger);
             } else {
                 LOG.warn("Neither activation nor deactivation time fits now");
@@ -92,6 +94,17 @@ public class TimeBasedTriggerReceiver extends BroadcastReceiver {
 
     private boolean isDeactivationTime(TimeBasedTrigger trigger) {
         return isNow(trigger.getDeactivationTime());
+    }
+
+    private boolean isRepeatingDay(TimeBasedTrigger trigger) {
+        LocalDate now = LocalDate.now();
+        for (Day day : trigger.getRepeatOnDays()) {
+            if (day.getDayOfWeek() == now.getDayOfWeek()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private boolean isNow(LocalTime time) {
