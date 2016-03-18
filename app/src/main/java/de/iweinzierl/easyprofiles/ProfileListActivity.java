@@ -90,7 +90,7 @@ public class ProfileListActivity extends BaseActivity implements ProfileListFrag
     @Override
     public void onProfileRemoved(Profile profile) {
         Snackbar.make(
-                findViewById(R.id.fragment),
+                findViewById(android.R.id.content),
                 "Deleted profile: " + profile.toString(),
                 Snackbar.LENGTH_SHORT)
                 .show();

@@ -3,6 +3,7 @@ package de.iweinzierl.easyprofiles;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.orm.SugarRecord;
@@ -78,21 +79,54 @@ public class TriggerListActivity extends BaseActivity implements TriggerListFrag
     }
 
     @Override
-    public void onTriggerEnabled(PersistentTrigger persistentTrigger) {
+    public void onTriggerEnabled(final PersistentTrigger persistentTrigger) {
         persistentTrigger.setEnabled(true);
         SugarRecord.save(persistentTrigger);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        "Trigger enabled: " + persistentTrigger.getType().name(),
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        });
     }
 
     @Override
-    public void onTriggerDisabled(PersistentTrigger persistentTrigger) {
+    public void onTriggerDisabled(final PersistentTrigger persistentTrigger) {
         persistentTrigger.setEnabled(false);
         SugarRecord.save(persistentTrigger);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        "Trigger disabled: " + persistentTrigger.getType().name(),
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        });
     }
 
     @Override
-    public void onTriggerRemoved(PersistentTrigger persistentTrigger) {
+    public void onTriggerRemoved(final PersistentTrigger persistentTrigger) {
         SugarRecord.delete(persistentTrigger);
         updateTriggerList();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        "Removed trigger: " + persistentTrigger.getType().name(),
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        });
     }
 
     private void updateTriggerList() {

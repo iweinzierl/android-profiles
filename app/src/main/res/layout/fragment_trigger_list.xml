@@ -8,32 +8,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TriggerListActivityFragment">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/trigger_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="false" />
-
-    <RelativeLayout
-        android:id="@+id/list_empty_view"
-        style="@style/AppTheme.List.Hint"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/title"
-            style="@style/AppTheme.List.Hint.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty_list_view_trigger_title" />
-
-        <TextView
-            style="@style/AppTheme.List.Hint.Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:text="@string/empty_list_view_trigger_text" />
-
-    </RelativeLayout>
-
+        android:layout_height="wrap_content" />
 </RelativeLayout>
