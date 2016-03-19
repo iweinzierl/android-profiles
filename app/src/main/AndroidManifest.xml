@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application xmlns:tools="http://schemas.android.com/tools"
-        android:name=".EasyProfilesApp"
+        android:name=".EasyProfilesApp_"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -25,7 +25,7 @@
             android:value="easy_profiles.db" />
         <meta-data
             android:name="VERSION"
-            android:value="4" />
+            android:value="5" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -48,10 +48,8 @@
         <activity android:name=".ProfileSchedulerActivity" />
         <activity android:name=".LocationTriggerActivity" />
         <activity android:name=".LogDisplayActivity" />
-        <activity
-            android:name=".LocationListActivity_"
-            android:label="@string/title_activity_location_list"
-            android:theme="@style/AppTheme"/>
+        <activity android:name=".LocationListActivity_" />
+        <activity android:name=".PickLocationActivity_" />
 
         <receiver android:name=".receiver.ConnectionChangedBroadcastReceiver">
             <intent-filter>

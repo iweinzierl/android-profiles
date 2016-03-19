@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 
-import de.iweinzierl.easyprofiles.LocationListActivity;
 import de.iweinzierl.easyprofiles.LocationListActivity_;
 import de.iweinzierl.easyprofiles.LogDisplayActivity;
 import de.iweinzierl.easyprofiles.ProfileListActivity;

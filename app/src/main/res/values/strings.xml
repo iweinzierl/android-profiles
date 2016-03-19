@@ -40,7 +40,6 @@
 
     <!-- triggers -->
     <string name="activity_triggerlist">Auslöser</string>
-    <string name="activity_pick_location">Ort auswählen</string>
     <string name="activity_location_trigger_incomplete_error_title">Fehler beim Anlegen</string>
     <string name="activity_location_trigger_incomplete_error_message">Der Ortsbezogene Auslöser konnte nicht angelegt werden. Unvollständige Eingabe.</string>
     <string name="triggerlist_item_deleted">Auslöser Entfernt</string>
@@ -68,6 +67,11 @@
     <string name="activity_locationlist_label_lat">Lat:</string>
     <string name="activity_locationlist_label_lon">Lon:</string>
     <string name="activity_locationlist_radius_in_title">m Radius</string>
+
+    <string name="activity_pick_location">Ort auswählen</string>
+    <string name="activity_pick_location_hint_name">Name</string>
+    <string name="activity_pick_location_label_radius">Radius: %s m</string>
+    <string name="activity_pick_location_label_finish">Übernehmen</string>
 
     <!-- dialogs -->
     <string name="edittextdialog_title">Umbenennen</string>

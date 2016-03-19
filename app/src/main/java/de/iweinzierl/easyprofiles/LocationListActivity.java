@@ -1,28 +1,23 @@
 package de.iweinzierl.easyprofiles;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.orm.SugarRecord;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.iweinzierl.easyprofiles.adapter.LocationsCardAdapter;
-import de.iweinzierl.easyprofiles.domain.LocationBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.Location;
-import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
-import de.iweinzierl.easyprofiles.persistence.TriggerType;
 
 @EActivity
 public class LocationListActivity extends BaseActivity {
@@ -35,15 +30,13 @@ public class LocationListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    @Click(R.id.addButton)
+    protected void addNewLocation() {
+        startActivityForResult(
+                new Intent(this, PickLocationActivity_.class),
+                PickLocationActivity.REQUEST_LOCATION_WITH_RADIUS);
     }
 
     @AfterViews
@@ -62,26 +55,36 @@ public class LocationListActivity extends BaseActivity {
 
     @Background
     protected void updateLocations() {
-        // TODO fetch correct locations here!!
-        List<PersistentTrigger> triggers = SugarRecord.find(
-                PersistentTrigger.class,
-                "type = ?",
-                TriggerType.LOCATION_BASED.name());
-
-        List<Location> locs = new ArrayList<>();
-
-        for (PersistentTrigger trigger : triggers) {
-            LocationBasedTrigger locTrigger = new LocationBasedTrigger();
-            locTrigger.apply(trigger);
-
-            locs.add(new Location("Fake", locTrigger.getLat(), locTrigger.getLon(), locTrigger.getRadius()));
-        }
-
-        setLocations(locs);
+        List<Location> locations = SugarRecord.listAll(Location.class);
+        setLocations(locations);
     }
 
     @UiThread
     protected void setLocations(List<Location> locations) {
         locationsAdapter.setItems(locations);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PickLocationActivity.REQUEST_LOCATION_WITH_RADIUS && resultCode == RESULT_OK) {
+            PickLocationActivity.Result result =
+                    (PickLocationActivity.Result) data.getSerializableExtra(PickLocationActivity.EXTRA_LOCATION_RESULT);
+
+            saveNewLocation(result);
+        }
+    }
+
+    @Background
+    protected void saveNewLocation(PickLocationActivity.Result result) {
+        Location location = new Location(
+                result.getName(),
+                result.getLat(),
+                result.getLon(),
+                result.getRadius());
+
+        SugarRecord.saveInTx(location);
+        updateLocations();
     }
 }

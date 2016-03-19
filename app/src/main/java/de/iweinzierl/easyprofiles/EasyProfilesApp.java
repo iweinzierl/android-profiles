@@ -7,12 +7,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.orm.SugarApp;
 
+import org.androidannotations.annotations.EApplication;
 import org.slf4j.Logger;
 
 import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.logging.DbLogger;
 import de.iweinzierl.easyprofiles.receiver.RestartServicesReceiver;
 
+@EApplication
 public class EasyProfilesApp extends SugarApp {
 
     public static final String LOG_TAG = "easyprofiles";
