@@ -48,19 +48,21 @@
         <activity android:name=".ProfileSchedulerActivity" />
         <activity android:name=".LocationTriggerActivity" />
         <activity android:name=".LogDisplayActivity" />
+        <activity
+            android:name=".LocationListActivity_"
+            android:label="@string/title_activity_location_list"
+            android:theme="@style/AppTheme"/>
 
         <receiver android:name=".receiver.ConnectionChangedBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".receiver.RestartServicesReceiver">
             <intent-filter>
                 <action android:name="de.iweinzierl.easyprofiles.service.ACTION_RESTART" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".receiver.TimeBasedTriggerReceiver" />
 
         <service
@@ -78,7 +80,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
     </application>
 
 </manifest>

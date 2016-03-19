@@ -21,6 +21,7 @@ public class NavigationAdapter extends ListAdapter<Integer> {
             R.string.navigation_header,
             R.string.activity_profilelist,
             R.string.activity_triggerlist,
+            R.string.activity_locationlist,
             R.string.activity_logs
     );
 
@@ -64,6 +65,9 @@ public class NavigationAdapter extends ListAdapter<Integer> {
                 break;
             case R.string.activity_logs:
                 iv.setImageDrawable(res.getDrawable(R.drawable.ic_group_black_36dp, theme));
+                break;
+            case R.string.activity_locationlist:
+                iv.setImageDrawable(res.getDrawable(R.drawable.ic_location_on_black_36dp, theme));
                 break;
         }
 

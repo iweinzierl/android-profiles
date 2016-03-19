@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
         <item name="colorButtonNormal">@color/ColorPrimary</item>
+        <item name="colorAccent">@color/ColorPrimaryDark</item>
         <item name="android:colorAccent">@color/ColorPrimaryDark</item>
     </style>
 
