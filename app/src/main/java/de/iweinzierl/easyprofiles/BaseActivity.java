@@ -40,7 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         navigationDrawer.setAdapter(new NavigationAdapter(this));
         navigationDrawer.setOnItemClickListener(new NavigationClickListener(this));
 
-        toolbarTop.setNavigationIcon(R.drawable.ic_menu_black_36dp);
+        toolbarTop.setNavigationIcon(R.drawable.ic_menu_white_36dp);
 
         setSupportActionBar(toolbarTop);
     }
