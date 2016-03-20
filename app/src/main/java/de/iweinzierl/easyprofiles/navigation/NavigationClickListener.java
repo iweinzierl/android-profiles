@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 
 import de.iweinzierl.easyprofiles.LocationListActivity_;
 import de.iweinzierl.easyprofiles.LogDisplayActivity;
-import de.iweinzierl.easyprofiles.ProfileListActivity;
+import de.iweinzierl.easyprofiles.ProfileListActivity_;
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.TriggerListActivity;
 
@@ -25,7 +25,7 @@ public class NavigationClickListener implements AdapterView.OnItemClickListener 
 
         switch (item) {
             case R.string.activity_profilelist:
-                context.startActivity(new Intent(context, ProfileListActivity.class));
+                context.startActivity(new Intent(context, ProfileListActivity_.class));
                 break;
             case R.string.activity_triggerlist:
                 context.startActivity(new Intent(context, TriggerListActivity.class));

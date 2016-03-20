@@ -33,7 +33,7 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="de.iweinzierl.easyprofiles.persistence" />
 
-        <activity android:name=".ProfileListActivity">
+        <activity android:name=".ProfileListActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

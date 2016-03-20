@@ -7,7 +7,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 
-import de.iweinzierl.easyprofiles.ProfileListActivity;
+import de.iweinzierl.easyprofiles.ProfileListActivity_;
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 
@@ -20,9 +20,9 @@ public class NotificationHelper {
     }
 
     public void publishProfileNotification(Profile profile) {
-        Intent startApplicationIntent = new Intent(context, ProfileListActivity.class);
+        Intent startApplicationIntent = new Intent(context, ProfileListActivity_.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(ProfileListActivity.class);
+        stackBuilder.addParentStack(ProfileListActivity_.class);
         stackBuilder.addNextIntent(startApplicationIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
