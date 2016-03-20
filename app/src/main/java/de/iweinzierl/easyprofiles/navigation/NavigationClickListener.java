@@ -9,7 +9,7 @@ import de.iweinzierl.easyprofiles.LocationListActivity_;
 import de.iweinzierl.easyprofiles.LogDisplayActivity;
 import de.iweinzierl.easyprofiles.ProfileListActivity_;
 import de.iweinzierl.easyprofiles.R;
-import de.iweinzierl.easyprofiles.TriggerListActivity;
+import de.iweinzierl.easyprofiles.TriggerListActivity_;
 
 public class NavigationClickListener implements AdapterView.OnItemClickListener {
 
@@ -28,7 +28,7 @@ public class NavigationClickListener implements AdapterView.OnItemClickListener 
                 context.startActivity(new Intent(context, ProfileListActivity_.class));
                 break;
             case R.string.activity_triggerlist:
-                context.startActivity(new Intent(context, TriggerListActivity.class));
+                context.startActivity(new Intent(context, TriggerListActivity_.class));
                 break;
             case R.string.activity_logs:
                 context.startActivity(new Intent(context, LogDisplayActivity.class));

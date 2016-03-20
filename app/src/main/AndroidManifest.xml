@@ -43,7 +43,7 @@
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".WifiTriggerActivity" />
         <activity android:name=".ProfileSelectionListActivity" />
-        <activity android:name=".TriggerListActivity" />
+        <activity android:name=".TriggerListActivity_" />
         <activity android:name=".TriggerTypeSelectionActivity" />
         <activity android:name=".ProfileSchedulerActivity" />
         <activity android:name=".LocationTriggerActivity" />
