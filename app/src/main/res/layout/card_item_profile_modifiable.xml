@@ -35,7 +35,7 @@
                 android:layout_alignParentEnd="true"
                 android:clickable="true"
                 android:contentDescription="@string/profilelist_edit_hint"
-                android:src="@drawable/settings_36px" />
+                android:src="@drawable/ic_mode_edit_black_24dp" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
