@@ -14,8 +14,9 @@ import java.util.List;
 
 import de.iweinzierl.easyprofiles.R;
 import de.iweinzierl.easyprofiles.persistence.Profile;
+import de.iweinzierl.easyprofiles.widget.recyclerview.Removable;
 
-public class ModifiableProfileCardAdapter extends RecyclerView.Adapter<ModifiableProfileCardAdapter.ViewHolder> {
+public class ModifiableProfileCardAdapter extends RecyclerView.Adapter<ModifiableProfileCardAdapter.ViewHolder> implements Removable {
 
     public interface OnItemClickListener {
         void onItemClick(Profile profile);
@@ -23,6 +24,10 @@ public class ModifiableProfileCardAdapter extends RecyclerView.Adapter<Modifiabl
 
     public interface OnItemEditListener {
         void onItemEdit(Profile profile);
+    }
+
+    public interface OnItemRemoveListener {
+        void onItemRemove(Profile profile);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,6 +76,7 @@ public class ModifiableProfileCardAdapter extends RecyclerView.Adapter<Modifiabl
     private List<Profile> items;
     private OnItemClickListener onItemClickListener;
     private OnItemEditListener onItemEditListener;
+    private OnItemRemoveListener onItemRemovedListener;
 
     public ModifiableProfileCardAdapter(Context context, List<Profile> items) {
         this.context = context;
@@ -120,11 +126,27 @@ public class ModifiableProfileCardAdapter extends RecyclerView.Adapter<Modifiabl
         notifyDataSetChanged();
     }
 
+    @Override
+    public void remove(RecyclerView.ViewHolder viewHolder) {
+        if (onItemRemovedListener != null) {
+            ModifiableProfileCardAdapter.ViewHolder holder = (ModifiableProfileCardAdapter.ViewHolder) viewHolder;
+            Profile profile = holder.getProfile();
+            onItemRemovedListener.onItemRemove(profile);
+        }
+
+        items.remove(viewHolder.getAdapterPosition());
+        notifyDataSetChanged();
+    }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
     public void setOnItemEditListener(OnItemEditListener onItemEditListener) {
         this.onItemEditListener = onItemEditListener;
+    }
+
+    public void setOnItemRemoveListener(OnItemRemoveListener onItemRemovedListener) {
+        this.onItemRemovedListener = onItemRemovedListener;
     }
 }

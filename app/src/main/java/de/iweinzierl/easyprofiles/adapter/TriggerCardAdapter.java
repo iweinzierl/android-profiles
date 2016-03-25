@@ -20,8 +20,9 @@ import de.iweinzierl.easyprofiles.domain.TimeBasedTrigger;
 import de.iweinzierl.easyprofiles.domain.Trigger;
 import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.util.time.DayOfWeekHelper;
+import de.iweinzierl.easyprofiles.widget.recyclerview.Removable;
 
-public class TriggerCardAdapter extends RecyclerView.Adapter<TriggerCardAdapter.TriggerHolder> {
+public class TriggerCardAdapter extends RecyclerView.Adapter<TriggerCardAdapter.TriggerHolder> implements Removable {
 
     private final int TYPE_WIFI = 1;
     private final int TYPE_LOCATION = 2;
@@ -30,6 +31,10 @@ public class TriggerCardAdapter extends RecyclerView.Adapter<TriggerCardAdapter.
 
     public interface OnItemClickListener {
         void onItemClick(Trigger trigger);
+    }
+
+    public interface OnItemRemoveListener {
+        void onItemRemove(Trigger trigger);
     }
 
     public abstract class TriggerHolder extends RecyclerView.ViewHolder {
@@ -197,6 +202,7 @@ public class TriggerCardAdapter extends RecyclerView.Adapter<TriggerCardAdapter.
     private Context context;
     private List<Trigger> items;
     private OnItemClickListener onItemClickListener;
+    private OnItemRemoveListener onItemRemoveListener;
     private DayOfWeekHelper dayOfWeekHelper;
 
     public TriggerCardAdapter(Context context, List<Trigger> items) {
@@ -252,6 +258,26 @@ public class TriggerCardAdapter extends RecyclerView.Adapter<TriggerCardAdapter.
     }
 
     @Override
+    public void remove(RecyclerView.ViewHolder viewHolder) {
+        Trigger trigger = null;
+
+        if (viewHolder instanceof LocationViewHolder) {
+            trigger = ((LocationViewHolder) viewHolder).getTrigger();
+        } else if (viewHolder instanceof TimeViewHolder) {
+            trigger = ((TimeViewHolder) viewHolder).getTrigger();
+        } else if (viewHolder instanceof WifiViewHolder) {
+            trigger = ((WifiViewHolder) viewHolder).getTrigger();
+        }
+
+        if (onItemRemoveListener != null && trigger != null) {
+            onItemRemoveListener.onItemRemove(trigger);
+        }
+
+        items.remove(viewHolder.getAdapterPosition());
+        notifyDataSetChanged();
+    }
+
+    @Override
     public int getItemCount() {
         return items == null ? 0 : items.size();
     }
@@ -274,5 +300,9 @@ public class TriggerCardAdapter extends RecyclerView.Adapter<TriggerCardAdapter.
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemRemoveListener(OnItemRemoveListener onItemRemoveListener) {
+        this.onItemRemoveListener = onItemRemoveListener;
     }
 }

@@ -94,4 +94,7 @@
     <string name="saturday_short">Sa</string>
     <string name="sunday_short">So</string>
     <string name="title_activity_location_list">LocationListActivity</string>
+
+    <!-- card view -->
+    <string name="CardViewDelete">Löschen</string>
 </resources>

@@ -18,6 +18,8 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.ColorRes;
+import org.androidannotations.annotations.res.StringRes;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import de.iweinzierl.easyprofiles.domain.TriggerBuilder;
 import de.iweinzierl.easyprofiles.domain.WifiBasedTrigger;
 import de.iweinzierl.easyprofiles.persistence.PersistentTrigger;
 import de.iweinzierl.easyprofiles.persistence.TriggerType;
+import de.iweinzierl.easyprofiles.widget.recyclerview.CardItemRemoveListener;
 
 @EActivity
 public class TriggerListActivity extends BaseActivity {
@@ -42,6 +45,15 @@ public class TriggerListActivity extends BaseActivity {
     private static final int REQUEST_PICK_WIFI = 200;
     private static final int REQUEST_PICK_LOCATION = 300;
     private static final int REQUEST_PICK_TIME_SETTINGS = 400;
+
+    @ColorRes(R.color.CardViewDeleteBackground)
+    protected int cardViewDeleteBackgroundColor;
+
+    @ColorRes(R.color.CardViewDeleteText)
+    protected int cardViewDeleteTextColor;
+
+    @StringRes(R.string.CardViewDelete)
+    protected String cardViewDeleteMessage;
 
     @ViewById(R.id.trigger_list)
     protected RecyclerView triggerListView;
@@ -59,24 +71,13 @@ public class TriggerListActivity extends BaseActivity {
         triggerListView.setLayoutManager(new LinearLayoutManager(this));
         triggerListView.setHasFixedSize(false);
 
-        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
-            @Override
-            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                return makeMovementFlags(0, ItemTouchHelper.RIGHT);
-            }
+        final ItemTouchHelper.SimpleCallback callback = new CardItemRemoveListener(
+                triggerListView,
+                cardViewDeleteBackgroundColor,
+                cardViewDeleteTextColor,
+                cardViewDeleteMessage);
 
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                Trigger trigger = ((TriggerCardAdapter.TriggerHolder) viewHolder).getTrigger();
-                onTriggerRemoved(trigger.export());
-            }
-        });
-
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(triggerListView);
     }
 
@@ -121,21 +122,24 @@ public class TriggerListActivity extends BaseActivity {
                 .show();
     }
 
-    public void onTriggerEnabled(final PersistentTrigger persistentTrigger) {
+    @Background
+    protected void enableTrigger(final PersistentTrigger persistentTrigger) {
         persistentTrigger.setEnabled(true);
         SugarRecord.save(persistentTrigger);
 
         showMessage("Trigger enabled: " + persistentTrigger.getType().name());
     }
 
-    public void onTriggerDisabled(final PersistentTrigger persistentTrigger) {
+    @Background
+    protected void disableTrigger(final PersistentTrigger persistentTrigger) {
         persistentTrigger.setEnabled(false);
         SugarRecord.save(persistentTrigger);
 
         showMessage("Trigger disabled: " + persistentTrigger.getType().name());
     }
 
-    public void onTriggerRemoved(final PersistentTrigger persistentTrigger) {
+    @Background
+    protected void removeTrigger(final PersistentTrigger persistentTrigger) {
         SugarRecord.delete(persistentTrigger);
         updateTriggerList();
 
@@ -185,12 +189,20 @@ public class TriggerListActivity extends BaseActivity {
             @Override
             public void onItemClick(Trigger trigger) {
                 if (trigger.isEnabled()) {
-                    onTriggerDisabled(trigger.export());
+                    disableTrigger(trigger.export());
                 } else {
-                    onTriggerEnabled(trigger.export());
+                    enableTrigger(trigger.export());
                 }
             }
         });
+
+        adapter.setOnItemRemoveListener(new TriggerCardAdapter.OnItemRemoveListener() {
+            @Override
+            public void onItemRemove(Trigger trigger) {
+                removeTrigger(trigger.export());
+            }
+        });
+
         triggerListView.setAdapter(adapter);
     }
 

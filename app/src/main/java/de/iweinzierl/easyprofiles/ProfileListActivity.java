@@ -19,6 +19,8 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.ColorRes;
+import org.androidannotations.annotations.res.StringRes;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -27,11 +29,21 @@ import de.inselhome.android.logging.AndroidLoggerFactory;
 import de.iweinzierl.easyprofiles.adapter.ModifiableProfileCardAdapter;
 import de.iweinzierl.easyprofiles.persistence.Profile;
 import de.iweinzierl.easyprofiles.util.ProfileActivator;
+import de.iweinzierl.easyprofiles.widget.recyclerview.CardItemRemoveListener;
 
 @EActivity
 public class ProfileListActivity extends BaseActivity {
 
     private static final Logger LOG = AndroidLoggerFactory.getInstance().getLogger(ProfileListActivity.class.getName());
+
+    @ColorRes(R.color.CardViewDeleteBackground)
+    protected int cardViewDeleteBackgroundColor;
+
+    @ColorRes(R.color.CardViewDeleteText)
+    protected int cardViewDeleteTextColor;
+
+    @StringRes(R.string.CardViewDelete)
+    protected String cardViewDeleteMessage;
 
     @ViewById(R.id.profile_list)
     protected RecyclerView profileListView;
@@ -50,20 +62,12 @@ public class ProfileListActivity extends BaseActivity {
         profileListView.setHasFixedSize(false);
         profileListView.setLayoutManager(new LinearLayoutManager(this));
 
-        final ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView profileListView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
+        final ItemTouchHelper.SimpleCallback callback = new CardItemRemoveListener(
+                profileListView,
+                cardViewDeleteBackgroundColor,
+                cardViewDeleteTextColor,
+                cardViewDeleteMessage);
 
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                ModifiableProfileCardAdapter.ViewHolder holder = (ModifiableProfileCardAdapter.ViewHolder) viewHolder;
-                Profile profile = holder.getProfile();
-
-                removeProfile(profile);
-            }
-        };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(profileListView);
     }
@@ -124,9 +128,10 @@ public class ProfileListActivity extends BaseActivity {
     @UiThread
     protected void setProfiles(List<Profile> profiles, boolean modifiable) {
         ModifiableProfileCardAdapter profileCardAdapter = new ModifiableProfileCardAdapter(this, null);
+        profileListView.setAdapter(profileCardAdapter);
         profileCardAdapter.setOnItemClickListener(new OnProfileClickListener());
         profileCardAdapter.setOnItemEditListener(new OnProfileEditListener());
-        profileListView.setAdapter(profileCardAdapter);
+        profileCardAdapter.setOnItemRemoveListener(new OnProfileRemoveListener());
         profileCardAdapter.setItems(profiles);
     }
 
@@ -164,6 +169,13 @@ public class ProfileListActivity extends BaseActivity {
             Intent intent = new Intent(ProfileListActivity.this, EditProfileActivity.class);
             intent.putExtra(EditProfileActivity.EXTRA_PROFILE_ID, profile.getId());
             startActivity(intent);
+        }
+    }
+
+    private class OnProfileRemoveListener implements ModifiableProfileCardAdapter.OnItemRemoveListener {
+        @Override
+        public void onItemRemove(Profile profile) {
+            removeProfile(profile);
         }
     }
 }

@@ -6,6 +6,9 @@
     <color name="ColorSecondaryDark">#000</color>
     <color name="ColorBright">#fff</color>
 
+    <color name="CardViewDeleteBackground">#FF0E11</color>
+    <color name="CardViewDeleteText">#FFFFFF</color>
+
     <color name="ProfileListItem">@color/ColorSecondary</color>
 
     <color name="EditProfileDevider">#bfbfbf</color>
